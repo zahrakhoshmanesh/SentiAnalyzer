@@ -1,0 +1,147 @@
+---
+title: "NLP"
+author: "Zahra Khoshmanesh"
+date: "March 29, 2019"
+output: html_document
+---
+
+
+## importing the dataset
+
+```{r}
+
+source_datasets=read.delim('Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+
+```
+
+## Cleaning the texts
+
+```{r}
+#install.packages('tm')
+#install.packages('SnowballC')
+library(tm)
+corpus=VCorpus(VectorSource(source_datasets$Review))
+#convert all review to lower case
+corpus= tm_map(corpus,content_transformer(tolower))
+# remove numbers from reviews
+corpus=tm_map(corpus,removeNumbers)
+# remove punctuations from reviews
+corpus=tm_map(corpus,removePunctuation)
+# remove Stop words from reviews
+corpus=tm_map(corpus,removeWords,stopwords())
+# Stemming
+corpus=tm_map(corpus,stemDocument)
+# remove extra space that created in cleaning stage when for example number remove
+corpus=tm_map(corpus,stripWhitespace)
+
+```
+
+## Creating the bag of words model
+
+```{r}
+#creating document term matrix of words in reviews
+dtm = DocumentTermMatrix(corpus)
+# reduce dimention of sparse matrix with considering 99 percent of most frequent
+dtm = removeSparseTerms(dtm,0.999)
+dtm
+
+```
+
+## Building  classification
+
+3 classification are popular for text:
+1- decision tree
+2- naive bayes
+3- random forest
+
+## preparing the dataset and divide dataset to train and test
+
+```{r}
+# convert matrix of independent variables to data frame
+dataset = as.data.frame(as.matrix(dtm))
+dataset$Liked =  source_datasets$Liked
+
+# encode the target feature as factor
+dataset$Liked = factor(dataset$Liked,level=c(0,1))
+
+# split dataset to training and test set
+#install.packages('caTools')
+library(caTools)
+set.seed(123)
+split=sample.split(dataset$Liked, SplitRatio = 0.8)
+training_set=subset(dataset,split==TRUE)
+test_set=subset(dataset,split==FALSE)
+
+```
+
+
+### classifier : Random Forest
+
+
+```{r}
+
+
+# fitting random forest classification to the training set
+#install.packages('randomForest')
+library(randomForest)
+classifier = randomForest(x=training_set[-692],
+                          y=training_set$Liked,
+                          ntree=10
+                          )
+#predicting the test set result
+y_pred = predict(classifier,newdata=test_set[-692])
+
+#making the confusion matrix
+cm_randomforest=table(test_set[,692],y_pred)
+cm_randomforest
+
+
+```
+
+
+## Naive Bayes classifier
+
+```{r}
+# Naive Bayes
+
+#install.packages('e1071')
+library(e1071)
+classifier = naiveBayes(x = training_set[-692],
+                        y = training_set$Liked)
+
+# Predicting the Test set results
+y_pred = predict(classifier, newdata = test_set[-692])
+
+# Making the Confusion Matrix
+cm_naivebayes = table(test_set[, 692], y_pred)
+cm_naivebayes
+
+```
+
+## Decision Tree Classifier
+
+```{r}
+# Decision Tree Classification
+
+
+# Splitting the dataset into the Training set and Test set
+#install.packages('caTools')
+library(caTools)
+set.seed(123)
+
+# Fitting Decision Tree Classification to the Training set
+#install.packages('rpart')
+library(rpart)
+classifier = rpart(formula = Liked ~ .,
+                   data = training_set)
+
+# Predicting the Test set results
+y_pred = predict(classifier, newdata = test_set[-692], type = 'class')
+
+# Making the Confusion Matrix
+cm_decisiontree = table(test_set[, 692], y_pred)
+cm_decisiontree
+
+
+```
+
