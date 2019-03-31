@@ -93,7 +93,28 @@ y_pred = predict(classifier,newdata=test_set[-692])
 
 #making the confusion matrix
 cm_randomforest=table(test_set[,692],y_pred)
-cm_randomforest
+#cm_randomforest
+#str(cm_randomforest)
+TP=cm_randomforest[1,1]
+TP
+FP=cm_randomforest[1,2]
+FP
+FN=cm_randomforest[2,1]
+FN
+TN=cm_randomforest[2,2]
+TN
+
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+Accuracy
+
+Precision = TP / (TP + FP)
+Precision
+
+Recall = TP / (TP + FN)
+Recall
+
+F1_Score = 2 * Precision * Recall / (Precision + Recall)
+F1_Score
 
 
 ```
@@ -115,6 +136,26 @@ y_pred = predict(classifier, newdata = test_set[-692])
 # Making the Confusion Matrix
 cm_naivebayes = table(test_set[, 692], y_pred)
 cm_naivebayes
+TP=cm_naivebayes[1,1]
+TP
+FP=cm_naivebayes[1,2]
+FP
+FN=cm_naivebayes[2,1]
+FN
+TN=cm_naivebayes[2,2]
+TN
+
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+Accuracy
+
+Precision = TP / (TP + FP)
+Precision
+
+Recall = TP / (TP + FN)
+Recall
+
+F1_Score = 2 * Precision * Recall / (Precision + Recall)
+F1_Score
 
 ```
 
@@ -140,8 +181,33 @@ y_pred = predict(classifier, newdata = test_set[-692], type = 'class')
 
 # Making the Confusion Matrix
 cm_decisiontree = table(test_set[, 692], y_pred)
+
 cm_decisiontree
+
+TP=cm_decisiontree[1,1]
+TP
+FP=cm_decisiontree[1,2]
+FP
+FN=cm_decisiontree[2,1]
+FN
+TN=cm_decisiontree[2,2]
+TN
+
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+Accuracy
+
+Precision = TP / (TP + FP)
+Precision
+
+Recall = TP / (TP + FN)
+Recall
+
+F1_Score = 2 * Precision * Recall / (Precision + Recall)
+F1_Score
+
 
 
 ```
+
+
 
