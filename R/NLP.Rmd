@@ -16,7 +16,9 @@ library(here)
 #> here() starts at project folder
 datasetpath = here("inst", "Restaurant_Reviews.tsv")
 source_datasets=read.delim(datasetpath,quote='',stringsAsFactors = FALSE)
-#source_datasets=read.delim('./inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+
+
+#source_datasets=read.delim('../inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
 ```
 
 ## Cleaning the texts
