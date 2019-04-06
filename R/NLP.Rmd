@@ -11,11 +11,6 @@ output: html_document
 ```{r}
 # using package here to tackle the relative path
 
-#install.packages('here') 
-library(here)
-#> here() starts at project folder
-datasetpath = here("inst", "Restaurant_Reviews.tsv")
-source_datasets=read.delim(datasetpath,quote='',stringsAsFactors = FALSE)
 
 
 #source_datasets=read.delim('../inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
@@ -27,6 +22,7 @@ source_datasets=read.delim(datasetpath,quote='',stringsAsFactors = FALSE)
 #install.packages('tm')
 #install.packages('SnowballC')
 library(tm)
+library(SnowballC)
 corpus=VCorpus(VectorSource(source_datasets$Review))
 #convert all review to lower case
 corpus= tm_map(corpus,content_transformer(tolower))
@@ -69,6 +65,7 @@ dataset = as.data.frame(as.matrix(dtm))
 dataset$Liked =  source_datasets$Liked
 
 # encode the target feature as factor
+dataset$Liked=factor(dataset$Liked)
 dataset$Liked = factor(dataset$Liked,level=c(0,1))
 
 # split dataset to training and test set
