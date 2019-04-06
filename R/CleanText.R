@@ -1,12 +1,11 @@
-#' Clean text and buil term matrix for bag of words model.
+#' Clean text and buil term matrix for bag of words model or TF DFI.
 #'
-#' @param x A tsv file having two columns, review as text, label as binary.
+#' @param source_dataset A tsv file having two columns, review as text, label as binary.
 #' @param dtm-method 1 for bag of word, 2 for TF DFI.
 #' @export
 #' @return The term matrix converted to dataframe.
-#' @example
-#' df<-CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1)
-#' df<-CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2)
+#' @examples CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1)
+
 CleanText <- function(source_dataset,dtm_method){
   library(tm)
   #library(rJava)
@@ -37,6 +36,5 @@ CleanText <- function(source_dataset,dtm_method){
   # reduce dimention of sparse matrix with considering 99 percent of most frequent
   dtm = removeSparseTerms(dtm,0.999)
   return(dtm)
-
 }
 
