@@ -4,10 +4,12 @@
 \alias{CleanText}
 \title{Clean text and buil term matrix for bag of words model or TF DFI.}
 \usage{
-CleanText(source_dataset, dtm_method)
+CleanText(source_dataset, dtm_method, reductionrate)
 }
 \arguments{
 \item{source_dataset}{A tsv file having two columns, review as text, label as binary.}
+
+\item{reductionrate}{how many percent of term matrix you want to keep,usually 0.999.}
 
 \item{dtm-method}{1 for bag of word, 2 for TF DFI.}
 }

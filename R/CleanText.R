@@ -2,11 +2,14 @@
 #'
 #' @param source_dataset A tsv file having two columns, review as text, label as binary.
 #' @param dtm-method 1 for bag of word, 2 for TF DFI.
+#' @param reductionrate how many percent of term matrix you want to keep,usually 0.999.
 #' @export
 #' @return The term matrix converted to dataframe.
-#' @examples CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1)
+#' @examples
+#' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)
+#' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
 
-CleanText <- function(source_dataset,dtm_method){
+CleanText <- function(source_dataset,dtm_method,reductionrate){
   library(tm)
   #library(rJava)
   #library(RWeka)
@@ -34,7 +37,7 @@ CleanText <- function(source_dataset,dtm_method){
   )
 
   # reduce dimention of sparse matrix with considering 99 percent of most frequent
-  dtm = removeSparseTerms(dtm,0.999)
+  dtm = removeSparseTerms(dtm,reductionrate)
   return(dtm)
 }
 
