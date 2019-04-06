@@ -1,6 +1,42 @@
 #' Clean text and buil term matrix for bag of words model.
 #'
 #' @param x A tsv file having two columns, review as text, label as binary.
+#' @param dtm-method 1 for bag of word, 2 for TF DFI.
 #' @export
 #' @return The term matrix converted to dataframe.
-CleanText <- function(){}
+#' @example
+#' df<-CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1)
+#' df<-CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2)
+CleanText <- function(source_dataset,dtm_method){
+  library(tm)
+  #library(rJava)
+  #library(RWeka)
+  source_datasets=read.delim(source_dataset,quote='',stringsAsFactors = FALSE)
+  corpus=VCorpus(VectorSource(source_datasets$Review))
+  #convert all review to lower case
+  corpus= tm_map(corpus,content_transformer(tolower))
+  # remove numbers from reviews
+  corpus=tm_map(corpus,removeNumbers)
+  # remove punctuations from reviews
+  corpus=tm_map(corpus,removePunctuation)
+  # remove Stop words from reviews
+  corpus=tm_map(corpus,removeWords,stopwords())
+  # Stemming
+  corpus=tm_map(corpus,stemDocument)
+  # remove extra space that created in cleaning stage when for example number remove
+  corpus=tm_map(corpus,stripWhitespace)
+  #creating document term matrix of words in reviews
+  # Trigrams
+  #bigramTokenizer <- function(x) NGramTokenizer(x, Weka_control(min = 2, max = 2))
+  dtm <-switch(dtm_method,
+               '1' = DocumentTermMatrix(corpus),
+               '2' = DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE))),
+               #'3' = TermDocumentMatrix(corpus, control = list(tokenize = bigramTokenizer))
+  )
+
+  # reduce dimention of sparse matrix with considering 99 percent of most frequent
+  dtm = removeSparseTerms(dtm,0.999)
+  return(dtm)
+
+}
+
