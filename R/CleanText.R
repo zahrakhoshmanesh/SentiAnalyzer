@@ -34,9 +34,9 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
                '1' = DocumentTermMatrix(corpus),
                '2' = DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE))),
                #'3' = TermDocumentMatrix(corpus, control = list(tokenize = bigramTokenizer))
-  )
+                )
 
-  # reduce dimention of sparse matrix with considering 99 percent of most frequent
+  # reduce dimention of sparse matrix
   dtm = removeSparseTerms(dtm,reductionrate)
 
   # convert matrix of independent variables to data frame
@@ -45,5 +45,7 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
   dataset$target = factor(source_datasets[[-1]],level=c(0,1))
   return(dataset)
 }
+#df<-CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
+#dim(df)
 
 
