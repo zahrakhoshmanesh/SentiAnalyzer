@@ -38,6 +38,12 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
 
   # reduce dimention of sparse matrix with considering 99 percent of most frequent
   dtm = removeSparseTerms(dtm,reductionrate)
-  return(dtm)
+
+  # convert matrix of independent variables to data frame
+  dataset = as.data.frame(as.matrix(dtm))
+  # encode the target feature as factor
+  dataset$target = factor(source_datasets[[-1]],level=c(0,1))
+  return(dataset)
 }
+
 
