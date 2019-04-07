@@ -1,10 +1,15 @@
+
 #' Clean text and buil term matrix for bag of words model or TF DFI.
 #'
 #' @param source_dataset A tsv file having two columns, review as text, label as binary.
 #' @param dtm-method 1 for bag of word, 2 for TF DFI.
 #' @param reductionrate how many percent of term matrix you want to keep,usually 0.999.
-#' @export
-#' @return The term matrix converted to dataframe.
+#' @export dataset
+#' @return dataframe "dataset" : The term matrix converted to dataframe plus target label.
+#' @author Zahra Khoshmanesh
+#' @import tm
+#' @import assertthat
+#' @import testthat
 #' @examples
 #' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)
 #' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
