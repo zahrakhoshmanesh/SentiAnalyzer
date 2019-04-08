@@ -17,6 +17,50 @@ str(source_datasets$Liked)
 
 ```
 
+## tackling imbalanced data
+
+```{r}
+BalanceData<-function(x){
+#install.packages("ROSE")
+library(ROSE)
+data(hacide)
+df<-x
+
+#over sampling
+data_balanced_over <- ovun.sample(cls ~ ., data = hacide.train, method = "over",N = 1960)$data
+table(data_balanced_over$cls)
+
+data_balanced_under <- ovun.sample(cls ~ ., data = hacide.train, method = "under", N = 40, seed = 1)$data
+table(data_balanced_under$cls)
+
+data_balanced_both <- ovun.sample(cls ~ ., data = hacide.train, method = "both", p=0.5,N=1000, seed = 1)$data
+table(data_balanced_both$cls)
+
+data.rose <- ROSE(cls ~ ., data = hacide.train, seed = 1)$data
+table(data.rose$cls)
+
+#check table
+table(df$Liked)
+data_balanced_over <- ovun.sample(Liked ~ ., data = df, method = "over",N = 1000)$data
+table(data_balanced_over$Liked)
+
+data_balanced_under <- ovun.sample(Liked ~ ., data = df, method = "under", N = 500, seed = 1)$data
+table(data_balanced_under$Liked)
+
+data_balanced_both <- ovun.sample(Liked ~ ., data = df, method = "both", p=0.5,N=500, seed = 1)$data
+table(data_balanced_both$Liked)
+
+data.rose <- ROSE(Liked ~ ., data = df, seed = 1)$data
+table(data.rose$Liked)
+}
+
+
+```
+
+
+
+
+
 ## Cleaning the texts
 
 ```{r}
@@ -47,6 +91,9 @@ dtm = DocumentTermMatrix(corpus)
 # reduce dimention of sparse matrix with considering 99 percent of most frequent
 dtm = removeSparseTerms(dtm,0.99)
 dtm
+#plot(dtm, terms = findFreqTerms(tdm, lowfreq = 6)[1:25], corThreshold = 0.5)
+
+
 
 ```
 
@@ -80,6 +127,15 @@ split=sample.split(dataset$target, SplitRatio = 0.8)
 training_set=subset(dataset,split==TRUE)
 test_set=subset(dataset,split==FALSE)
 
+```
+
+
+
+## visualization
+
+```{r}
+wsTDM <- Data(TermDocMatrix(dtm))
+wsHClust <- hclust(dist(wsTDM), method = "ward")
 ```
 
 

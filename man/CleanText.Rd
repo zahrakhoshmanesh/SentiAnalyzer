@@ -19,6 +19,10 @@ dataframe "dataset" : The term matrix converted to dataframe plus target label.
 \description{
 Clean text and buil term matrix for bag of words model or TF DFI.
 }
+\examples{
+CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)
+CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
+}
 \author{
 Zahra Khoshmanesh
 }
