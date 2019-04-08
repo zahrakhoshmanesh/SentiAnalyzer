@@ -1,9 +1,9 @@
 
-#' Clean text and buil term matrix for bag of words,TF DFI and bi-gram.
+#' Clean text and build term matrix for bag of words,TF DFI and bi-gram.
 #'
 #' @param source_dataset A tsv file having two columns, review as text, label as binary.
 #' @param dtm-method 1 for bag of word, 2 for TF DFI, 3 for bigram.
-#' @param reductionrate how many percent of term matrix you want to keep,usually 0.999.
+#' @param reductionrate how many percent of term matrix you want to keep,usually 0.999 and not less than 0.99.
 #' @return dataframe "dataset" : The term matrix converted to dataframe plus target label.
 #' @author Zahra Khoshmanesh
 #' @export
@@ -13,7 +13,7 @@
 #' @examples
 #' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)
 #' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
-
+#' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)
 CleanText <- function(source_dataset,dtm_method,reductionrate){
 
   #assertthat(not_empty(source_dataset), noNA(source_dataset),not_empty(dtm_method),not_empty(reductionrate))
