@@ -6,6 +6,7 @@
 #' @param reductionrate how many percent of term matrix you want to keep,usually 0.999.
 #' @return dataframe "dataset" : The term matrix converted to dataframe plus target label.
 #' @author Zahra Khoshmanesh
+#' @export
 #' @import tm
 #' @import assertthat
 #' @import testthat

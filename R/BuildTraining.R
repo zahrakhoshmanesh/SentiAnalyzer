@@ -3,13 +3,13 @@
 #' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
 #' @return traned models
 #' @author Atousa Zarindast
+#' @export
 #' @import tidyverse
 #' @import tidyr
 #' @import assertthat
 #' @import testthat
 #' @import caret
 #' @import tidyr
-
 
 BuildTraining <- function(x) {
   library(assertthat)
@@ -22,14 +22,13 @@ BuildTraining <- function(x) {
   assert_that(not_empty(x), noNA(x), is.data.frame(x))
   expect_equal(unique(sapply(dataset[, -ncol(dataset)], is.numeric)), TRUE)
 
-
   #last_co<-x[,ncol(x)]
 
   if (is.factor(x[, ncol(x)]) == FALSE) {
     x[, ncol(x)] <- ifelse(x[, ncol(x)] == 1, "Yes", "No")
 
     x[, ncol(x)] <- factor(x[, ncol(x)], level = c("Yes", "No"))
-  } else {
+    } else {
     x[, ncol(x)] <- ifelse(x[, ncol(x)] == 1, "Yes", "No")
   }
 

@@ -3,14 +3,13 @@
 #' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
 #' @return visualization of trained algrithms (for classifiying textual data), comparision and select the best!
 #' @author Atousa Zarindast
+#' @export
 #' @import tidyverse
 #' @import tidyr
 #' @import assertthat
 #' @import testthat
 #' @import caret
 #' @import tidyr
-
-
 
 comparison <- function(x) {
   library(assertthat)
