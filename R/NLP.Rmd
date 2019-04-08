@@ -94,8 +94,33 @@ dtm
 #plot(dtm, terms = findFreqTerms(tdm, lowfreq = 6)[1:25], corThreshold = 0.5)
 
 
+  BigramTokenizer <-  function(x)  unlist(lapply(ngrams(words(x), 2), paste, collapse = " "), use.names = FALSE)
+
+  tdm <- TermDocumentMatrix(corpus, control = list(tokenize = BigramTokenizer))
+  tdm
+  #inspect(removeSparseTerms(tdm[, 1:10], 0.99))
+  # convert matrix of independent variables to data frame
+dataset = as.data.frame(as.matrix(dtm))
+dim(dataset)
+
 
 ```
+## n gram
+```{r}
+#creating document term matrix of words in reviews
+BigramTokenizer <-  function(x)  unlist(lapply(ngrams(words(x), 2), paste, collapse = " "), use.names = FALSE)
+
+tdm <- TermDocumentMatrix(corpus, control = list(tokenize = BigramTokenizer))
+tdm
+library(matlib)
+ntdm<-t(tdm)
+  #inspect(removeSparseTerms(tdm[, 1:10], 0.99))
+  # convert matrix of independent variables to data frame
+dataset = as.data.frame(as.matrix(ntdm))
+dim(dataset)
+
+```
+
 
 ## Building  classification
 
