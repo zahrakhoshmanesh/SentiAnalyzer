@@ -4,7 +4,6 @@
 #' @param source_dataset A tsv file having two columns, review as text, label as binary.
 #' @param dtm-method 1 for bag of word, 2 for TF DFI.
 #' @param reductionrate how many percent of term matrix you want to keep,usually 0.999.
-#' @export dataset
 #' @return dataframe "dataset" : The term matrix converted to dataframe plus target label.
 #' @author Zahra Khoshmanesh
 #' @import tm

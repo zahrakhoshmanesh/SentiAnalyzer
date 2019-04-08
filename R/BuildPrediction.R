@@ -1,29 +1,26 @@
 #' predict the classes using trained algorithms and give cnfusion matrix  in return
 #'
 #' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
-#' @export
 #' @return 3 confusion matrix for each trained classification algorithm
 #' @author Atousa Zarindast
 #' @import tidyverse
 #' @import tidyr
 #' @import assertthat
 #' @import testthat
-#' @import Caret
+#' @import caret
 #' @import tidyr
-#' @import Training_Alg
 
-library(assertthat)
-library(caret)
-library(tidyr)
-library(testthat)
+BuildPrediction <- function(x) {
+  library(assertthat)
+  library(caret)
+  library(tidyr)
+  library(testthat)
 
-library(tidyverse)
-library(RWeka)
-library(eply)
-
-Multipleconfusions <- function(x) {
+  library(tidyverse)
+  library(RWeka)
+  library(eply)
   #x=sample
-  list <- Training_Alg(x)
+  list <- BuildTraining(x)
 
   ###############gbm####################################
   #prediction of gbm

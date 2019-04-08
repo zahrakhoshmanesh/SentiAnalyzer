@@ -1,24 +1,24 @@
 #' Train Machine learning algorithms and give trained models
 #'
 #' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
-#' @export
 #' @return traned models
 #' @author Atousa Zarindast
 #' @import tidyverse
 #' @import tidyr
 #' @import assertthat
 #' @import testthat
-#' @import Caret
+#' @import caret
 #' @import tidyr
 
-library(assertthat)
-library(caret)
-library(tidyr)
-library(testthat)
-library(tidyverse)
-library(RWeka)
-library(eply)
-Training_Alg <- function(x) {
+
+BuildTraining <- function(x) {
+  library(assertthat)
+  library(caret)
+  library(tidyr)
+  library(testthat)
+  library(tidyverse)
+  library(RWeka)
+  library(eply)
   assert_that(not_empty(x), noNA(x), is.data.frame(x))
   expect_equal(unique(sapply(dataset[, -ncol(dataset)], is.numeric)), TRUE)
 

@@ -14,8 +14,11 @@ CleanText(source_dataset, dtm_method, reductionrate)
 \item{dtm-method}{1 for bag of word, 2 for TF DFI.}
 }
 \value{
-The term matrix converted to dataframe.
+dataframe "dataset" : The term matrix converted to dataframe plus target label.
 }
 \description{
 Clean text and buil term matrix for bag of words model or TF DFI.
+}
+\author{
+Zahra Khoshmanesh
 }
