@@ -134,8 +134,8 @@ test_set=subset(dataset,split==FALSE)
 ## visualization
 
 ```{r}
-wsTDM <- Data(TermDocMatrix(dtm))
-wsHClust <- hclust(dist(wsTDM), method = "ward")
+#wsTDM <- Data(TermDocMatrix(dtm))
+#wsHClust <- hclust(dist(wsTDM), method = "ward")
 ```
 
 
