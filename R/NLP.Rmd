@@ -10,9 +10,56 @@ output: html_document
 
 ```{r}
 
-source_datasets=read.delim('../Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+
+source_datasets=read.delim('../inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+str(source_datasets$Liked)
+#Sys.setenv(JAVA_HOME="C:\\Program Files (x86)\\Java\\jdk1.8.0_201\\jre")
 
 ```
+
+## tackling imbalanced data
+
+```{r}
+BalanceData<-function(x){
+#install.packages("ROSE")
+library(ROSE)
+data(hacide)
+df<-x
+
+#over sampling
+data_balanced_over <- ovun.sample(cls ~ ., data = hacide.train, method = "over",N = 1960)$data
+table(data_balanced_over$cls)
+
+data_balanced_under <- ovun.sample(cls ~ ., data = hacide.train, method = "under", N = 40, seed = 1)$data
+table(data_balanced_under$cls)
+
+data_balanced_both <- ovun.sample(cls ~ ., data = hacide.train, method = "both", p=0.5,N=1000, seed = 1)$data
+table(data_balanced_both$cls)
+
+data.rose <- ROSE(cls ~ ., data = hacide.train, seed = 1)$data
+table(data.rose$cls)
+
+#check table
+table(df$Liked)
+data_balanced_over <- ovun.sample(Liked ~ ., data = df, method = "over",N = 1000)$data
+table(data_balanced_over$Liked)
+
+data_balanced_under <- ovun.sample(Liked ~ ., data = df, method = "under", N = 500, seed = 1)$data
+table(data_balanced_under$Liked)
+
+data_balanced_both <- ovun.sample(Liked ~ ., data = df, method = "both", p=0.5,N=500, seed = 1)$data
+table(data_balanced_both$Liked)
+
+data.rose <- ROSE(Liked ~ ., data = df, seed = 1)$data
+table(data.rose$Liked)
+}
+
+
+```
+
+
+
+
 
 ## Cleaning the texts
 
@@ -42,10 +89,38 @@ corpus=tm_map(corpus,stripWhitespace)
 #creating document term matrix of words in reviews
 dtm = DocumentTermMatrix(corpus)
 # reduce dimention of sparse matrix with considering 99 percent of most frequent
-dtm = removeSparseTerms(dtm,0.999)
+dtm = removeSparseTerms(dtm,0.99)
 dtm
+#plot(dtm, terms = findFreqTerms(tdm, lowfreq = 6)[1:25], corThreshold = 0.5)
+
+
+  BigramTokenizer <-  function(x)  unlist(lapply(ngrams(words(x), 2), paste, collapse = " "), use.names = FALSE)
+
+  tdm <- TermDocumentMatrix(corpus, control = list(tokenize = BigramTokenizer))
+  tdm
+  #inspect(removeSparseTerms(tdm[, 1:10], 0.99))
+  # convert matrix of independent variables to data frame
+dataset = as.data.frame(as.matrix(dtm))
+dim(dataset)
+
 
 ```
+## n gram
+```{r}
+#creating document term matrix of words in reviews
+BigramTokenizer <-  function(x)  unlist(lapply(ngrams(words(x), 2), paste, collapse = " "), use.names = FALSE)
+
+tdm <- TermDocumentMatrix(corpus, control = list(tokenize = BigramTokenizer))
+tdm
+library(matlib)
+ntdm<-t(tdm)
+  #inspect(removeSparseTerms(tdm[, 1:10], 0.99))
+  # convert matrix of independent variables to data frame
+dataset = as.data.frame(as.matrix(ntdm))
+dim(dataset)
+
+```
+
 
 ## Building  classification
 
@@ -59,19 +134,33 @@ dtm
 ```{r}
 # convert matrix of independent variables to data frame
 dataset = as.data.frame(as.matrix(dtm))
-dataset$Liked =  source_datasets$Liked
+
+#dataset$targetclass = source_datasets[-1]
+str(source_datasets[[-1]])
+
+#dataset$Liked =  source_datasets$Liked
 
 # encode the target feature as factor
-dataset$Liked = factor(dataset$Liked,level=c(0,1))
+dataset$target = factor(source_datasets[[-1]],level=c(0,1))
+str(dataset$target)
 
 # split dataset to training and test set
 #install.packages('caTools')
 library(caTools)
 set.seed(123)
-split=sample.split(dataset$Liked, SplitRatio = 0.8)
+split=sample.split(dataset$target, SplitRatio = 0.8)
 training_set=subset(dataset,split==TRUE)
 test_set=subset(dataset,split==FALSE)
 
+```
+
+
+
+## visualization
+
+```{r}
+#wsTDM <- Data(TermDocMatrix(dtm))
+#wsHClust <- hclust(dist(wsTDM), method = "ward")
 ```
 
 
@@ -84,15 +173,19 @@ test_set=subset(dataset,split==FALSE)
 # fitting random forest classification to the training set
 #install.packages('randomForest')
 library(randomForest)
-classifier = randomForest(x=training_set[-692],
-                          y=training_set$Liked,
+dimention<-dim(dataset)
+numdim<-dimention[2]
+numdim
+
+classifier = randomForest(x=training_set[-1*numdim],
+                          y=training_set$target,
                           ntree=10
                           )
 #predicting the test set result
-y_pred = predict(classifier,newdata=test_set[-692])
+y_pred = predict(classifier,newdata=test_set[-1*numdim])
 
 #making the confusion matrix
-cm_randomforest=table(test_set[,692],y_pred)
+cm_randomforest=table(test_set[,numdim],y_pred)
 #cm_randomforest
 #str(cm_randomforest)
 TP=cm_randomforest[1,1]
@@ -128,7 +221,7 @@ F1_Score
 #install.packages('e1071')
 library(e1071)
 classifier = naiveBayes(x = training_set[-692],
-                        y = training_set$Liked)
+                        y = training_set$target)
 
 # Predicting the Test set results
 y_pred = predict(classifier, newdata = test_set[-692])
