@@ -15,6 +15,9 @@
 #' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
 
 CleanText <- function(source_dataset,dtm_method,reductionrate){
+
+  assert_that(not_empty(source_dataset), noNA(source_dataset),not_empty(dtm_method),not_empty(reductionrate))
+
   library(tm)
   library(rJava)
   library(RWeka)
@@ -48,6 +51,8 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
   dataset = as.data.frame(as.matrix(dtm))
   # encode the target feature as factor
   dataset$target = factor(source_datasets[[-1]],level=c(0,1))
+  assert_that(not_empty(dataset), noNA(dataset),is.data.frame(dataset))
+
   return(dataset)
 }
 #df<-CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)
