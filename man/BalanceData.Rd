@@ -4,16 +4,19 @@
 \alias{BalanceData}
 \title{Clean text and buil term matrix for bag of words model or TF DFI.}
 \usage{
-BalanceData(x)
+BalanceData(dataset)
 }
 \arguments{
-\item{x}{unbalanced dataset.}
+\item{x}{unbalanced dataset, a tsv format : tab delimeter, two column: first text and second binary class label.}
 }
 \value{
-balanced dataframe
+balanced dataset, save as out.tsv name in inst folder
 }
 \description{
 Clean text and buil term matrix for bag of words model or TF DFI.
+}
+\examples{
+BalanceData('./inst/Imbalance_Restaurant_Reviews.tsv')
 }
 \author{
 Zahra Khoshmanesh

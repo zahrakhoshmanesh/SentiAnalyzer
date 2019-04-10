@@ -2,14 +2,14 @@
 % Please edit documentation in R/CleanText.R
 \name{CleanText}
 \alias{CleanText}
-\title{Clean text and buil term matrix for bag of words,TF DFI and bi-gram.}
+\title{Clean text and build term matrix for bag of words,TF DFI and bi-gram.}
 \usage{
 CleanText(source_dataset, dtm_method, reductionrate)
 }
 \arguments{
 \item{source_dataset}{A tsv file having two columns, review as text, label as binary.}
 
-\item{reductionrate}{how many percent of term matrix you want to keep,usually 0.999.}
+\item{reductionrate}{how many percent of term matrix you want to keep,usually 0.999 and not less than 0.99.}
 
 \item{dtm-method}{1 for bag of word, 2 for TF DFI, 3 for bigram.}
 }
@@ -17,11 +17,12 @@ CleanText(source_dataset, dtm_method, reductionrate)
 dataframe "dataset" : The term matrix converted to dataframe plus target label.
 }
 \description{
-Clean text and buil term matrix for bag of words,TF DFI and bi-gram.
+Clean text and build term matrix for bag of words,TF DFI and bi-gram.
 }
 \examples{
 CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)
 CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
+CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)
 }
 \author{
 Zahra Khoshmanesh
