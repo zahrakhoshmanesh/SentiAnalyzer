@@ -11,7 +11,7 @@
 #' @import caret
 #' @import tidyr
 
-comparison <- function(x) {
+comparison <- function(list) {
   library(assertthat)
   library(caret)
   library(tidyr)
@@ -19,14 +19,11 @@ comparison <- function(x) {
   library(tidyverse)
   library(RWeka)
   library(eply)
-  #x=sample
-  list <- BuildTraining(x)
-  list2 <- BuildPrediction(x)
-  KKN_con<-list2[1]
-  NB_con<-list2[2]
-  DT_con<-list2[3]
-  gbm_con<-list2[4]
-  list(gbmFit2, model_knn_10, model_naive_10, model_dectree_10)
+  KKN_con<-list[1]
+  NB_con<-list[2]
+  DT_con<-list[3]
+  gbm_con<-list[4]
+  #list(gbmFit2, model_knn_10, model_naive_10, model_dectree_10)
   gbm<-list[1]
   knn<-list[2]
   nb<-list[3]

@@ -1,45 +1,49 @@
 
 #' Clean text and buil term matrix for bag of words model or TF DFI.
 #'
-#' @param x unbalanced dataset.
-#' @return balanced dataframe
+#' @param x unbalanced dataset, a tsv format : tab delimeter, two column: first text and second binary class label.
+#' @return balanced dataset, save as out.tsv name in inst folder
 #' @author Zahra Khoshmanesh
 #' @export
 #' @import ROSE
-#' @import assertthat
-#' @import testthat
+#' @examples
+#' BalanceData('./inst/Imbalance_Restaurant_Reviews.tsv')
 
-BalanceData<-function(x){
+
+BalanceData<-function(dataset){
 
   library(ROSE)
-  data(hacide)
-  df<-x
 
-  #over sampling
-  data_balanced_over <- ovun.sample(cls ~ ., data = hacide.train, method = "over",N = 1960)$data
-  table(data_balanced_over$cls)
+  #read  datasets :put two dataset, 1 balance and 1 imbalanced for testing purpose
+  source_datasets=read.delim(dataset,quote='',stringsAsFactors = FALSE)
+  #source_datasets=read.delim('./inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
 
-  data_balanced_under <- ovun.sample(cls ~ ., data = hacide.train, method = "under", N = 40, seed = 1)$data
-  table(data_balanced_under$cls)
+  #check the number of two class label
+  check_class <-table(source_datasets[[2]])
+  class_label<-names(source_datasets)[2]
+  class_text<-names(source_datasets)[1]
+    if (check_class[1]!=check_class[2]){
 
-  data_balanced_both <- ovun.sample(cls ~ ., data = hacide.train, method = "both", p=0.5,N=1000, seed = 1)$data
-  table(data_balanced_both$cls)
+    print("dataset is imbalance, balancing it in few seconds")
+    #data.rose <- ROSE(class_label ~ ., data = source_datasets, seed = 1)$data
+    data.rose <- ROSE(Liked ~ ., data = source_datasets, seed = 1)$data
+    table(data.rose[[2]])
 
-  data.rose <- ROSE(cls ~ ., data = hacide.train, seed = 1)$data
-  table(data.rose$cls)
+  }  else {
+    print("dataset is balanced dataset and no need to balance it")
+  }
 
-  #check table
-  table(df$Liked)
-  data_balanced_over <- ovun.sample(Liked ~ ., data = df, method = "over",N = 1000)$data
-  table(data_balanced_over$Liked)
 
-  data_balanced_under <- ovun.sample(Liked ~ ., data = df, method = "under", N = 500, seed = 1)$data
-  table(data_balanced_under$Liked)
+  #save output in file
+  write.table(data.rose, file='./inst/out.tsv', quote=FALSE, sep='\t', col.names = NA)
 
-  data_balanced_both <- ovun.sample(Liked ~ ., data = df, method = "both", p=0.5,N=500, seed = 1)$data
-  table(data_balanced_both$Liked)
+  if (file.access('./inst/out.tsv', mode = 0)==0){
+    print("balancing dataset is done! and new balanced dataset saved in inst folder under name out.tsv ")
 
-  data.rose <- ROSE(Liked ~ ., data = df, seed = 1)$data
-  table(data.rose$Liked)
-  return(balansed_df)
+  }
 }
+
+#BalanceData('./inst/Imbalance_Restaurant_Reviews.tsv')
+
+
+
