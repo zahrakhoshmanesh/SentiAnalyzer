@@ -16,17 +16,19 @@ BalanceData<-function(dataset){
 
   #read  datasets :put two dataset, 1 balance and 1 imbalanced for testing purpose
   source_datasets=read.delim(dataset,quote='',stringsAsFactors = FALSE)
-  #source_datasets=read.delim('./inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+  #source_datasets=read.delim('./inst/Imbalance_Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
 
   #check the number of two class label
-  check_class <-table(source_datasets[[2]])
-  class_label<-names(source_datasets)[2]
-  class_text<-names(source_datasets)[1]
+  check_class <-table(source_datasets[[-1]])
+
+  res_name <- colnames(source_datasets)[ncol(source_datasets)]
+  formula <- as.formula(paste(res_name, ' ~ .'))
+
     if (check_class[1]!=check_class[2]){
 
     print("dataset is imbalance, balancing it in few seconds")
     #data.rose <- ROSE(class_label ~ ., data = source_datasets, seed = 1)$data
-    data.rose <- ROSE(Liked ~ ., data = source_datasets, seed = 1)$data
+    data.rose <- ROSE(formula, data = source_datasets, seed = 1)$data
     table(data.rose[[2]])
 
   }  else {
