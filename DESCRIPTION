@@ -1,4 +1,4 @@
-Package: FinalProjectSTAT585
+Package:SentiAnalyzer
 Title: Sentiment Analysis of Reviews
 Version: 0.0.0.9000
 Authors@R: 
