@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # SentiAnalyzer 
 ### Sentiment analysis for consumer review
 
@@ -15,5 +15,3 @@ Three steps of processing your review dataset:
 4. Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review
 
 =======
-# SentiAnalyzer
->>>>>>> da9897d37b4e5d1ffdb71b015136ea09e3c470f4
