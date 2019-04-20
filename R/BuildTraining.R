@@ -20,7 +20,7 @@ BuildTraining <- function(x) {
   library(RWeka)
   library(eply)
   assert_that(not_empty(x), noNA(x), is.data.frame(x))
-  expect_equal(unique(sapply(dataset[, -ncol(dataset)], is.numeric)), TRUE)
+  expect_equal(unique(sapply(x[, -ncol(x)], is.numeric)), TRUE)
 
   #last_co<-x[,ncol(x)]
 
@@ -148,7 +148,7 @@ BuildTraining <- function(x) {
   #plot(gbmFit2)
 
   list <-
-    list(gbmFit2, model_knn_10, model_naive_10, model_dectree_10)
+    list(x=x, gbmFit2, model_knn_10, model_naive_10, model_dectree_10)
   return(list)
 
 }
