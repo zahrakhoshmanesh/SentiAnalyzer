@@ -23,7 +23,7 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
   library(RWeka)
   library(matlib)
   source_datasets=read.delim(source_dataset,quote='',stringsAsFactors = FALSE)
-  corpus=VCorpus(VectorSource(source_datasets$Review))
+  corpus=VCorpus(VectorSource(source_datasets[[1]]))
   #convert all review to lower case
   corpus= tm_map(corpus,content_transformer(tolower))
   # remove numbers from reviews

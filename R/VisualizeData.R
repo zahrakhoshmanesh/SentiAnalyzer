@@ -35,7 +35,7 @@ VisualizeData<-function(dataset){
     count(word, sort = TRUE)
 
 
- wordfreqplot= tidy_text %>%
+ wordfreqplot = tidy_text %>%
     count(word, sort = TRUE) %>%
     filter(n > 10) %>%
     mutate(word = reorder(word, n)) %>%
@@ -43,11 +43,12 @@ VisualizeData<-function(dataset){
     geom_col() +
     xlab(NULL) +
     coord_flip()
+
  wordfreqplot
 
 
 
- wordcloadplot= tidy_text %>%
+ wordcloadplot = tidy_text %>%
     anti_join(stop_words) %>%
     count(word) %>%
     with(wordcloud(word, n, max.words = 100))
@@ -56,12 +57,13 @@ VisualizeData<-function(dataset){
 
 
 
- reshapplot= tidy_text %>%
+ reshapplot = tidy_text %>%
     inner_join(get_sentiments("bing")) %>%
     count(word, sentiment, sort = TRUE) %>%
     acast(word ~ sentiment, value.var = "n", fill = 0) %>%
     comparison.cloud(colors = c("gray20", "gray80"),
                      max.words = 100)
+
  reshapplot
 
 }
