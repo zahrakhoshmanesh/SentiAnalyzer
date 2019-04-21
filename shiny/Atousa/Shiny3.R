@@ -7,7 +7,7 @@ library(RWeka)
 library(eply)
 library(ggplot2)
 #install.packages("shinythemes") to run code
-x<-read.csv("../Data/x.csv")
+x<-read.csv("./Data/x.csv")
 ui = tagList(
     shinythemes::themeSelector(),
     navbarPage(
@@ -19,7 +19,7 @@ ui = tagList(
 
                  radioButtons(
                    "whichM",
-                   "Training Alg",
+                   h2("Training Alg"),
                    choices = c("knn", "gbm"),
                    selected = "knn"),
 
@@ -27,24 +27,24 @@ ui = tagList(
                  conditionalPanel(
                    condition = "input.whichM=='knn'",
 
-                   numericInput("knn_min", "min number of neigbors: ", value = 1, min=1, max=50),
-                   numericInput("knn_max", "max number of neigbors: ", value = 3, min=1, max=50)),
+                   numericInput("knn_min", h5("min number of neigbors: "), value = 1, min=1, max=50),
+                   numericInput("knn_max", h5("max number of neigbors: "), value = 3, min=1, max=50)),
 
 
                  conditionalPanel(
                    condition = "input.whichM=='gbm'",
 
-                   numericInput("n_l", "min number of trees:",
+                   numericInput("n_l", h5("min number of trees:"),
                                 value = 1, min=5, max=500),
-                   numericInput("n_m", "max number of trees:",
+                   numericInput("n_m", h5("max number of trees:"),
                                 value = 3, min=5, max=500)),
 
 
 
                 mainPanel(
                  tabsetPanel(
-                   tabPanel("Visual",plotOutput("train")),
-                   tabPanel("summary",verbatimTextOutput("summary"))
+                   tabPanel(h4("Visual"),plotOutput("train")),
+                   tabPanel(h4("summary"),verbatimTextOutput("summary"))
                             )
                           )
                )))
