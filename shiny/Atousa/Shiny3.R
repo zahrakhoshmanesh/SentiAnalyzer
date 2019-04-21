@@ -7,16 +7,14 @@ library(RWeka)
 library(eply)
 library(ggplot2)
 #install.packages("shinythemes") to run code
-x<-read.csv("./Data/x.csv")
+x<-read.csv("x.csv")
 ui = tagList(
     shinythemes::themeSelector(),
     navbarPage(
       # theme = "cerulean",  # <--- To set and use a specific theme, uncomment this
       "ML training algorithms",
       #sidebarLayout(
-               sidebarPanel(
-
-
+             sidebarPanel(
                  radioButtons(
                    "whichM",
                    h2("Training Alg"),
