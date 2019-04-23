@@ -57,6 +57,8 @@ server <- function(input, output) {
     savePred = T,
     classProb = T
   )
+  res_name <- colnames(x)[ncol(x)]
+  formula <- as.formula(paste(res_name, ' ~ .'))
   output$train <- renderPlot({
     # train control
     ctrl_cv10 = trainControl(
@@ -67,8 +69,7 @@ server <- function(input, output) {
     )
     if (input$whichM=="knn"){
 
-    res_name <- colnames(x)[ncol(x)]
-    formula <- as.formula(paste(res_name, ' ~ .'))
+
 
 
     treeGrid_knn = expand.grid(k = c(input$knn_min:input$knn_max))
@@ -117,8 +118,8 @@ server <- function(input, output) {
 
     if (input$whichM=="knn"){
 
-      res_name <- colnames(x)[ncol(x)]
-      formula <- as.formula(paste(res_name, ' ~ .'))
+
+      
 
 
       treeGrid_knn = expand.grid(k = c(input$knn_min:input$knn_max))
