@@ -11,7 +11,7 @@
 #' @import caret
 #' @import tidyr
 
-comparison <- function(list){
+comparison <- function(x){
   library(assertthat)
   library(caret)
   library(tidyr)
@@ -23,34 +23,17 @@ comparison <- function(list){
   #list of 4 confusion matrix comes from prediction phase
   #list2<-list(KKN_con, NB_con, DT_con, gbm_con)
   
-  KKN_conf<-list.conf.matrix[1]%>%flatten()
-  NB_conf<-list.conf.matrix[2]%>%flatten()
-  DT_conf<-list.conf.matrix[3]%>%flatten()
-  gbm_conf<-list.conf.matrix[4]%>%flatten()
-  
-
   accuracy_f=function(x){(x$table[1]+x$table[2,2])/(x$table[1]+x$table[1,2]+x$table[2,1]+x$table[2,2])}
-  precision_f=function(x){(i$table[1])/(i$table[1]+i$table[1,2])}
-  recall_f=function(x){(i$table[1])/(i$table[1]+i$table[2,1])}
-  f1score= function(x){2 * ((i$table[1])/(i$table[1]+i$table[1,2]))*((i$table[1])/(i$table[1]+i$table[2,1]))   / (((i$table[1])/(i$table[1]+i$table[1,2])) +  (i$table[1])/(i$table[1]+i$table[2,1]))}
-  knn_acc<-accuracy_f(KKN_conf)
-  NB_acc<-accuracy_f(NB_conf)
-  DT_acc<-accuracy_f(DT_conf)
-  gbm_acc<-accuracy_f(gbm_conf)
-  
-  knn_pre<-precision_f(KKN_conf)
-  NB_pre<-precision_f(NB_conf)
-  DT_pre<-precision_f(DT_conf)
-  gbm_pre<-precision_f(gbm_conf)
-  
-  knn_recall<-recall_f(KKN_conf)
-  NB_recall<-recall_f(NB_conf)
-  DT_recall<-recall_f(DT_conf)
-  gbm_recall<-recall_f(gbm_conf)
-  
-  knn_f1<-f1score(KKN_conf)
-  NB_f1<-f1score(NB_conf)
-  DT_f1<-f1score(DT_conf)
-  gbm_f1<-f1score(gbm_conf)
+  precision_f=function(x){(x$table[1])/(x$table[1]+x$table[1,2])}
+  recall_f=function(x){(x$table[1])/(x$table[1]+x$table[2,1])}
+  f1score= function(x){2 * ((x$table[1])/(x$table[1]+i$table[1,2]))*((x$table[1])/(x$table[1]+x$table[2,1]))   / (((x$table[1])/(x$table[1]+x$table[1,2])) +  (x$table[1])/(x$table[1]+x$table[2,1]))}
 
+  
+  df <- data.frame(matrix(list.conf.matrix, nrow=length(list.conf.matrix), byrow=T)) 
+  names(df)<-"conf"
+  
+  list.conf.matrix1<-df%>%mutate(accuracy=purrr::map(.x=conf,.f=accuracy_f),
+                                               precision=purrr::map(.x=conf,.f=precision_f),
+                                               recall=purrr::map(.x=conf,.f=recall_f),
+                                               f1score=purrr::map(.x=conf,.f=f1score))
 }
