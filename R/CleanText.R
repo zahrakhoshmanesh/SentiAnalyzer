@@ -11,9 +11,9 @@
 #' @import assertthat
 #' @import testthat
 #' @examples
-#' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)
-#' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
-#' CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)
+#' CleanText('./data/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)
+#' CleanText('./data/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
+#' CleanText('./data/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)
 CleanText <- function(source_dataset,dtm_method,reductionrate){
 
   #assertthat(not_empty(source_dataset), noNA(source_dataset),not_empty(dtm_method),not_empty(reductionrate))
@@ -57,7 +57,7 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
   #assertthat(not_empty(dataset), noNA(dataset),is.data.frame(dataset))
   return(dataset)
 }
-#df<-CleanText('./inst/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)
+#df<-CleanText('./data/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)
 #dim(df)
 
 

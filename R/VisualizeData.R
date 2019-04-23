@@ -7,7 +7,7 @@
 #' @export
 #' @import tidyverse
 #' @examples
-#' VisualizeData('./inst/Restaurant_Reviews.tsv')
+#' VisualizeData('./data/Restaurant_Reviews.tsv')
 
 
 VisualizeData<-function(dataset){
@@ -31,8 +31,7 @@ VisualizeData<-function(dataset){
   tidy_text <- tidy_text %>%
     anti_join(stop_words)
 
-  tidy_text  %>%
-    count(word, sort = TRUE)
+
 
 
  wordfreqplot = tidy_text %>%

@@ -5,7 +5,7 @@
 SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which includes natural language processing (NLP) of consumer sentiments. The dataset that SentiAnalyzer can work with for now is short text and a binary quantification, e.g. whether consumer hits the like button. The NLP of the sentiment is analyzed through the options of algorithms to compile the words and the machinge learning training model of choice.  
 
 ## Installation
-`install.packages("SentiAnalyzer")
+`install.packages("SentiAnalyzer")`
 
 ## Usage
 Three steps of processing your review dataset: 
