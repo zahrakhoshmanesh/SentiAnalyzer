@@ -23,42 +23,16 @@ BuildPrediction <- function(x) {
   library(purrr)
 
   list <- BuildTraining(x)
-  x <- list[1]
-  x<-map_df(x, ~.x)
-
-  ###############gbm####################################
-  #prediction of gbm
-  prediction_gbmFit2 = predict(list[[2]], x)
-  #confusion matrix gbm
-  gbm_con <- confusionMatrix(prediction_gbmFit2, x[, ncol(x)])
-
-  #############random forest############
-  #predict
-  prediction_dec_parameterset = predict(list[[5]], x)
-  #confusion matrix
-  DT_con <- confusionMatrix(prediction_dec_parameterset, x[, ncol(x)])
-  #DT_con
-
-
-
-  ##########nb#############3
-  #prediction in nb
-  prediction_naive_parameterset = predict(list[[4]], x)
-  #confusion matrix
-  NB_con <-
-    confusionMatrix(prediction_naive_parameterset, x[, ncol(x)])
-  #NB_con
-
-  #########knn##########3
-  #prediction
-  prediction_knn_parameterset = predict(list[[3]], x)
-  #confusion matrix
-  KKN_con <- confusionMatrix(prediction_knn_parameterset, x[, ncol(x)])
-
-  #KKN_con
-
-  list2<-list(KKN_con, NB_con, DT_con, gbm_con)
-
-  return(list2)
+  
+  xx <- list[1]%>%map_df(~.x)
+  list<-list[-1]
+  
+  df <- data.frame(matrix(list, nrow=length(list), byrow=T)) 
+  names(df)<-"method"
+  
+  t<-df%>%mutate( prediction=purrr::map(.x=method,.f=function(d){predict(d,xx)}) )
+  t<-t%>%mutate(conf=purrr::map(.x=prediction,.f=function(d){confusionMatrix(d,xx[, ncol(xx)])}))
+  t<-t[3]
+  return(t)
 
 }

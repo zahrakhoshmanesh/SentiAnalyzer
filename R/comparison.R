@@ -20,22 +20,25 @@ comparison <- function(x){
   library(RWeka)
   library(eply)
 
-  list.conf.matrix<-BuildPrediction(x)
-  #list of 4 confusion matrix comes from prediction phase
-  #list2<-list(KKN_con, NB_con, DT_con, gbm_con)
+  
+  df<-BuildPrediction(x)
+
   
   accuracy_f=function(x){(x$table[1]+x$table[2,2])/(x$table[1]+x$table[1,2]+x$table[2,1]+x$table[2,2])}
   precision_f=function(x){(x$table[1])/(x$table[1]+x$table[1,2])}
   recall_f=function(x){(x$table[1])/(x$table[1]+x$table[2,1])}
-  f1score= function(x){2 * ((x$table[1])/(x$table[1]+i$table[1,2]))*((x$table[1])/(x$table[1]+x$table[2,1]))   / (((x$table[1])/(x$table[1]+x$table[1,2])) +  (x$table[1])/(x$table[1]+x$table[2,1]))}
+  f1score= function(x){2 * ((x$table[1])/(x$table[1]+x$table[1,2]))*((x$table[1])/(x$table[1]+x$table[2,1]))   / (((x$table[1])/(x$table[1]+x$table[1,2])) +  (x$table[1])/(x$table[1]+x$table[2,1]))}
+
 
   
-  df <- data.frame(matrix(list.conf.matrix, nrow=length(list.conf.matrix), byrow=T)) 
-  names(df)<-"conf"
-  
-  list.conf.matrix1<-df%>%mutate(accuracy=purrr::map(.x=conf,.f=accuracy_f),
+  df<-df%>%mutate(accuracy=purrr::map(.x=conf,.f=accuracy_f),
                                                precision=purrr::map(.x=conf,.f=precision_f),
                                                recall=purrr::map(.x=conf,.f=recall_f),
                                                f1score=purrr::map(.x=conf,.f=f1score))
+  return(df)
+
+  
+
+
 
 }
