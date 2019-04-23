@@ -7,7 +7,7 @@
 #' @export
 #' @import ROSE
 #' @examples
-#' BalanceData('./inst/Imbalance_Restaurant_Reviews.tsv')
+#' BalanceData('./data/Imbalance_Restaurant_Reviews.tsv')
 
 
 BalanceData<-function(dataset){
@@ -45,7 +45,7 @@ BalanceData<-function(dataset){
   }
 }
 
-#BalanceData('./inst/Imbalance_Restaurant_Reviews.tsv')
+#BalanceData('./data/Imbalance_Restaurant_Reviews.tsv')
 
 
 
