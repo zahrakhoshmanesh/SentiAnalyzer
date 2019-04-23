@@ -19,10 +19,10 @@ comparison <- function(x){
   library(tidyverse)
   library(RWeka)
   library(eply)
+
   
   df<-BuildPrediction(x)
-  #list of 4 confusion matrix comes from prediction phase
-  #list2<-list(KKN_con, NB_con, DT_con, gbm_con)
+
   
   accuracy_f=function(x){(x$table[1]+x$table[2,2])/(x$table[1]+x$table[1,2]+x$table[2,1]+x$table[2,2])}
   precision_f=function(x){(x$table[1])/(x$table[1]+x$table[1,2])}
@@ -38,5 +38,7 @@ comparison <- function(x){
   return(df)
 
   
-  
+
+
+
 }
