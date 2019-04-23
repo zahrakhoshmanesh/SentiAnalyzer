@@ -11,7 +11,7 @@
 #' @import caret
 #' @import tidyr
 
-comparison <- function(list) {
+comparison <- function(list){
   library(assertthat)
   library(caret)
   library(tidyr)
@@ -19,117 +19,38 @@ comparison <- function(list) {
   library(tidyverse)
   library(RWeka)
   library(eply)
-  #list of 4 confusion matrix comes from prediction phase
   list.conf.matrix<-BuildPrediction(x)
+  #list of 4 confusion matrix comes from prediction phase
   #list2<-list(KKN_con, NB_con, DT_con, gbm_con)
   
   KKN_conf<-list.conf.matrix[1]%>%flatten()
   NB_conf<-list.conf.matrix[2]%>%flatten()
   DT_conf<-list.conf.matrix[3]%>%flatten()
   gbm_conf<-list.conf.matrix[4]%>%flatten()
-  vector<-c(KKN_conf,NB_conf,DT_conf,gbm_conf)
-  names(vector)
-  #formula for accuracy,Precision,recall, and f-score_knn
-  for (i in (KKN_conf,NB_conf,DT_conf,gbm_conf){
-  
-    name <- paste("Accuracy_", i, sep = "")
-    name<-(i$table[1]+i$table[2,2])/(i$table[1]+i$table[1,2]+i$table[2,1]+i$table[2,2])
-    name <- paste("Precision_", i, sep = "")
-    name<-(i$table[1])/(i$table[1]+i$table[1,2])
-    name <- paste("Recall_", i, sep = "")
-    name<-(i$table[1])/(i$table[1]+i$table[2,1])
-    name <- paste("F1_Score_", i, sep = "")
-    name<-2 * ((i$table[1])/(i$table[1]+i$table[1,2]))*((i$table[1])/(i$table[1]+i$table[2,1]))   / (((i$table[1])/(i$table[1]+i$table[1,2])) +  (i$table[1])/(i$table[1]+i$table[2,1]))
-  }
-  
-  TP
-  
-  TP=KKN_conf$table[1]
-  
-  FP=KKN_conf$table[1,2]
-  
-  FN=KKN_conf$table[2,1]
-  
-  TN=KKN_conf$table[2,2]
   
 
-  Accuracy_knn = (TP + TN) / (TP + TN + FP + FN)
+  accuracy_f=function(x){(x$table[1]+x$table[2,2])/(x$table[1]+x$table[1,2]+x$table[2,1]+x$table[2,2])}
+  precision_f=function(x){(i$table[1])/(i$table[1]+i$table[1,2])}
+  recall_f=function(x){(i$table[1])/(i$table[1]+i$table[2,1])}
+  f1score= function(x){2 * ((i$table[1])/(i$table[1]+i$table[1,2]))*((i$table[1])/(i$table[1]+i$table[2,1]))   / (((i$table[1])/(i$table[1]+i$table[1,2])) +  (i$table[1])/(i$table[1]+i$table[2,1]))}
+  knn_acc<-accuracy_f(KKN_conf)
+  NB_acc<-accuracy_f(NB_conf)
+  DT_acc<-accuracy_f(DT_conf)
+  gbm_acc<-accuracy_f(gbm_conf)
   
-
-  Precision_knn = TP / (TP + FP)
+  knn_pre<-precision_f(KKN_conf)
+  NB_pre<-precision_f(NB_conf)
+  DT_pre<-precision_f(DT_conf)
+  gbm_pre<-precision_f(gbm_conf)
   
-
-  Recall_knn = TP / (TP + FN)
+  knn_recall<-recall_f(KKN_conf)
+  NB_recall<-recall_f(NB_conf)
+  DT_recall<-recall_f(DT_conf)
+  gbm_recall<-recall_f(gbm_conf)
   
-
-  F1_Score_knn = 2 * Precision_knn *  Recall_knn / (Precision_knn +  Recall_knn)
-  
-
-# gbm ---------------------------------------------------------------------
-
-  TP=gbm_conf$table[1]
-  
-  FP=gbm_conf$table[1,2]
-  
-  FN=gbm_conf$table[2,1]
-  
-  TN=gbm_conf$table[2,2]
-  
-  
-  Accuracy_gbm = (TP + TN) / (TP + TN + FP + FN)
-  
-  
-  Precision_gbm = TP / (TP + FP)
-  
-  
-  Recall_gbm = TP / (TP + FN)
-  
-  
-  F1_Score_gbm = 2 * Precision_gbm *  Recall_gbm / (Precision_gbm +  Recall_gbm)
-
-# nb ----------------------------------------------------------------------
-
-  TP=NB_conf$table[1]
-  
-  FP=NB_conf$table[1,2]
-  
-  FN=NB_conf$table[2,1]
-  
-  TN=NB_conf$table[2,2]
-  
-  
-  Accuracy_nb = (TP + TN) / (TP + TN + FP + FN)
-  
-  
-  Precision_nb = TP / (TP + FP)
-  
-  
-  Recall_nb = TP / (TP + FN)
-  
-  
-  F1_Score_nb = 2 * Precision_nb *  Recall_nb / (Precision_nb +  Recall_nb)
-
-# dt ----------------------------------------------------------------------
-  TP=DT_conf$table[1]
-  
-  FP=DT_conf$table[1,2]
-  
-  FN=DT_conf$table[2,1]
-  
-  TN=DT_conf$table[2,2]
-  
-  
-  Accuracy_DT = (TP + TN) / (TP + TN + FP + FN)
-  
-  
-  Precision_DT = TP / (TP + FP)
-  
-  
-  Recall_DT = TP / (TP + FN)
-  
-  
-  F1_Score_DT = 2 * Precision_DT *  Recall_DT / (Precision_DT +  Recall_DT)
-  
-  
+  knn_f1<-f1score(KKN_conf)
+  NB_f1<-f1score(NB_conf)
+  DT_f1<-f1score(DT_conf)
+  gbm_f1<-f1score(gbm_conf)
 
 }
