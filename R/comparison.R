@@ -32,9 +32,9 @@ comparison <- function(x){
 
   
   df<-df%>%mutate(accuracy=purrr::map(.x=conf,.f=accuracy_f),
-                                               precision=purrr::map(.x=cof,.f=precision_f),
-                                               recall=purrr::map(.x=cof,.f=recall_f),
-                                               f1score=purrr::map(.x=cof,.f=f1score))
+                                               precision=purrr::map(.x=conf,.f=precision_f),
+                                               recall=purrr::map(.x=conf,.f=recall_f),
+                                               f1score=purrr::map(.x=conf,.f=f1score))
   return(df)
 
   

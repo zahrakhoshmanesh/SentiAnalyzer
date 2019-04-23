@@ -27,7 +27,7 @@ BuildPrediction <- function(x) {
   xx <- list[1]%>%map_df(~.x)
   list<-list[-1]
   
-  df <- data.frame(matrix(list, nrow=length(list1), byrow=T)) 
+  df <- data.frame(matrix(list, nrow=length(list), byrow=T)) 
   names(df)<-"method"
   
   t<-df%>%mutate( prediction=purrr::map(.x=method,.f=function(d){predict(d,xx)}) )
