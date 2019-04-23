@@ -1,5 +1,4 @@
 library(shiny)
-
 library(tidytext)
 library(dplyr)
 library(ggplot2)
@@ -9,7 +8,7 @@ library(reshape2)
 #preparing data
 
 data(stop_words)
-source_datasets=read.delim('Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+source_datasets=read.delim('Restaurant_Reviews.tsv',quote='\t',stringsAsFactors = FALSE)
 text_df <- tibble(text = source_datasets[[1]])
 tidy_text <- text_df %>%
   unnest_tokens(word, text) %>%
@@ -40,30 +39,10 @@ ui <- fluidPage(
       
     )
   )
-
-
-nyc <- read.csv("nyc_emergency.csv", stringsAsFactors = FALSE)
-
-ui <- fluidPage(
-
-    titlePanel("NYC Crime Data"),
-
-	sidebarPanel(
-	    selectInput("incident_type", "Incident Type", choices = sort(unique(nyc$Incident.Type)), selected = "Fire-3rd Alarm")
-	),
-
-	mainPanel(
-	  tabsetPanel(
-	    tabPanel("Barchart", plotOutput("crime")),
-	    tabPanel("Scatterplot of Locations", plotOutput("location"))
-	  )
-	)
-
 )
 
 
 server <- function(input, output) {
-
   
   source_subset <- reactive({
     tidy_text %>%
@@ -80,10 +59,10 @@ server <- function(input, output) {
       coord_flip()+
       ggtitle(paste("highest ranked term filtered by frequency of term >", input$freq, "In restaurant Reviews"))
     
-
+    
   })
   
-
+  
   output$cloud <- renderPlot({
     
     wordcloadplot = tidy_text %>%
@@ -103,32 +82,11 @@ server <- function(input, output) {
       acast(word ~ sentiment, value.var = "n", fill = 0) %>%
       comparison.cloud(colors = c("gray20", "gray80"),
                        max.words = input$freq)
- 
+    
     
     
   })
   
-
-
-  nyc_subset <- reactive({
-    nyc %>%
-      filter(Incident.Type == input$incident_type)
-  })
-
-  output$crime <- renderPlot({
-    ggplot(data = nyc_subset(), aes(x = Borough, fill = Borough)) +
-      geom_bar(stat = "count") +
-      theme_bw() +
-      ggtitle(paste("Number of", input$incident_type, "Reports by Borough"))
-  })
-
-  output$location <- renderPlot({
-    ggplot(data = nyc_subset(), aes(x = Longitude, y = Latitude)) +
-      geom_point(aes(colour = Borough)) +
-      theme_bw() +
-      ggtitle("Locations of incidents")
-  })
-
 }
 
 shinyApp(ui, server)
