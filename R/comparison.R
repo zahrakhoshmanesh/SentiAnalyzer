@@ -19,6 +19,7 @@ comparison <- function(x){
   library(tidyverse)
   library(RWeka)
   library(eply)
+
   list.conf.matrix<-BuildPrediction(x)
   #list of 4 confusion matrix comes from prediction phase
   #list2<-list(KKN_con, NB_con, DT_con, gbm_con)
@@ -36,4 +37,5 @@ comparison <- function(x){
                                                precision=purrr::map(.x=conf,.f=precision_f),
                                                recall=purrr::map(.x=conf,.f=recall_f),
                                                f1score=purrr::map(.x=conf,.f=f1score))
+
 }
