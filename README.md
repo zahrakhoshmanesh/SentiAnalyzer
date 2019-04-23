@@ -1,4 +1,3 @@
-
 # SentiAnalyzer 
 ### Sentiment analysis for consumer review
 

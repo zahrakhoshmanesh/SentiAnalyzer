@@ -16,7 +16,7 @@ some diagram and insight of data
 Visualize dataset and get some insight of data.
 }
 \examples{
-VisualizeData('./inst/Restaurant_Reviews.tsv')
+VisualizeData('./data/Restaurant_Reviews.tsv')
 }
 \author{
 Zahra Khoshmanesh

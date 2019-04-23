@@ -8,7 +8,7 @@ library(reshape2)
 #preparing data
 
 data(stop_words)
-source_datasets=read.delim('Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+source_datasets=read.delim('Restaurant_Reviews.tsv',quote='\t',stringsAsFactors = FALSE)
 text_df <- tibble(text = source_datasets[[1]])
 tidy_text <- text_df %>%
   unnest_tokens(word, text) %>%
@@ -59,10 +59,10 @@ server <- function(input, output) {
       coord_flip()+
       ggtitle(paste("highest ranked term filtered by frequency of term >", input$freq, "In restaurant Reviews"))
     
-
+    
   })
   
-
+  
   output$cloud <- renderPlot({
     
     wordcloadplot = tidy_text %>%
@@ -82,7 +82,7 @@ server <- function(input, output) {
       acast(word ~ sentiment, value.var = "n", fill = 0) %>%
       comparison.cloud(colors = c("gray20", "gray80"),
                        max.words = input$freq)
- 
+    
     
     
   })
