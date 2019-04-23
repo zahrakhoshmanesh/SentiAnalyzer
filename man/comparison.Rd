@@ -4,7 +4,7 @@
 \alias{comparison}
 \title{visualize performance of the algorithm}
 \usage{
-comparison(list)
+comparison(x)
 }
 \arguments{
 \item{x}{input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance}

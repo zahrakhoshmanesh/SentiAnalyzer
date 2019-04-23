@@ -1,22 +1,13 @@
-Package:SentiAnalyzer
+Package: SentiAnalyzer
 Title: Sentiment Analysis of Reviews
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "Zahra",
-           family = "Khoshmanesh",
-           role = c("aut", "cre"),
-           email = "first.last@example.com")
-    person(given = "Atousa",
-           family = "Zarindast",
-           role = c("aut", "cre"),
-           email = "first.last@example.com")
-    person(given = "Joey",
-           family = "Budi",
-           role = c("aut", "cre"),
-           email = "first.last@example.com")
-           
+Authors@R:c(
+    person("Zahra", "Khoshmanesh", email = "zkh@iastate.edu", role = c("aut", "cre")),
+    person("Atousa", "Zarindast", email = "atousa@iastate.edu", role = "aut"),
+    person("Joshua", "budi", email = "joshua@iastate.edu", role = "aut"))  
 Description: What the package does (one paragraph).
 License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
+
