@@ -1,7 +1,7 @@
 #' Train Machine learning algorithms and give trained models
 #'
 #' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
-#' @return traned models
+#' @return trained models
 #' @author Atousa Zarindast
 #' @export
 #' @import tidyverse
@@ -10,6 +10,8 @@
 #' @import testthat
 #' @import caret
 #' @import tidyr
+#' @example
+#'  BuildTraining('./data/testing.csv')
 
 BuildTraining <- function(x) {
   library(assertthat)
