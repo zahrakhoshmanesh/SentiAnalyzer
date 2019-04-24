@@ -11,8 +11,10 @@
 #' @import testthat
 #' @import caret
 #' @import tidyr
-#' @example
-#'  BuildPrediction('./data/testing.csv')
+#' @examples 
+#' library(SentiAnalyzer)
+#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+#' my_training_data <- BuildPrediction(csv_data)
 
 BuildPrediction <- function(x) {
   # library(assertthat)

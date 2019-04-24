@@ -16,13 +16,7 @@
 #' my_training_data <- BuildTraining(csv_data)
 
 BuildTraining <- function(x) {
-  library(assertthat)
-  library(caret)
-  library(tidyr)
-  library(testthat)
-  library(tidyverse)
-  library(RWeka)
-  library(eply)
+
   assert_that(not_empty(x), noNA(x), is.data.frame(x))
   expect_equal(unique(sapply(x[, -ncol(x)], is.numeric)), TRUE)
 
