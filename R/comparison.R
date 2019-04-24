@@ -10,17 +10,12 @@
 #' @import testthat
 #' @import caret
 #' @import tidyr
-#' @example
-#' comparison('./data/testing.csv')
-
+#' @examples
+#' library(SentiAnalyzer)
+#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+#' my_training_data <- BuildTraining(csv_data)
 comparison <- function(x){
-  library(assertthat)
-  library(caret)
-  library(tidyr)
-  library(testthat)
-  library(tidyverse)
-  library(RWeka)
-  library(eply)
+
 
   
   df<-BuildPrediction(x)
