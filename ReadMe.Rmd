@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Functions
 
-### 1- Habing Sence of Data 
+### 1- Having Sence of Data 
 
 In this function, user can have a quick view on data. The shiny version of this function fully implemented and can be use by user.
 

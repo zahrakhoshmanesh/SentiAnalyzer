@@ -1,0 +1,424 @@
+---
+title: "for documentation"
+author: "jbudi"
+date: "April 20, 2019"
+output: html_document
+---
+
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+a
+```
+
+### importing the dataset
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+source_datasets=read.delim('../inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+str(source_datasets$Liked)
+#Sys.setenv(JAVA_HOME="C:\\Program Files (x86)\\Java\\jdk1.8.0_201\\jre")
+
+```
+
+####dataset sample
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold'}
+head(source_datasets)
+```
+
+### tackling imbalanced data
+`BalanceData` function can be used to balance the called dataset. Using packages:`ROSE, balance the columns of the data. For oversampled data, used `ovun.sample' to balance over or under sampled data. Then check the balance of the columns
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+
+BalanceData<-function(x){
+#install.packages("ROSE")
+library(ROSE)
+data(hacide)
+df<-x
+
+#over sampling
+data_balanced_over <- ovun.sample(cls ~ ., data = hacide.train, method = "over",N = 1960)$data
+table(data_balanced_over$cls)
+
+data_balanced_under <- ovun.sample(cls ~ ., data = hacide.train, method = "under", N = 40, seed = 1)$data
+table(data_balanced_under$cls)
+
+data_balanced_both <- ovun.sample(cls ~ ., data = hacide.train, method = "both", p=0.5,N=1000, seed = 1)$data
+table(data_balanced_both$cls)
+
+data.rose <- ROSE(cls ~ ., data = hacide.train, seed = 1)$data
+table(data.rose$cls)
+
+#check table
+table(df$Liked)
+data_balanced_over <- ovun.sample(Liked ~ ., data = df, method = "over",N = 1000)$data
+table(data_balanced_over$Liked)
+
+data_balanced_under <- ovun.sample(Liked ~ ., data = df, method = "under", N = 500, seed = 1)$data
+table(data_balanced_under$Liked)
+
+data_balanced_both <- ovun.sample(Liked ~ ., data = df, method = "both", p=0.5,N=500, seed = 1)$data
+table(data_balanced_both$Liked)
+
+data.rose <- ROSE(Liked ~ ., data = df, seed = 1)$data
+table(data.rose$Liked)
+}
+
+
+```
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold' }
+
+```
+
+
+
+
+### Cleaning the texts
+packages used: `tm` and `SnowballC`
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold', echo=TRUE}
+#install.packages('tm')
+#install.packages('SnowballC')
+library(tm)
+corpus=VCorpus(VectorSource(source_datasets$Review))
+#convert all review to lower case
+corpus= tm_map(corpus,content_transformer(tolower))
+# remove numbers from reviews
+corpus=tm_map(corpus,removeNumbers)
+# remove punctuations from reviews
+corpus=tm_map(corpus,removePunctuation)
+# remove Stop words from reviews
+corpus=tm_map(corpus,removeWords,stopwords())
+# Stemming
+corpus=tm_map(corpus,stemDocument)
+# remove extra space that created in cleaning stage when for example number remove
+corpus=tm_map(corpus,stripWhitespace)
+
+corpus$content[[1]][[1]]
+corpus$content[[2]][[1]]
+corpus$content[[3]][[1]]
+corpus$content[[4]][[1]]
+corpus$content[[5]][[1]]
+corpus$content[[61]][[1]]
+
+```
+```
+
+## Creating the bag of words model
+creating document term matrix of words in reviews
+`DocumentTermMatrix` and `TermDocumentMatrix`
+using n gram, Bigram
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+
+dtm = DocumentTermMatrix(corpus)
+# reduce dimension of sparse matrix with considering 99 percent of most frequent
+dtm = removeSparseTerms(dtm,0.99)
+dtm
+#plot(dtm, terms = findFreqTerms(tdm, lowfreq = 6)[1:25], corThreshold = 0.5)
+
+
+  BigramTokenizer <-  function(x)  unlist(lapply(ngrams(words(x), 2), paste, collapse = " "), use.names = FALSE)
+
+  tdm <- TermDocumentMatrix(corpus, control = list(tokenize = BigramTokenizer))
+  tdm
+  #inspect(removeSparseTerms(tdm[, 1:10], 0.99))
+  # convert matrix of independent variables to data frame
+dataset = as.data.frame(as.matrix(dtm))
+dim(dataset)
+```
+at this point 
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold'}
+dim(dataset)
+names(dataset)[1:50]
+dataset[1:30]
+```
+
+
+
+### Building  classification
+
+####3 classification are popular for text:
+1- decision tree
+2- naive bayes
+3- random forest
+
+## preparing the dataset and divide dataset to train and test
+using package `caTools`
+split the training and the test set to 0.8:0.2 split ratio, 0.8 of the dataset is used to train the model and 0.2 part is the predicted using the model
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+# convert matrix of independent variables to data frame
+dataset = as.data.frame(as.matrix(dtm))
+
+#dataset$targetclass = source_datasets[-1]
+str(source_datasets[[-1]])
+
+#dataset$Liked =  source_datasets$Liked
+
+# encode the target feature as factor
+dataset$target = factor(source_datasets[[-1]],level=c(0,1))
+str(dataset$target)
+
+# split dataset to training and test set
+#install.packages('caTools')
+library(caTools)
+set.seed(123)
+split=sample.split(dataset$target, SplitRatio = 0.8)
+training_set=subset(dataset,split==TRUE)
+test_set=subset(dataset,split==FALSE)
+
+```
+
+
+
+## visualization
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+#wsTDM <- Data(TermDocMatrix(dtm))
+#wsHClust <- hclust(dist(wsTDM), method = "ward")
+```
+
+
+### classifier : Random Forest
+Now, the split dataset have the 3 options iof the algorithm that the user can pick do NLP on the dataset from 3 ML algorithms. 
+First using `randomForest` package
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+# fitting random forest classification to the training set
+#install.packages('randomForest')
+library(randomForest)
+dimention<-dim(dataset)
+numdim<-dimention[2]
+numdim
+
+classifier = randomForest(x=training_set[-1*numdim],
+                          y=training_set$target,
+                          ntree=10
+                          )
+#predicting the test set result
+y_pred = predict(classifier,newdata=test_set[-1*numdim])
+
+#making the confusion matrix
+cm_randomforest=table(test_set[,numdim],y_pred)
+#cm_randomforest
+#str(cm_randomforest)
+TP=cm_randomforest[1,1]
+TP
+FP=cm_randomforest[1,2]
+FP
+FN=cm_randomforest[2,1]
+FN
+TN=cm_randomforest[2,2]
+TN
+
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+Accuracy
+
+Precision = TP / (TP + FP)
+Precision
+
+Recall = TP / (TP + FN)
+Recall
+
+F1_Score = 2 * Precision * Recall / (Precision + Recall)
+F1_Score
+
+
+```
+
+
+## Naive Bayes classifier
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+# Naive Bayes
+
+#install.packages('e1071')
+library(e1071)
+classifier = naiveBayes(x = training_set[-692],
+                        y = training_set$target)
+
+# Predicting the Test set results
+y_pred = predict(classifier, newdata = test_set[-692])
+
+# Making the Confusion Matrix
+cm_naivebayes = table(test_set[, 692], y_pred)
+cm_naivebayes
+TP=cm_naivebayes[1,1]
+TP
+FP=cm_naivebayes[1,2]
+FP
+FN=cm_naivebayes[2,1]
+FN
+TN=cm_naivebayes[2,2]
+TN
+
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+Accuracy
+
+Precision = TP / (TP + FP)
+Precision
+
+Recall = TP / (TP + FN)
+Recall
+
+F1_Score = 2 * Precision * Recall / (Precision + Recall)
+F1_Score
+
+```
+
+## Decision Tree Classifier
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+# Decision Tree Classification
+
+
+# Splitting the dataset into the Training set and Test set
+#install.packages('caTools')
+library(caTools)
+set.seed(123)
+
+# Fitting Decision Tree Classification to the Training set
+#install.packages('rpart')
+library(rpart)
+classifier = rpart(formula = Liked ~ .,
+                   data = training_set)
+
+# Predicting the Test set results
+y_pred = predict(classifier, newdata = test_set[-692], type = 'class')
+
+# Making the Confusion Matrix
+cm_decisiontree = table(test_set[, 692], y_pred)
+
+cm_decisiontree
+
+TP=cm_decisiontree[1,1]
+TP
+FP=cm_decisiontree[1,2]
+FP
+FN=cm_decisiontree[2,1]
+FN
+TN=cm_decisiontree[2,2]
+TN
+
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+Accuracy
+
+Precision = TP / (TP + FP)
+Precision
+
+Recall = TP / (TP + FN)
+Recall
+
+F1_Score = 2 * Precision * Recall / (Precision + Recall)
+F1_Score
+
+
+
+```
+
+
+## Visualization
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+
+#' Visualize dataset and get some insight of data.
+#'
+#' @param x dataset.
+#' @return some diagram and insight of data
+#' @author Zahra Khoshmanesh
+#' @export
+#' @import tidyverse
+#' @examples
+#' VisualizeData('./inst/Restaurant_Reviews.tsv')
+
+
+VisualizeData<-function(dataset){
+
+  library(tidyverse)
+  library(tm)
+  library(qdap)
+
+  #source_datasets=read.delim(dataset,quote='',stringsAsFactors = FALSE)
+  source_datasets=read.delim('./inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+
+  #check the number of two class label
+  check_class <-table(source_datasets[[2]])
+  class_label<-names(source_datasets)[2]
+  class_text<-names(source_datasets)[1]
+  if (check_class[1]!=check_class[2]){
+
+    print("dataset is imbalance, balance it with calling BalanceData ")
+
+  }  else {
+    print("dataset is balanced dataset and no need to balance it")
+  }
+
+  corpus=VCorpus(VectorSource(source_datasets[[1]]))
+  #convert all review to lower case
+  corpus= tm_map(corpus,content_transformer(tolower))
+  # remove numbers from reviews
+  corpus=tm_map(corpus,removeNumbers)
+  # remove punctuations from reviews
+  corpus=tm_map(corpus,removePunctuation)
+  # remove Stop words from reviews
+  corpus=tm_map(corpus,removeWords,stopwords())
+  # Stemming
+  corpus=tm_map(corpus,stemDocument)
+  # remove extra space that created in cleaning stage when for example number remove
+  corpus=tm_map(corpus,stripWhitespace)
+  myTDM <- TermDocumentMatrix(corpus)
+  findFreqTerms(myTDM,lowfreq = 20, highfreq = Inf)
+
+
+
+  a <- tolower(source_datasets[[1]])
+  a <- removePunctuation(a)
+  a <- removeNumbers(a)
+  a <-rm_stopwords(a, tm::stopwords("english"))
+
+
+  freq_term<-freq_terms(a)
+  ## S3 method for class 'freq_terms'
+  plot(freq_term, plot = TRUE)
+  
+  library(tidytext)
+  library(dplyr)
+  text_df <- tibble(text = source_datasets[[1]])
+  
+   tidy_text <- text_df %>%
+    unnest_tokens(word, text)
+  
+  data(stop_words)
+  tidy_text <- tidy_text %>%
+    anti_join(stop_words)
+
+  tidy_text  %>%
+    count(word, sort = TRUE) 
+  
+  library(ggplot2)
+  tidy_text %>%
+    count(word, sort = TRUE) %>%
+    filter(n > 10) %>%
+    mutate(word = reorder(word, n)) %>%
+    ggplot(aes(word, n)) +
+    geom_col() +
+    xlab(NULL) +
+    coord_flip()
+}
+
+
+
+
+
+
+```
+
+
+
+
+
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold'}
+a
+```
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+a
+```
