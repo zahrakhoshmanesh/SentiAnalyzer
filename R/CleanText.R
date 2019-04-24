@@ -9,7 +9,6 @@
 #' @export
 #' @import tm
 #' @import assertthat
-#' @import testthat
 #' @examples
 #' CleanText('./data/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)
 #' CleanText('./data/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
@@ -18,10 +17,10 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
 
   #assertthat(not_empty(source_dataset), noNA(source_dataset),not_empty(dtm_method),not_empty(reductionrate))
 
-  library(tm)
-  library(rJava)
-  library(RWeka)
-  library(matlib)
+  # library(tm)
+  # library(rJava)
+  # library(RWeka)
+  # library(matlib)
   source_datasets=read.delim(source_dataset,quote='',stringsAsFactors = FALSE)
   corpus=VCorpus(VectorSource(source_datasets[[1]]))
   #convert all review to lower case

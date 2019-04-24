@@ -7,7 +7,7 @@ context("test-comparison")
 test_that("comparison work as expected", {
   
   
-  valid_path <- system.file("data", "testing.csv", package = "SentiAnalyzer")
+  valid_path <- system.file("data", "testing1.csv", package = "SentiAnalyzer")
   
   c<-read.csv(valid_path)
   #input is dataframe

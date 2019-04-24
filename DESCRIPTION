@@ -13,3 +13,10 @@ RoxygenNote: 6.1.1
 Suggests: 
     testthat (>= 2.1.0),
     covr
+Imports:
+    assertthat,
+    caret,
+    tidyr,
+    tm,
+    purrr,
+    dplyr
