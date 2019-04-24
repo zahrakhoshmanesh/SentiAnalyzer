@@ -6,8 +6,10 @@
 #' @author Zahra Khoshmanesh
 #' @export
 #' @import ROSE
+#' @import assertthat
+#' @import testthat
 #' @examples
-#' BalanceData('./data/Imbalance_Restaurant_Reviews.tsv')
+#' BalanceData(system.file("data", "Imbalance_Restaurant_Reviews.tsv", package = "SentiAnalyzer"))
 
 
 BalanceData<-function(dataset){
@@ -16,10 +18,7 @@ BalanceData<-function(dataset){
 
   #read  datasets :put two dataset, 1 balance and 1 imbalanced for testing purpose
   source_datasets=read.delim(dataset,quote='',stringsAsFactors = FALSE)
-  #source_datasets=read.delim('./inst/Imbalance_Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
-  
-  assert_that(not_empty(dataset), noNA(dataset), is.data.frame(dataset))
-  expect_equal(unique(sapply(dataset[, -ncol(x)], is.numeric)), TRUE)
+  #source_datasets=read.delim('./data/Imbalance_Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
 
   #check the number of two class label
   check_class <-table(source_datasets[[-1]])
@@ -48,7 +47,7 @@ BalanceData<-function(dataset){
   }
 }
 
-#BalanceData('./data/Imbalance_Restaurant_Reviews.tsv')
+#BalanceData(system.file("data", "Imbalance_Restaurant_Reviews.tsv", package = "SentiAnalyzer"))
 
 
 
