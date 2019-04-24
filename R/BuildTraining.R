@@ -10,8 +10,10 @@
 #' @import testthat
 #' @import caret
 #' @import tidyr
-#' @example
-#'  BuildTraining('./data/testing.csv')
+#' @examples
+#' library(SentiAnalyzer)
+#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+#' my_training_data <- BuildTraining(csv_data)
 
 BuildTraining <- function(x) {
   library(assertthat)
