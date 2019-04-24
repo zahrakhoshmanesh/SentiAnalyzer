@@ -40,7 +40,7 @@ BalanceData<-function(dataset){
   write.table(data.rose, file='./data/out.tsv', quote=FALSE, sep='\t', col.names = NA)
 
   if (file.access('./data/out.tsv', mode = 0)==0){
-    print("balancing dataset is done! and new balanced dataset saved in inst folder under name out.tsv ")
+    print("balancing dataset is done! and new balanced dataset saved in data folder under name out.tsv ")
 
   }
 }
