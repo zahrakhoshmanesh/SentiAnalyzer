@@ -10,6 +10,8 @@
 #' @import testthat
 #' @import caret
 #' @import tidyr
+#' @example
+#' comparison('./data/testing.csv')
 
 comparison <- function(x){
   library(assertthat)

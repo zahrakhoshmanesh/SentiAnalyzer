@@ -11,6 +11,8 @@
 #' @import testthat
 #' @import caret
 #' @import tidyr
+#' @example
+#'  BuildPrediction('./data/testing.csv')
 
 BuildPrediction <- function(x) {
   library(assertthat)
