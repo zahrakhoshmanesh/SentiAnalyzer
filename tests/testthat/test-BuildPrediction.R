@@ -6,7 +6,7 @@ context("test-BuildPrediction")
 # - function should return a list
 test_that("BuildPrediction work as expected", {
   
-  valid_path <- system.file("data", "testing.csv", package = "SentiAnalyzer")
+  valid_path <- system.file("data", "testing1.csv", package = "SentiAnalyzer")
   c<-read.csv(valid_path)
   #input is dataframe
   expect_s3_class(c, "data.frame")

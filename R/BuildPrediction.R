@@ -15,25 +15,25 @@
 #'  BuildPrediction('./data/testing.csv')
 
 BuildPrediction <- function(x) {
-  library(assertthat)
-  library(caret)
-  library(tidyr)
-  library(testthat)
-  library(tidyverse)
-  library(RWeka)
-  library(eply)
-  library(purrr)
+  # library(assertthat)
+  # library(caret)
+  # library(tidyr)
+  # library(testthat)
+  # library(tidyverse)
+  # library(RWeka)
+  # library(eply)
+  # library(purrr)
 
   list <- BuildTraining(x)
   
-  xx <- list[1]%>%map_df(~.x)
+  xx <- list[1]%>%purrr::map_df(~.x)
   list<-list[-1]
   
   df <- data.frame(matrix(list, nrow=length(list), byrow=T)) 
   names(df)<-"method"
   
-  t<-df%>%mutate( prediction=purrr::map(.x=method,.f=function(d){predict(d,xx)}) )
-  t<-t%>%mutate(conf=purrr::map(.x=prediction,.f=function(d){confusionMatrix(d,xx[, ncol(xx)])}))
+  t<-df%>%dplyr::mutate( prediction=purrr::map(.x=method,.f=function(d){predict(d,xx)}) )
+  t<-t%>%dplyr::mutate(conf=purrr::map(.x=prediction,.f=function(d){confusionMatrix(d,xx[, ncol(xx)])}))
   t<-t[3]
   return(t)
 

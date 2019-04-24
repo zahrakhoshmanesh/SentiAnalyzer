@@ -10,7 +10,7 @@ BuildTraining(x)
 \item{x}{input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance}
 }
 \value{
-traned models
+trained models
 }
 \description{
 Train Machine learning algorithms and give trained models
