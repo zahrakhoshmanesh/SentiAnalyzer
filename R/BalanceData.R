@@ -17,6 +17,9 @@ BalanceData<-function(dataset){
   #read  datasets :put two dataset, 1 balance and 1 imbalanced for testing purpose
   source_datasets=read.delim(dataset,quote='',stringsAsFactors = FALSE)
   #source_datasets=read.delim('./inst/Imbalance_Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
+  
+  assert_that(not_empty(dataset), noNA(dataset), is.data.frame(dataset))
+  expect_equal(unique(sapply(dataset[, -ncol(x)], is.numeric)), TRUE)
 
   #check the number of two class label
   check_class <-table(source_datasets[[-1]])

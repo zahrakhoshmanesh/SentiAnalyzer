@@ -4,10 +4,12 @@
 \alias{VisualizeData}
 \title{Visualize dataset and get some insight of data.}
 \usage{
-VisualizeData(dataset)
+VisualizeData(dataset, termcount)
 }
 \arguments{
 \item{x}{dataset.}
+
+\item{y}{termcount:used for filtering the highest terms repeated in reviews usually > 10}
 }
 \value{
 some diagram and insight of data
@@ -16,7 +18,7 @@ some diagram and insight of data
 Visualize dataset and get some insight of data.
 }
 \examples{
-VisualizeData('./data/Restaurant_Reviews.tsv')
+VisualizeData('./data/Restaurant_Reviews.tsv',15)
 }
 \author{
 Zahra Khoshmanesh

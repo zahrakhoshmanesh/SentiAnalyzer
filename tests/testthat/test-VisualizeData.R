@@ -1,3 +1,6 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
+context("test-VisualizeData")
+
+test_that("test for function VisualizeData :Visualize the dataset and plot high term frequency", {
+  expect_error(VisualizeData())
+  expect_error(VisualizeData("m"))
 })

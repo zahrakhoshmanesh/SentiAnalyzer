@@ -2,15 +2,16 @@
 #' Visualize dataset and get some insight of data.
 #'
 #' @param x dataset.
+#' @param y termcount:used for filtering the highest terms repeated in reviews usually > 10
 #' @return some diagram and insight of data
 #' @author Zahra Khoshmanesh
 #' @export
 #' @import tidyverse
 #' @examples
-#' VisualizeData('./data/Restaurant_Reviews.tsv')
+#' VisualizeData('./data/Restaurant_Reviews.tsv',15)
 
 
-VisualizeData<-function(dataset){
+VisualizeData<-function(dataset,termcount){
 
   library(tidytext)
   library(dplyr)
@@ -36,7 +37,7 @@ VisualizeData<-function(dataset){
 
  wordfreqplot = tidy_text %>%
     count(word, sort = TRUE) %>%
-    filter(n > 10) %>%
+    filter(n > termcount) %>%
     mutate(word = reorder(word, n)) %>%
     ggplot(aes(word, n)) +
     geom_col() +
