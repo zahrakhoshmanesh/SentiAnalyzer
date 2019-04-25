@@ -7,7 +7,7 @@
 CleanText(source_dataset, dtm_method, reductionrate)
 }
 \arguments{
-\item{source_dataset}{A tsv file having two columns, review as text, label as binary.}
+\item{source_dataset}{A dataframe  having two columns, review as text, label as binary.}
 
 \item{reductionrate}{how many percent of term matrix you want to keep,usually 0.999 and not less than 0.99.}
 
@@ -21,10 +21,10 @@ Clean text and build term matrix for bag of words,TF DFI and bi-gram.
 }
 \examples{
 library(SentiAnalyzer)
-dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
-CleanText(dataset,dtm_method=1,reductionrate=0.99)
-CleanText(dataset,dtm_method=2,reductionrate=0.99)
-CleanText(dataset,dtm_method=3,reductionrate=0.999)
+orignal_dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+CleanText(original_dataset,dtm_method=1,reductionrate=0.99)
+CleanText(original_dataset,dtm_method=2,reductionrate=0.99)
+CleanText(original_dataset,dtm_method=3,reductionrate=0.999)
 
 }
 \author{
