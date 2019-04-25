@@ -6,6 +6,8 @@
 #' @author Zahra Khoshmanesh
 #' @export
 #' @import ROSE
+#' @import usethis
+#' @import assertthat
 #' @import testthat
 #' @examples
 #' library(SentiAnalyzer)
