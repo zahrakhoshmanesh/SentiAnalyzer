@@ -7,7 +7,7 @@
 BalanceData(dataset)
 }
 \arguments{
-\item{x}{unbalanced dataset, a tsv format : tab delimeter, two column: first text and second binary class label.}
+\item{x}{unbalanced dataset, a dataframe : two column: first reviews and second binary class label: negative =0 and positive=1.}
 }
 \value{
 balanced dataset, save as out.tsv name in inst folder
@@ -17,7 +17,8 @@ Clean text and buil term matrix for bag of words model or TF DFI.
 }
 \examples{
 library(SentiAnalyzer)
-BalanceData(system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv"))
+imbalance_data<- read.delim(system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+BalanceData(imbalance_data)
 }
 \author{
 Zahra Khoshmanesh
