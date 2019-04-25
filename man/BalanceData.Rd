@@ -16,7 +16,8 @@ balanced dataset, save as out.tsv name in inst folder
 Clean text and buil term matrix for bag of words model or TF DFI.
 }
 \examples{
-BalanceData(system.file("data", "Imbalance_Restaurant_Reviews.tsv", package = "SentiAnalyzer"))
+library(SentiAnalyzer)
+BalanceData(system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv"))
 }
 \author{
 Zahra Khoshmanesh

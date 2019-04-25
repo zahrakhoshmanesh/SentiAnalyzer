@@ -20,9 +20,12 @@ dataframe "dataset" : The term matrix converted to dataframe plus target label.
 Clean text and build term matrix for bag of words,TF DFI and bi-gram.
 }
 \examples{
-CleanText('./data/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)
-CleanText('./data/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)
-CleanText('./data/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)
+library(SentiAnalyzer)
+dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+CleanText(dataset,dtm_method=1,reductionrate=0.99)
+CleanText(dataset,dtm_method=2,reductionrate=0.99)
+CleanText(dataset,dtm_method=3,reductionrate=0.999)
+
 }
 \author{
 Zahra Khoshmanesh
