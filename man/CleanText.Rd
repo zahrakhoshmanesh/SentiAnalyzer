@@ -25,7 +25,6 @@ orignal_dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Re
 CleanText(original_dataset,dtm_method=1,reductionrate=0.99)
 CleanText(original_dataset,dtm_method=2,reductionrate=0.99)
 CleanText(original_dataset,dtm_method=3,reductionrate=0.999)
-
 }
 \author{
 Zahra Khoshmanesh

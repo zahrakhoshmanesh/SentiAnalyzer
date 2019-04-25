@@ -22,4 +22,6 @@ Imports:
     dplyr,
     ROSE,
     testthat,
-    tidyverse
+    tidyverse,
+    SnowballC,
+    usethis

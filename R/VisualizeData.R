@@ -7,17 +7,25 @@
 #' @author Zahra Khoshmanesh
 #' @export
 #' @import tidyverse
+#' @import assertthat
+#' @import testthat
+#' @import tidytext
+#' @import dplyr
+#' @import ggplot2
+#' @import wordcloud
+#' @import reshape2
 #' @examples
-#' VisualizeData('./data/Restaurant_Reviews.tsv',15)
-
+#' library(SentiAnalyzer)
+#' orignal_dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+#' VisualizeData(orignal_dataset,15)
 
 VisualizeData<-function(dataset,termcount){
 
-  library(tidytext)
-  library(dplyr)
-  library(ggplot2)
-  library(wordcloud)
-  library(reshape2)
+  #library(tidytext)
+  #library(dplyr)
+  #library(ggplot2)
+  #library(wordcloud)
+  #library(reshape2)
 
   source_datasets=read.delim(dataset,quote='',stringsAsFactors = FALSE)
   #source_datasets=read.delim('./inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)

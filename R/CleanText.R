@@ -8,13 +8,16 @@
 #' @author Zahra Khoshmanesh
 #' @export
 #' @import tm
+#' @import SnowballC
+#' @import assertthat
+#' @import testthat
 #' @examples
 #' library(SentiAnalyzer)
 #' orignal_dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
 #' CleanText(original_dataset,dtm_method=1,reductionrate=0.99)
 #' CleanText(original_dataset,dtm_method=2,reductionrate=0.99)
 #' CleanText(original_dataset,dtm_method=3,reductionrate=0.999)
-#' 
+ 
 CleanText <- function(source_dataset,dtm_method,reductionrate){
 
   #assertthat(not_empty(source_dataset), noNA(source_dataset),not_empty(dtm_method),not_empty(reductionrate))
