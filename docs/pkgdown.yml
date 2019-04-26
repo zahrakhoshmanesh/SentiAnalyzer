@@ -1,28 +1,23 @@
 pandoc: 1.19.2.1
 pkgdown: 1.3.0
 pkgdown_sha: ~
-articles: []
+articles:
+  ReadMe: ReadMe.html
+  shiny: shiny.html
+  workflow: workflow.html
 
 navbar:
-  title: "Sentianalyzer"
+  title: "SentiAnalyzer"
   type: inverse
   left:
     - icon: fa-home fa-lg
       href: index.html
     - text: "Workflow"
-      href: vignettes/workflow.Rmd
+      href: articles/workflow.html
+    - text: "shiny"
+      href: articles/shiny.html
     - text: "Reference"
-      href: reference/index.html
-    - text: "Shiny"
-      menu:
-      - text: "1"
-      - href: vignettes/shiny.Rmd
-      - text: "2"
-      - href: vignettes/shiny.Rmd
-      - text: "3"
-      - href: vignettes/shiny.Rmd
-    
-    
+      href: "reference/index.html"
   right:
     - icon: fa-github
       href: https://github.com/zahrakhoshmanesh/SentiAnalyzer
