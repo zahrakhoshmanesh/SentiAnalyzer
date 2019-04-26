@@ -18,7 +18,9 @@ some diagram and insight of data
 Visualize dataset and get some insight of data.
 }
 \examples{
-VisualizeData('./data/Restaurant_Reviews.tsv',15)
+library(SentiAnalyzer)
+orignal_dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+VisualizeData(orignal_dataset,15)
 }
 \author{
 Zahra Khoshmanesh

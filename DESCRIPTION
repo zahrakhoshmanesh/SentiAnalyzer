@@ -12,7 +12,9 @@ LazyData: true
 RoxygenNote: 6.1.1
 Suggests: 
     testthat (>= 2.1.0),
-    covr
+    covr,
+    knitr,
+    rmarkdown
 Imports:
     assertthat,
     caret,
@@ -25,3 +27,4 @@ Imports:
     tidyverse,
     SnowballC,
     usethis
+VignetteBuilder: knitr

@@ -112,7 +112,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>unbalanced dataset, a tsv format : tab delimeter, two column: first text and second binary class label.</p></td>
+      <td><p>unbalanced dataset, a dataframe : two column: first reviews and second binary class label: negative =0 and positive=1.</p></td>
     </tr>
     </table>
     
@@ -122,7 +122,1819 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>BalanceData</span>(<span class='st'>'./data/Imbalance_Restaurant_Reviews.tsv'</span>)</div><div class='output co'>#&gt; <span class='message'>Loaded ROSE 0.0-3</span></div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file './data/Imbalance_Restaurant_Reviews.tsv': No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in file(file, "rt"): cannot open the connection</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>SentiAnalyzer</span>)
+<span class='no'>imbalance_data</span><span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.delim</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"SentiAnalyzer"</span>, <span class='st'>"extdata/Imbalance_Restaurant_Reviews.tsv"</span>),<span class='kw'>quote</span><span class='kw'>=</span><span class='st'>''</span>,<span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>BalanceData</span>(<span class='no'>imbalance_data</span>)</div><div class='output co'>#&gt; [1] "dataset is imbalance, balancing it in few seconds"
+#&gt; <span style='color: #00BB00;'>&lt;U+2714&gt;</span><span> Setting active project to </span><span style='color: #0000BB;'>'D:/R/SentiAnalyzer'</span><span>
+#&gt; </span><span style='color: #00BB00;'>&lt;U+2714&gt;</span><span> Saving </span><span style='color: #0000BB;'>'data.rose'</span><span> to </span><span style='color: #0000BB;'>'data/data.rose.rda'</span><span>
+#&gt; [1] "balancing dataset is done! and new balanced dataset saved in extdata folder under name out.tsv "</div><div class='output co'>#&gt;                                                                                                                                                    Review
+#&gt; 1                                                                                                                                          Won't go back.
+#&gt; 2                                                                                              -Drinks took close to 30 minutes to come out at one point.
+#&gt; 3                                                                                                                                    The service was meh.
+#&gt; 4                                                      We got the food and apparently they have never heard of salt and the batter on the fish was chewy.
+#&gt; 5                                                                                                                         I've never been treated so bad.
+#&gt; 6                   Coming here is like experiencing an underwhelming relationship where both parties can't wait for the other person to ask to break up.
+#&gt; 7     Hard to judge whether these sides were good because we were grossed out by the melted styrofoam and didn't want to eat it for fear of getting sick.
+#&gt; 8                                                                                                     "It was extremely ""crumby"" and pretty tasteless."
+#&gt; 9                                                                                                          "The service was terrible, food was mediocre."
+#&gt; 10                                                                                                                                         Mediocre food.
+#&gt; 11                                                                                                 The scallop dish is quite appalling for value as well.
+#&gt; 12                                                                                                     I was shocked because no signs indicate cash only.
+#&gt; 13                                                                                                             Overall I wasn't very impressed with Noca.
+#&gt; 14                                                                            We literally sat there for 20 minutes with no one asking to take our order.
+#&gt; 15                                                                                                             But I definitely would not eat here again.
+#&gt; 16                                Not a single employee came out to see if we were OK or even needed a water refill once they finally served us our food.
+#&gt; 17                                                                                                            very slow at seating even with reservation.
+#&gt; 18                                                                                     "I find wasting food to be despicable, but this just wasn't food."
+#&gt; 19  The problem I have is that they charge $11.99 for a sandwich that is no bigger than a Subway sub (which offers better and more amount of vegetables).
+#&gt; 20                                                                            A lady at the table next to us found a live green caterpillar In her salad.
+#&gt; 21                                                                                                                                         Service sucks.
+#&gt; 22                                                                                  "It was a bit too sweet, not really spicy enough, and lacked flavor."
+#&gt; 23      I seriously cannot believe that the owner has so many unexperienced employees that all are running around like chickens with their heads cut off.
+#&gt; 24                                                                                                                              Won't ever go here again.
+#&gt; 25                 "By this point, my friends and I had basically figured out this place was a joke and didn't mind making it publicly and loudly known."
+#&gt; 26                                                                                                        Eew... This location needs a complete overhaul.
+#&gt; 27                                                                                                                The selection of food was not the best.
+#&gt; 28                                                                                                                                       I was mortified.
+#&gt; 29                                                                     After all the rave reviews I couldn't wait to eat here......what a disappointment!
+#&gt; 30                                                                                        "For a self proclaimed coffee cafe, I was wildly disappointed."
+#&gt; 31                                                                                                   Please stay away from the shrimp stir fried noodles.
+#&gt; 32                                                                                                      Do yourself a favor and stay away from this dish.
+#&gt; 33                                                                                                       We could not believe how dirty the oysters were!
+#&gt; 34                                                                                                              It's NOT hard to make a decent hamburger.
+#&gt; 35                                                                                                                                   Terrible management.
+#&gt; 36                                                                             "The food is about on par with Denny's, which is to say, not good at all."
+#&gt; 37                                                                                               We sat another ten minutes and finally gave up and left.
+#&gt; 38                                      "Ordered a double cheeseburger &amp; got a single patty that was falling apart (picture uploaded) Yeah, still sucks."
+#&gt; 39                                          "Insults, profound deuchebaggery, and had to go outside for a smoke break while serving just to solidify it."
+#&gt; 40                                                                                            Not much seafood and like 5 strings of pasta at the bottom.
+#&gt; 41                                                                                                                             The manager was the worst.
+#&gt; 42                                                                                                           first time there and might just be the last.
+#&gt; 43   "This is was due to the fact that it took 20 minutes to be acknowledged, then another 35 minutes to get our food...and they kept forgetting things."
+#&gt; 44                                                                       "the food is not tasty at all, not to say its ""real traditional Hunan style""."
+#&gt; 45                                                         "To my disbelief, each dish qualified as the worst version of these foods I have ever tasted."
+#&gt; 46                                                                                                                          But then they came back cold.
+#&gt; 47                                                                                          After the disappointing dinner we went elsewhere for dessert.
+#&gt; 48                                                                                          "REAL sushi lovers, let's be honest - Yama is not that good."
+#&gt; 49                                                                                                                             The warm beer didn't help.
+#&gt; 50                                                                                                    "Friend's pasta -- also bad, he barely touched it."
+#&gt; 51                                                                                                                              Don't bother coming here.
+#&gt; 52                                                                                                                                          dont go here.
+#&gt; 53                                                                                                                 Just don't know why they were so slow.
+#&gt; 54                                                                                                                    Probably not in a hurry to go back.
+#&gt; 55                                           "For about 10 minutes, we we're waiting for her salad when we realized that it wasn't coming any time soon."
+#&gt; 56                                                                                 My salad had a bland vinegrette on the baby greens and hearts of Palm.
+#&gt; 57                                        The potatoes were like rubber and you could tell they had been made up ahead of time being kept under a warmer.
+#&gt; 58                                                                                                                                  Left very frustrated.
+#&gt; 59                                                                                                             Overall I wasn't very impressed with Noca.
+#&gt; 60                                                                  My husband and I ate lunch here and were very disappointed with the food and service.
+#&gt; 61                                                             "I mean really, how do you get so famous for your fish and chips when it's so terrible!?!"
+#&gt; 62                                              First - the bathrooms at this location were dirty- Seat covers were not replenished &amp; just plain yucky!!!
+#&gt; 63                                                                                                               "The service was not up to par, either."
+#&gt; 64                                                                                          I don't have to be an accountant to know I'm getting screwed!
+#&gt; 65                                                                                  "It was a bit too sweet, not really spicy enough, and lacked flavor."
+#&gt; 66                                                                                     I think food should have flavor and texture and both were lacking.
+#&gt; 67                                                                  "I do love sushi, but I found Kabuki to be over-priced, over-hip and under-services."
+#&gt; 68                                                                                                                               Appetite instantly gone.
+#&gt; 69                                                                                     I checked out this place a couple years ago and was not impressed.
+#&gt; 70                                                                                    "It was attached to a gas station, and that is rarely a good sign."
+#&gt; 71                                                                                                                                Food was below average.
+#&gt; 72                                                                                                                        I've never been treated so bad.
+#&gt; 73                                                                                                 The scallop dish is quite appalling for value as well.
+#&gt; 74                                                                                                                                    The Burrittos Blah!
+#&gt; 75                                                                                                   "Needless to say, we will never be back here again."
+#&gt; 76                                                                                                                                       I'm super pissd.
+#&gt; 77                           "No allergy warnings on the menu, and the waitress had absolutely no clue as to which meals did or did not contain peanuts."
+#&gt; 78                                                                                                              We waited for forty five minutes in vain.
+#&gt; 79                 "The burger had absolutely no flavor - the meat itself was totally bland, the burger was overcooked and there was no charcoal flavor."
+#&gt; 80                                                                                                               I can't tell you how disappointed I was.
+#&gt; 81                                                                                                        I don't think we'll be going back anytime soon.
+#&gt; 82                                           "For about 10 minutes, we we're waiting for her salad when we realized that it wasn't coming any time soon."
+#&gt; 83                                                                                                                       The desserts were a bit strange.
+#&gt; 84                                                                                                                My friend did not like his Bloody Mary.
+#&gt; 85                                                                                          I left with a stomach ache and felt sick the rest of the day.
+#&gt; 86               "Then, as if I hadn't wasted enough of my life there, they poured salt in the wound by drawing out the time it took to bring the check."
+#&gt; 87                                                                                                          I got home to see the driest damn wings ever!
+#&gt; 88                                                                                                                                I give it 2 thumbs down
+#&gt; 89                                                                                                              "I'd rather eat airline food, seriously."
+#&gt; 90                                            I work in the hospitality industry in Paradise Valley and have refrained from recommending Cibo any longer.
+#&gt; 91                                                                                               "It was either too cold, not enough flavor or just bad."
+#&gt; 92                                                                          We watched our waiter pay a lot more attention to other tables and ignore us.
+#&gt; 93                                                                                              this is the worst sushi i have ever eat besides Costco's.
+#&gt; 94                                                                                                            A FLY was in my apple juice.. A FLY!!!!!!!!
+#&gt; 95                                                                                          She ordered a toasted English muffin that came out untoasted.
+#&gt; 96                                                                                                                                    Soggy and not good.
+#&gt; 97                                           "I live in the neighborhood so I am disappointed I won't be back here, because it is a convenient location."
+#&gt; 98                    "We got sitting fairly fast, but, ended up waiting 40 minutes just to place our order, another 30 minutes before the food arrived."
+#&gt; 99                                                                                             "The chains, which I'm no fan of, beat this place easily."
+#&gt; 100                                                                                                                   "Strike 2, who wants to be rushed."
+#&gt; 101                                                                                                                  Overpriced for what you are getting.
+#&gt; 102                            "He was extremely rude and really, there are so many other restaurants I would love to dine at during a weekend in Vegas."
+#&gt; 103                                                                                                                                        Service sucks.
+#&gt; 104                                                                                                                         Waited and waited and waited.
+#&gt; 105                                                                                                                                       What a mistake.
+#&gt; 106                                                                     They brought a fresh batch of fries and I was thinking yay something warm but no!
+#&gt; 107                                                               "Main thing I didn't enjoy is that the crowd is of older crowd, around mid 30s and up."
+#&gt; 108                                                                              "Unfortunately, it only set us up for disapppointment with our entrees."
+#&gt; 109                                                                                                                            Boy was that sucker dry!!.
+#&gt; 110                                                                    "Never been to Hard Rock Casino before, WILL NEVER EVER STEP FORWARD IN IT AGAIN!"
+#&gt; 111                                                                                                    Overall I was not impressed and would not go back.
+#&gt; 112            I am far from a sushi connoisseur but I can definitely tell the difference between good food and bad food and this was certainly bad food.
+#&gt; 113                                                                                                                             I was VERY disappointed!!
+#&gt; 114                                                                                  "The meat was pretty dry, I had the sliced brisket and pulled pork."
+#&gt; 115                                                            When my mom and I got home she immediately got sick and she only had a few bites of salad.
+#&gt; 116                                                                                                                               I give it 2 thumbs down
+#&gt; 117                                          "I live in the neighborhood so I am disappointed I won't be back here, because it is a convenient location."
+#&gt; 118                                                                                                        Now I am getting angry and I want my damn pho.
+#&gt; 119                                                                                         After the disappointing dinner we went elsewhere for dessert.
+#&gt; 120                                                                                                   I've never been more insulted or felt disrespected.
+#&gt; 121                                                                                                "Needless to say, I won't be going back anytime soon."
+#&gt; 122                                                                  "The food sucked, which we expected but it sucked more than we could have imagined."
+#&gt; 123                                                                                 My fella got the huevos rancheros and they didn't look too appealing.
+#&gt; 124                                                                                            I hate those things as much as cheap quality black olives.
+#&gt; 125                                The potato chip order was sad... I could probably count how many chips were in that box and it was probably around 12.
+#&gt; 126                                                                                                                                The food was terrible.
+#&gt; 127                                         The server was very negligent of our needs and made us feel very unwelcome... I would not suggest this place!
+#&gt; 128                                                                                                Google mediocre and I imagine Smashburger will pop up.
+#&gt; 129                                   We waited for thirty minutes to be seated (although there were 8 vacant tables and we were the only folks waiting).
+#&gt; 130                                                                                                                      RUDE &amp; INCONSIDERATE MANAGEMENT.
+#&gt; 131                                             It sure does beat the nachos at the movies but I would expect a little bit more coming from a restaurant.
+#&gt; 132                                                                                                                                It was way over fried.
+#&gt; 133                                                                                                                        The service was a bit lacking.
+#&gt; 134                                                                               "Overall, I was very disappointed with the quality of food at Bouchon."
+#&gt; 135                                                                                                                                           Over rated.
+#&gt; 136                                                                                                                   Probably not in a hurry to go back.
+#&gt; 137                                                "Perhaps I caught them on an off night judging by the other reviews, but I'm not inspired to go back."
+#&gt; 138  "Overall, I don't think that I would take my parents to this place again because they made most of the similar complaints that I silently felt too."
+#&gt; 139                                                                                                                 I dressed up to be treated so rudely!
+#&gt; 140                                              "Anyways, The food was definitely not filling at all, and for the price you pay you should expect more."
+#&gt; 141                                                                                                       Eew... This location needs a complete overhaul.
+#&gt; 142                                                                                                                                        Won't go back.
+#&gt; 143                                                                                The chicken wings contained the driest chicken meat I have ever eaten.
+#&gt; 144                                                                                                                  We won't be going back anytime soon!
+#&gt; 145                                                                                                          the spaghetti is nothing special whatsoever.
+#&gt; 146                                                                          "However, my recent experience at this particular location was not so good."
+#&gt; 147                                                                 "I don't know what the big deal is about this place, but I won't be back ""ya'all""."
+#&gt; 148                                                                                                             It's too bad the food is so damn generic.
+#&gt; 149                                                                                                                     I will not be eating there again.
+#&gt; 150                                                                                                            Overall I wasn't very impressed with Noca.
+#&gt; 151                                                                                                                                  Con: spotty service.
+#&gt; 152                                                                                                                                 It was equally awful.
+#&gt; 153                                                                                                                 I dressed up to be treated so rudely!
+#&gt; 154                                                                                                                         This place deserves no stars.
+#&gt; 155                                                                                                                                    I was so insulted.
+#&gt; 156                                                                             Best of luck to the rude and non-customer service focused new management.
+#&gt; 157                                                                             The poor batter to meat ratio made the chicken tenders very unsatisfying.
+#&gt; 158                                                                                                                               The management is rude.
+#&gt; 159                                                                        She was quite disappointed although some blame needs to be placed at her door.
+#&gt; 160                                                "The building itself seems pretty neat, the bathroom is pretty trippy, but I wouldn't eat here again."
+#&gt; 161                                                                                                                 I dressed up to be treated so rudely!
+#&gt; 162                   "We got sitting fairly fast, but, ended up waiting 40 minutes just to place our order, another 30 minutes before the food arrived."
+#&gt; 163                                                                                           Del Taco is pretty nasty and should be avoided if possible.
+#&gt; 164                                                                                    "I find wasting food to be despicable, but this just wasn't food."
+#&gt; 165                                    I also decided not to send it back because our waitress looked like she was on the verge of having a heart attack.
+#&gt; 166                                                                                      "Your servers suck, wait, correction, our server Heimer sucked."
+#&gt; 167                                                                                                                                  Terrible management.
+#&gt; 168                                                                                       "(It wasn't busy either) Also, the building was FREEZING cold."
+#&gt; 169                                                                                                             Not tasty and the texture was just nasty.
+#&gt; 170                                                                                                           I wasn't really impressed with Strip Steak.
+#&gt; 171                                                                                                                                    I was so insulted.
+#&gt; 172                                                                                                            It wasn't busy at all and now we know why.
+#&gt; 173                                                                                                                         Waited and waited and waited.
+#&gt; 174                                                                                                                       Food quality has been horrible.
+#&gt; 175                                                                                                                                                #NAME?
+#&gt; 176                                                                                                                              What a mistake that was!
+#&gt; 177                                                                       Ordered an appetizer and took 40 minutes and then the pizza another 10 minutes.
+#&gt; 178                                                                                                                      RUDE &amp; INCONSIDERATE MANAGEMENT.
+#&gt; 179                                                                                                                  "For service, I give them no stars."
+#&gt; 180                                                                           Ryan's Bar is definitely one Edinburgh establishment I won't be revisiting.
+#&gt; 181                                                                                                                         This was like the final blow!
+#&gt; 182                                                                                                                                      I'm super pissd.
+#&gt; 183                                                                                                                                                #NAME?
+#&gt; 184                                                                                                "The pizza tasted old, super chewy in not a good way."
+#&gt; 185                                                                                                                                    I wouldn't return.
+#&gt; 186                                                                                                                                  Con: spotty service.
+#&gt; 187                                                                                  I don't think I'll be running back to Carly's anytime soon for food.
+#&gt; 188                                                                             "No, I'm going to eat the potato that I found some strangers hair in it."
+#&gt; 189                                                                                                                                The food was terrible.
+#&gt; 190                                                                                       "For a self proclaimed coffee cafe, I was wildly disappointed."
+#&gt; 191                                                              The servers are not pleasant to deal with and they don't always honor Pizza Hut coupons.
+#&gt; 192                                         The server was very negligent of our needs and made us feel very unwelcome... I would not suggest this place!
+#&gt; 193 "Hot dishes are not hot, cold dishes are close to room temp.I watched staff prepare food with BARE HANDS, no gloves.Everything is deep fried in oil."
+#&gt; 194                                                   The cashier had no care what so ever on what I had to say it still ended up being wayyy overpriced.
+#&gt; 195                                                                                                       I had the chicken Pho and it tasted very bland.
+#&gt; 196                                                    "I have watched their prices inflate, portions get smaller and management attitudes grow rapidly!"
+#&gt; 197                                                                                                             It's NOT hard to make a decent hamburger.
+#&gt; 198                Paying $7.85 for a hot dog and fries that looks like it came out of a kid's meal at the Wienerschnitzel is not my idea of a good meal.
+#&gt; 199                                                                                    "This place is not quality sushi, it is not a quality restaurant."
+#&gt; 200                                                                                                                            The manager was the worst.
+#&gt; 201                                                                                       The waiter wasn't helpful or friendly and rarely checked on us.
+#&gt; 202                             "The service was a little slow , considering that were served by 3 people servers so the food was coming in a slow pace."
+#&gt; 203                                                                                              "Probably never coming back, and wouldn't recommend it."
+#&gt; 204                                                                    I don't recommend unless your car breaks down in front of it and you are starving.
+#&gt; 205                                                                                                   "Third, the cheese on my friend's burger was cold."
+#&gt; 206                                                                 "I don't know what the big deal is about this place, but I won't be back ""ya'all""."
+#&gt; 207                                                                                                                   "Strike 2, who wants to be rushed."
+#&gt; 208                                                                                               There is nothing privileged about working/eating there.
+#&gt; 209                Paying $7.85 for a hot dog and fries that looks like it came out of a kid's meal at the Wienerschnitzel is not my idea of a good meal.
+#&gt; 210                                       The potatoes were like rubber and you could tell they had been made up ahead of time being kept under a warmer.
+#&gt; 211                                                                                                                           We will not be coming back.
+#&gt; 212                                                  I ordered Albondigas soup - which was just warm - and tasted like tomato soup with frozen meatballs.
+#&gt; 213                                                                                                "The pizza tasted old, super chewy in not a good way."
+#&gt; 214                                                                                                          the spaghetti is nothing special whatsoever.
+#&gt; 215                                                                                                                                    Very poor service.
+#&gt; 216                                                                "The burger... I got the ""Gold Standard"" a $17 burger and was kind of disappointed."
+#&gt; 217                                                                       "I started this review with two stars, but I'm editing it to give it only one."
+#&gt; 218                                                                                                                                    I wouldn't return.
+#&gt; 219                                                                                                                       The service was extremely slow.
+#&gt; 220                                                                                                                          After two I felt disgusting.
+#&gt; 221                                                               The only thing I wasn't too crazy about was their guacamole as I don't like it purÃ©ed.
+#&gt; 222         "Bad day or not, I have a very low tolerance for rude customer service people, it is your job to be nice and polite, wash dishes otherwise!!"
+#&gt; 223                                The tables outside are also dirty a lot of the time and the workers are not always friendly and helpful with the menu.
+#&gt; 224                                                                                                                           "Will never, ever go back."
+#&gt; 225                                                                                                                   My gyro was basically lettuce only.
+#&gt; 226                                The potato chip order was sad... I could probably count how many chips were in that box and it was probably around 12.
+#&gt; 227                                                                                         I left with a stomach ache and felt sick the rest of the day.
+#&gt; 228                                               "If you want to wait for mediocre food and downright terrible service, then this is the place for you."
+#&gt; 229                                                                                                "Host staff were, for lack of a better word, BITCHES!"
+#&gt; 230                                                                                                                                    I was so insulted.
+#&gt; 231                                                                                The chicken wings contained the driest chicken meat I have ever eaten.
+#&gt; 232                                                                                                                              And then tragedy struck.
+#&gt; 233                                                                                                                            The warm beer didn't help.
+#&gt; 234                                          "I live in the neighborhood so I am disappointed I won't be back here, because it is a convenient location."
+#&gt; 235                                                                                                            The service was poor and thats being nice.
+#&gt; 236                                                                                          "Also, I feel like the chips are bought, not made in house."
+#&gt; 237                                                          "Total letdown, I would much rather just go to the Camelback Flower Shop and Cartel Coffee."
+#&gt; 238                                    I also decided not to send it back because our waitress looked like she was on the verge of having a heart attack.
+#&gt; 239                "By this point, my friends and I had basically figured out this place was a joke and didn't mind making it publicly and loudly known."
+#&gt; 240                                                                                                     Pricing is a bit of a concern at Mellow Mushroom.
+#&gt; 241                                                                                                                                 It was probably dirt.
+#&gt; 242                                                                                                        "The service was terrible, food was mediocre."
+#&gt; 243                                                                                       It was a pale color instead of nice and char and has NO flavor.
+#&gt; 244                                                                                          The buffet is small and all the food they offered was BLAND.
+#&gt; 245                                                                                                                               Food was really boring.
+#&gt; 246                          "No allergy warnings on the menu, and the waitress had absolutely no clue as to which meals did or did not contain peanuts."
+#&gt; 247                        I just don't know how this place managed to served the blandest food I have ever eaten when they are preparing Indian cuisine.
+#&gt; 248                                                                     They brought a fresh batch of fries and I was thinking yay something warm but no!
+#&gt; 249                                        The pan cakes everyone are raving about taste like a sugary disaster tailored to the palate of a six year old.
+#&gt; 250                                                                                                               This place should honestly be blown up.
+#&gt; 251                                                                                                      WAAAAAAyyyyyyyyyy over rated is all I am saying.
+#&gt; 252                                                                                            I would avoid this place if you are staying in the Mirage.
+#&gt; 253                                                                                                                                  Service stinks here!
+#&gt; 254                                                                                                                                   The Burrittos Blah!
+#&gt; 255                                                                    "like the other reviewer said ""you couldn't pay me to eat at this place again."""
+#&gt; 256                                                                                       The waiter wasn't helpful or friendly and rarely checked on us.
+#&gt; 257                                                                                                                                   I never come again.
+#&gt; 258                                                                    "Never been to Hard Rock Casino before, WILL NEVER EVER STEP FORWARD IN IT AGAIN!"
+#&gt; 259                                                                                         She ordered a toasted English muffin that came out untoasted.
+#&gt; 260                                                                                                     Tried to go here for lunch and it was a madhouse.
+#&gt; 261                                                                                         I left with a stomach ache and felt sick the rest of the day.
+#&gt; 262                                                                                                                       The ambiance isn't much better.
+#&gt; 263                                                                      We've tried to like this place but after 10+ times I think we're done with them.
+#&gt; 264                                                                         "too bad cause I know it's family owned, I really wanted to like this place."
+#&gt; 265                                The potato chip order was sad... I could probably count how many chips were in that box and it was probably around 12.
+#&gt; 266                                                                                                                           We will not be coming back.
+#&gt; 267                                                                                                             We waited for forty five minutes in vain.
+#&gt; 268                                                                                               The Buffet at Bellagio was far from what I anticipated.
+#&gt; 269                                                 "The Wife hated her meal (coconut shrimp), and our friends really did not enjoy their meals, either."
+#&gt; 270                                                                                                            Overall I wasn't very impressed with Noca.
+#&gt; 271                                                                                                          first time there and might just be the last.
+#&gt; 272                                                                                                                     "Unfortunately, it was not good."
+#&gt; 273                                                               walked in and the place smelled like an old grease trap and only 2 others there eating.
+#&gt; 274                                           I'm not sure how long we stood there but it was long enough for me to begin to feel awkwardly out of place.
+#&gt; 275                                                                                                        "The service was terrible, food was mediocre."
+#&gt; 276                                                                    "like the other reviewer said ""you couldn't pay me to eat at this place again."""
+#&gt; 277                                                                     There is not a deal good enough that would drag me into that establishment again.
+#&gt; 278                                                                                                                                   I never come again.
+#&gt; 279                                                                                  WILL NEVER EVER GO BACK AND HAVE TOLD MANY PEOPLE WHAT HAD HAPPENED.
+#&gt; 280                                                                                                                                     Terrible service!
+#&gt; 281                                                                       Ordered an appetizer and took 40 minutes and then the pizza another 10 minutes.
+#&gt; 282                              The only reason to eat here would be to fill up before a night of binge drinking just to get some carbs in your stomach.
+#&gt; 283                                                                                                   I've never been more insulted or felt disrespected.
+#&gt; 284                                                                                                                       I've never been treated so bad.
+#&gt; 285                                                                                                  "Needless to say, we will never be back here again."
+#&gt; 286                                                                                                    I was shocked because no signs indicate cash only.
+#&gt; 287                                                                                                The scallop dish is quite appalling for value as well.
+#&gt; 288                                                                                                                               Weird vibe from owners.
+#&gt; 289                                                                                                                                Hell no will I go back
+#&gt; 290                                              "If the food isn't bad enough for you, then enjoy dealing with the world's worst/annoying drunk people."
+#&gt; 291                                                                                                   "Friend's pasta -- also bad, he barely touched it."
+#&gt; 292                                                                                                                      They dropped more than the ball.
+#&gt; 293                                                                                                                  Overpriced for what you are getting.
+#&gt; 294                                                                                          "Also, I feel like the chips are bought, not made in house."
+#&gt; 295                                                                         I paid the bill but did not tip because I felt the server did a terrible job.
+#&gt; 296                                                                    "like the other reviewer said ""you couldn't pay me to eat at this place again."""
+#&gt; 297                                                                         "Frozen pucks of disgust, with some of the worst people behind the register."
+#&gt; 298                                                                                                   I can take a little bad service but the food sucks.
+#&gt; 299                                                                         I paid the bill but did not tip because I felt the server did a terrible job.
+#&gt; 300                                                                                                                                  But I don't like it.
+#&gt; 301                                                                                                           "What did bother me, was the slow service."
+#&gt; 302                "I had high hopes for this place since the burgers are cooked over a charcoal grill, but unfortunately the taste fell flat, way flat."
+#&gt; 303                                                                                                                     The RI style calamari was a joke.
+#&gt; 304                                                                                                                      The service was terrible though.
+#&gt; 305                                                                                                                             Disappointing experience.
+#&gt; 306                                                                                                                   My gyro was basically lettuce only.
+#&gt; 307                                                     So in a nutshell: 1) The restaraunt smells like a combination of a dirty fish market and a sewer.
+#&gt; 308                                                                              And the red curry had so much bamboo shoots and wasn't very tasty to me.
+#&gt; 309                                                                                                                                    Very poor service.
+#&gt; 310                                                                                                The scallop dish is quite appalling for value as well.
+#&gt; 311                                                     "As much as I'd like to go back, I can't get passed the atrocious service and will never return."
+#&gt; 312                                                                                                                            The manager was the worst.
+#&gt; 313                                                                                                                       The ambiance isn't much better.
+#&gt; 314                                                                                            It really is impressive that the place hasn't closed down.
+#&gt; 315                                                                                                                                        Service sucks.
+#&gt; 316                                                                                               "Not much flavor to them, and very poorly constructed."
+#&gt; 317                                                                                                                     The worst was the salmon sashimi.
+#&gt; 318                                                                                                               Ordered burger rare came in we'll done.
+#&gt; 319                                                                                                                           I've had better atmosphere.
+#&gt; 320                                                                                                  Tonight I had the Elk Filet special...and it sucked.
+#&gt; 321                                                                                         After the disappointing dinner we went elsewhere for dessert.
+#&gt; 322                                                                                                                                   This is a disgrace.
+#&gt; 323                                                                                                                               I give it 2 thumbs down
+#&gt; 324                                                                             The poor batter to meat ratio made the chicken tenders very unsatisfying.
+#&gt; 325                                                                                                                                   This is a disgrace.
+#&gt; 326                                                         "The whole experience was underwhelming, and I think we'll just go to Ninja Sushi next time."
+#&gt; 327                                                                                                                               I just wanted to leave.
+#&gt; 328                                                                                                             I took back my money and got outta there.
+#&gt; 329                                                                                                                                      He was terrible!
+#&gt; 330                                                                                                                   "Strike 2, who wants to be rushed."
+#&gt; 331                                                                                                                Waitress was a little slow in service.
+#&gt; 332                                                            "Poor service, the waiter made me feel like I was stupid every time he came to the table."
+#&gt; 333                                                "The building itself seems pretty neat, the bathroom is pretty trippy, but I wouldn't eat here again."
+#&gt; 334                                                                                                                                    I was so insulted.
+#&gt; 335                                   We waited for thirty minutes to be seated (although there were 8 vacant tables and we were the only folks waiting).
+#&gt; 336                                                                                                                                    I was so insulted.
+#&gt; 337                               Not a single employee came out to see if we were OK or even needed a water refill once they finally served us our food.
+#&gt; 338                                                                                                       I don't think we'll be going back anytime soon.
+#&gt; 339                                                                                                       Eew... This location needs a complete overhaul.
+#&gt; 340                                                            "Poor service, the waiter made me feel like I was stupid every time he came to the table."
+#&gt; 341                                                            When my mom and I got home she immediately got sick and she only had a few bites of salad.
+#&gt; 342                                                              We started with the tuna sashimi which was brownish in color and obviously wasn't fresh.
+#&gt; 343                                                                                                                                Hell no will I go back
+#&gt; 344                                   "I have been to very few places to eat that under no circumstances would I ever return to, and this tops the list."
+#&gt; 345               "On three different occasions I asked for well done or medium well, and all three times I got the bloodiest piece of meat on my plate."
+#&gt; 346                                                                                                                     I would not recommend this place.
+#&gt; 347                    "I guess I should have known that this place would suck, because it is inside of the Excalibur, but I didn't use my common sense."
+#&gt; 348                                                                         We watched our waiter pay a lot more attention to other tables and ignore us.
+#&gt; 349                                                                                       The waiter wasn't helpful or friendly and rarely checked on us.
+#&gt; 350                                                 "The Wife hated her meal (coconut shrimp), and our friends really did not enjoy their meals, either."
+#&gt; 351                                The tables outside are also dirty a lot of the time and the workers are not always friendly and helpful with the menu.
+#&gt; 352                                                                                                                                    I was so insulted.
+#&gt; 353                                                                                                            Must have been an off night at this place.
+#&gt; 354                                                                                 "Furthermore, you can't even find hours of operation on the website!"
+#&gt; 355                                                                                                "The pizza tasted old, super chewy in not a good way."
+#&gt; 356                                                                                                      "Then our food came out, disappointment ensued."
+#&gt; 357                                                                                                                 The turkey and roast beef were bland.
+#&gt; 358                                                                                                "Host staff were, for lack of a better word, BITCHES!"
+#&gt; 359                                                                                                                     I would not recommend this place.
+#&gt; 360                                                                "The burger... I got the ""Gold Standard"" a $17 burger and was kind of disappointed."
+#&gt; 361                                                                                                                                        Awful service.
+#&gt; 362                                                                                           I as well would've given godfathers zero stars if possible.
+#&gt; 363                                                                                                                                      Nothing special.
+#&gt; 364                                                                                                "The pizza tasted old, super chewy in not a good way."
+#&gt; 365                                                                 "I don't know what the big deal is about this place, but I won't be back ""ya'all""."
+#&gt; 366                                                                  At least think to refill my water before I struggle to wave you over for 10 minutes.
+#&gt; 367                                                                "The burger... I got the ""Gold Standard"" a $17 burger and was kind of disappointed."
+#&gt; 368                                                                                       "For a self proclaimed coffee cafe, I was wildly disappointed."
+#&gt; 369                                                                                                                                   I never come again.
+#&gt; 370                                                 "The Wife hated her meal (coconut shrimp), and our friends really did not enjoy their meals, either."
+#&gt; 371                                                                                                      WAAAAAAyyyyyyyyyy over rated is all I am saying.
+#&gt; 372                                                                                                                    My girlfriend's veal was very bad.
+#&gt; 373                                                     So in a nutshell: 1) The restaraunt smells like a combination of a dirty fish market and a sewer.
+#&gt; 374                                                                                                                                 It was probably dirt.
+#&gt; 375                                                                                                     Pricing is a bit of a concern at Mellow Mushroom.
+#&gt; 376                                                                                                                                       It was packed!!
+#&gt; 377                                                                                           Del Taco is pretty nasty and should be avoided if possible.
+#&gt; 378                                                                                                                 Honeslty it didn't taste THAT fresh.)
+#&gt; 379                                                                                                        The plantains were the worst I've ever tasted.
+#&gt; 380                                                                                                   I can take a little bad service but the food sucks.
+#&gt; 381                                                                         I paid the bill but did not tip because I felt the server did a terrible job.
+#&gt; 382                                                 "The Wife hated her meal (coconut shrimp), and our friends really did not enjoy their meals, either."
+#&gt; 383                                                        Waited 2 hours &amp; never got either of our pizzas as many other around us who came in later did!
+#&gt; 384                                                                                                   Things that went wrong: - They burned the saganaki.
+#&gt; 385                                                                                                                    My girlfriend's veal was very bad.
+#&gt; 386                                                                                                                             AVOID THIS ESTABLISHMENT!
+#&gt; 387                                                                                                                              What a mistake that was!
+#&gt; 388                                                                                 "The ripped banana was not only ripped, but petrified and tasteless."
+#&gt; 389                                                    "Maybe it's just their Vegetarian fare, but I've been twice and I thought it was average at best."
+#&gt; 390                          "No allergy warnings on the menu, and the waitress had absolutely no clue as to which meals did or did not contain peanuts."
+#&gt; 391                                                                          "However, my recent experience at this particular location was not so good."
+#&gt; 392                                                                                                                         This was like the final blow!
+#&gt; 393                                                                                                                                           Over rated.
+#&gt; 394                        "On the ground, right next to our table was a large, smeared, been-stepped-in-and-tracked-everywhere pile of green bird poop."
+#&gt; 395                                                                                                                                I consider this theft.
+#&gt; 396                                                                                                       I don't think we'll be going back anytime soon.
+#&gt; 397                                                                                                 "This place is not worth your time, let alone Vegas."
+#&gt; 398                                                                                       It was a pale color instead of nice and char and has NO flavor.
+#&gt; 399                                    I also decided not to send it back because our waitress looked like she was on the verge of having a heart attack.
+#&gt; 400                                                                                                              "As for the ""mains,"" also uninspired."
+#&gt; 401                                                                                                      "It lacked flavor, seemed undercooked, and dry."
+#&gt; 402                                             It sure does beat the nachos at the movies but I would expect a little bit more coming from a restaurant.
+#&gt; 403                                                                                                                   I probably would not go here again.
+#&gt; 404                                                                                                                 The turkey and roast beef were bland.
+#&gt; 405                                                                                                 "If you look for authentic Thai food, go else where."
+#&gt; 406                                                                                            Your staff spends more time talking to themselves than me.
+#&gt; 407                                                                                                                              And then tragedy struck.
+#&gt; 408                                                                                                                                    Crust is not good.
+#&gt; 409                                                       "Worse of all, he humiliated his worker right in front of me..Bunch of horrible name callings."
+#&gt; 410                                                                                                       Eew... This location needs a complete overhaul.
+#&gt; 411                                                                                                My sashimi was poor quality being soggy and tasteless.
+#&gt; 412                                                                                                                                        Mediocre food.
+#&gt; 413                                                                                                        I've had better bagels from the grocery store.
+#&gt; 414                                                                                                          Crostini that came with the salad was stale.
+#&gt; 415                                                                                                                 I dressed up to be treated so rudely!
+#&gt; 416         "Bad day or not, I have a very low tolerance for rude customer service people, it is your job to be nice and polite, wash dishes otherwise!!"
+#&gt; 417                                                                                                            Overall I wasn't very impressed with Noca.
+#&gt; 418                                                                                                        If you are reading this please don't go there.
+#&gt; 419                        I just don't know how this place managed to served the blandest food I have ever eaten when they are preparing Indian cuisine.
+#&gt; 420                                                                          "There is really nothing for me at postinos, hope your experience is better"
+#&gt; 421                                                                                                         And the beans and rice were mediocre at best.
+#&gt; 422                              "Lobster Bisque, Bussell Sprouts, Risotto, Filet ALL needed salt and pepper..and of course there is none at the tables."
+#&gt; 423                                                                                                                                        Mediocre food.
+#&gt; 424                                                                                                                                 It was probably dirt.
+#&gt; 425                 Coming here is like experiencing an underwhelming relationship where both parties can't wait for the other person to ask to break up.
+#&gt; 426                                                                                                                                        Service sucks.
+#&gt; 427                                                                                                                     The RI style calamari was a joke.
+#&gt; 428                        "On the ground, right next to our table was a large, smeared, been-stepped-in-and-tracked-everywhere pile of green bird poop."
+#&gt; 429                                                                                                                                 It was equally awful.
+#&gt; 430                                                                                                                                      It was not good.
+#&gt; 431                                                     "The servers went back and forth several times, not even so much as an ""Are you being helped?"""
+#&gt; 432                                                                                                                     I would not recommend this place.
+#&gt; 433                                                                                                             "I probably won't be back, to be honest."
+#&gt; 434                                                                                                                               Not good for the money.
+#&gt; 435                                                                                                                         But then they came back cold.
+#&gt; 436                                                                           A lady at the table next to us found a live green caterpillar In her salad.
+#&gt; 437                                                                                                                           "Will never, ever go back."
+#&gt; 438                                                                                       The waiter wasn't helpful or friendly and rarely checked on us.
+#&gt; 439                                                                                                   I've never been more insulted or felt disrespected.
+#&gt; 440                                                                                                                                 It was equally awful.
+#&gt; 441                                                                 My husband and I ate lunch here and were very disappointed with the food and service.
+#&gt; 442                                                              The servers are not pleasant to deal with and they don't always honor Pizza Hut coupons.
+#&gt; 443                                                                                                                                 It was probably dirt.
+#&gt; 444                 Coming here is like experiencing an underwhelming relationship where both parties can't wait for the other person to ask to break up.
+#&gt; 445                                                                                                              "The service was not up to par, either."
+#&gt; 446                                                                                                               This place should honestly be blown up.
+#&gt; 447                                                                                                                                It was way over fried.
+#&gt; 448                                                               walked in and the place smelled like an old grease trap and only 2 others there eating.
+#&gt; 449                                                                                                              The live music on Fridays totally blows.
+#&gt; 450                                                                                                                                    Avoid at all cost!
+#&gt; 451                                                                                                       I'll take my business dinner dollars elsewhere.
+#&gt; 452  "Overall, I don't think that I would take my parents to this place again because they made most of the similar complaints that I silently felt too."
+#&gt; 453                               I asked multiple times for the wine list and after some time of being ignored I went to the hostess and got one myself.
+#&gt; 454                                                                                                                  We won't be going back anytime soon!
+#&gt; 455                                                                                                                           I've had better atmosphere.
+#&gt; 456                "The burger had absolutely no flavor - the meat itself was totally bland, the burger was overcooked and there was no charcoal flavor."
+#&gt; 457                                    If someone orders two tacos don't' you think it may be part of customer service to ask if it is combo or ala cart?
+#&gt; 458                                                                                                                             Disappointing experience.
+#&gt; 459                                                                                                                                  Con: spotty service.
+#&gt; 460                                                                                                   This place is way too overpriced for mediocre food.
+#&gt; 461                                 "seems like a good quick place to grab a bite of some familiar pub food, but do yourself a favor and look elsewhere."
+#&gt; 462                                                                                                Very Very Disappointed ordered the $35 Big Bay Plater.
+#&gt; 463                                                                                                                                      He was terrible!
+#&gt; 464                                                                             Best of luck to the rude and non-customer service focused new management.
+#&gt; 465                                                                                                                  This one is simply a disappointment.
+#&gt; 466                                                                                       I came back today since they relocated and still not impressed.
+#&gt; 467                                                                                                     Tried to go here for lunch and it was a madhouse.
+#&gt; 468                                                                                                                         I really enjoyed eating here.
+#&gt; 469                                                                                                        The seafood was fresh and generous in portion.
+#&gt; 470                                                               This is an Outstanding little restaurant with some of the Best Food I have ever tasted.
+#&gt; 471                                                                                                                        Service is quick and friendly.
+#&gt; 472                                                                           One of the few places in Phoenix that I would definately go back to again .
+#&gt; 473                                                                                                       Nicest Chinese restaurant I've been in a while.
+#&gt; 474                                                                                      "This place is pretty good, nice little vibe in the restaurant."
+#&gt; 475                                                                                 * Both the Hot &amp; Sour &amp; the Egg Flower Soups were absolutely 5 Stars!
+#&gt; 476                                                                                          I would definitely recommend the wings as well as the pizza.
+#&gt; 477                                                                                                      I miss it and wish they had one in Philadelphia!
+#&gt; 478                                                                                                                     The jalapeno bacon is soooo good.
+#&gt; 479                                                                                                     High-quality chicken on the chicken Caesar salad.
+#&gt; 480                                                                                                           "Give it a try, you will be happy you did."
+#&gt; 481                                                                                                                              Pretty cool I would say.
+#&gt; 482                                                                                                     you can watch them preparing the delicious food!)
+#&gt; 483                                                                                                               "Come hungry, leave happy and stuffed!"
+#&gt; 484                                                                                  The vegetables are so fresh and the sauce feels like authentic Thai.
+#&gt; 485                                                                                                                     This place is great!!!!!!!!!!!!!!
+#&gt; 486                                                        The sweet potato tots were good but the onion rings were perfection or as close as I have had.
+#&gt; 487                                                                                                                 Just spicy enough.. Perfect actually.
+#&gt; 488                                                                                               Our server was super nice and checked on us many times.
+#&gt; 489                                                                 "On the good side, the staff was genuinely pleasant and enthusiastic - a real treat."
+#&gt; 490                                                                            "The atmosphere is modern and hip, while maintaining a touch of coziness."
+#&gt; 491                                                  "They have a plethora of salads and sandwiches, and everything I've tried gets my seal of approval."
+#&gt; 492                                                                The steak was amazing...rge fillet relleno was the best seafood plate i have ever had!
+#&gt; 493                                                                                              "In an interesting part of town, this place is amazing."
+#&gt; 494                                                                                "Service is quick and even ""to go"" orders are just like we like it!"
+#&gt; 495                                                                                                         The classic Maine Lobster Roll was fantastic.
+#&gt; 496                                                                                   My ribeye steak was cooked perfectly and had great mesquite flavor.
+#&gt; 497                                                                The steak was amazing...rge fillet relleno was the best seafood plate i have ever had!
+#&gt; 498                                                                             "I have eaten here multiple times, and each time the food was delicious."
+#&gt; 499                                                                                             Great place to relax and have an awesome burger and beer.
+#&gt; 500                                                                                        Their rotating beers on tap is also a highlight of this place.
+#&gt; 501                                               "The food is delicious and just spicy enough, so be sure to ask for spicier if you prefer it that way."
+#&gt; 502                                                                                                             The waitress and manager are so friendly.
+#&gt; 503                                                                              "The wontons were thin, not thick and chewy, almost melt in your mouth."
+#&gt; 504                                         "Be sure to order dessert, even if you need to pack it to-go - the tiramisu and cannoli are both to die for."
+#&gt; 505                                                                    "The sides are delish - mixed mushrooms, yukon gold puree, white corn - beateous."
+#&gt; 506                                                                                                         The Veggitarian platter is out of this world!
+#&gt; 507                                                                                                  "You get incredibly fresh fish, prepared with care."
+#&gt; 508                                                                                                                "Seriously flavorful delights, folks."
+#&gt; 509                                                                                         The food was outstanding and the prices were very reasonable.
+#&gt; 510                                                                                                                                                #NAME?
+#&gt; 511                                                                                                       The staff are also very friendly and efficient.
+#&gt; 512                                                                                         First time going but I think I will quickly become a regular.
+#&gt; 513                                                                                                               All of the tapas dishes were delicious!
+#&gt; 514                                                                                                       Just had lunch here and had a great experience.
+#&gt; 515                                "The food was very good and I enjoyed every mouthful, an enjoyable relaxed venue for couples small family groups etc."
+#&gt; 516                                            "All in all an excellent restaurant highlighted by great service, a unique menu, and a beautiful setting."
+#&gt; 517                                "The food was very good and I enjoyed every mouthful, an enjoyable relaxed venue for couples small family groups etc."
+#&gt; 518                                                                                          Talk about great customer service of course we will be back.
+#&gt; 519                                                                                                                         The staff was very attentive.
+#&gt; 520                                                                                                       The seasonal fruit was fresh white peach puree.
+#&gt; 521                                                                                                       (The bathroom is just next door and very nice.)
+#&gt; 522                                                                                                                           "Love the margaritas, too!"
+#&gt; 523                                                                                 I ordered the Lemon raspberry ice cocktail which was also incredible.
+#&gt; 524                                                                                                                      They know how to make them here.
+#&gt; 525                                                                                                                        Everything was good and tasty!
+#&gt; 526                                                                                         "Anyway, this FS restaurant has a wonderful breakfast/lunch."
+#&gt; 527                                            "I always order from the vegetarian menu during dinner, which has a wide array of options to choose from."
+#&gt; 528                                                                   "Not a weekly haunt, but definitely a place to come back to every once in a while."
+#&gt; 529                                                                      "It's close to my house, it's low-key, non-fancy, affordable prices, good food."
+#&gt; 530                                                                         "Not to mention the combination of pears, almonds and bacon is a big winner!"
+#&gt; 531                                "The food was very good and I enjoyed every mouthful, an enjoyable relaxed venue for couples small family groups etc."
+#&gt; 532                                                                      This place is awesome if you want something light and healthy during the summer.
+#&gt; 533                                                                                                                               Reasonably priced also!
+#&gt; 534                                                                                                                                   Food was delicious!
+#&gt; 535                                                                                                        "Went in for happy hour, great list of wines."
+#&gt; 536                                 "The staff is super nice and very quick even with the crazy crowds of the downtown juries, lawyers, and court staff."
+#&gt; 537                                                                                                                              Pretty cool I would say.
+#&gt; 538                                                                                                                      I promise they won't disappoint.
+#&gt; 539                                                                                            The pancake was also really good and pretty large at that.
+#&gt; 540                                                                                                                               Great service and food.
+#&gt; 541                                                                 "The owner used to work at Nobu, so this place is really similar for half the price."
+#&gt; 542                                            "All in all an excellent restaurant highlighted by great service, a unique menu, and a beautiful setting."
+#&gt; 543                                                                                                                              Pretty cool I would say.
+#&gt; 544                                                            "I don't each much pasta, but I love the homemade /hand made pastas and thin pizzas here."
+#&gt; 545                                                                                                       Food was really good and I got full petty fast.
+#&gt; 546                                                                                            I love the fact that everything on their menu is worth it.
+#&gt; 547                                                                                      "The decor is nice, and the piano music soundtrack is pleasant."
+#&gt; 548                                                                    Last night was my second time dining here and I was so happy I decided to go back!
+#&gt; 549                                                             "Classy/warm atmosphere, fun and fresh appetizers, succulent steaks (Baseball steak!!!!!"
+#&gt; 550                                                                                                                                                #NAME?
+#&gt; 551                                                                                                                                   Eclectic selection.
+#&gt; 552                                            "I always order from the vegetarian menu during dinner, which has a wide array of options to choose from."
+#&gt; 553                                                                                                              The restaurant atmosphere was exquisite.
+#&gt; 554                                                                                                                     What a great double cheeseburger!
+#&gt; 555                            "Also were served hot bread and butter, and home made potato chips with bacon bits on top....very original and very good."
+#&gt; 556                                                                                            I like Steiners because it's dark and it feels like a bar.
+#&gt; 557                                                                                          Have been going since 2007 and every meal has been awesome!!
+#&gt; 558                                                                                                  Cooked to perfection and the service was impeccable.
+#&gt; 559                                                                                            The pancake was also really good and pretty large at that.
+#&gt; 560                                                                                                                     The jalapeno bacon is soooo good.
+#&gt; 561                                                                                                      I can assure you that you won't be disappointed.
+#&gt; 562                                                                                           The goat taco didn't skimp on the meat and wow what FLAVOR!
+#&gt; 563               Service was excellent and prices are pretty reasonable considering this is Vegas and located inside the Crystals shopping mall by Aria.
+#&gt; 564                                                                                                  "You get incredibly fresh fish, prepared with care."
+#&gt; 565                                                                                 * Both the Hot &amp; Sour &amp; the Egg Flower Soups were absolutely 5 Stars!
+#&gt; 566                                                                  The atmosphere was great with a lovely duo of violinists playing songs we requested.
+#&gt; 567                                                                  "Stopped by this place while in Madison for the Ironman, very friendly, kind staff."
+#&gt; 568                                                                                         I don't know what kind it is but they have the best iced tea.
+#&gt; 569                                                                           One of the few places in Phoenix that I would definately go back to again .
+#&gt; 570                                                                                                                         This is a GREAT place to eat!
+#&gt; 571                                                                                          I would definitely recommend the wings as well as the pizza.
+#&gt; 572                                                          We had a group of 70+ when we claimed we would only have 40 and they handled us beautifully.
+#&gt; 573                                                                                                  Their daily specials are always a hit with my group.
+#&gt; 574                                                                                                                  This place was such a nice surprise!
+#&gt; 575                                                                                                                      We enjoy their pizza and brunch.
+#&gt; 576                                                                                                                     What a great double cheeseburger!
+#&gt; 577                                                                                      "The decor is nice, and the piano music soundtrack is pleasant."
+#&gt; 578                                                 "Love this place, hits the spot when I want something healthy but not lacking in quantity or flavor."
+#&gt; 579                                                      "I had heard good things about this place, but it exceeding every hope I could have dreamed of."
+#&gt; 580                                                                                                                "Seriously flavorful delights, folks."
+#&gt; 581                                                                                                       Im in AZ all the time and now have my new spot.
+#&gt; 582                                                                                                               I can say that the desserts were yummy.
+#&gt; 583                                                                                                  Their daily specials are always a hit with my group.
+#&gt; 584                                                                                                                   They have a really nice atmosphere.
+#&gt; 585                                                                                                                                      Damn good steak.
+#&gt; 586                                                                                                     The food was excellent and service was very good.
+#&gt; 587                                                                                                         The classic Maine Lobster Roll was fantastic.
+#&gt; 588                                                                                                                   Now this dish was quite flavourful.
+#&gt; 589                                                                                                  "You get incredibly fresh fish, prepared with care."
+#&gt; 590                                                                                                                  I had a pretty satifying experience.
+#&gt; 591                                                                                                           The roast beef sandwich tasted really good!
+#&gt; 592                                                                           "Both of them were truly unbelievably good, and I am so glad we went back."
+#&gt; 593                                                                                                                                           Both great!
+#&gt; 594                                                                                                                                Go To Place for Gyros.
+#&gt; 595                                                                                                                       And service was super friendly.
+#&gt; 596                                                                         My boyfriend and i sat at the bar and had a completely delightful experience.
+#&gt; 597                                                                                                             The waitress and manager are so friendly.
+#&gt; 598                                                                                          This is the place where I first had pho and it was amazing!!
+#&gt; 599                                                                                     "The chips and salsa were really good, the salsa was very fresh."
+#&gt; 600                                                                                                        Favorite place in town for shawarrrrrrma!!!!!!
+#&gt; 601                                                                                                                                        Nice ambiance.
+#&gt; 602                                                                                                We had 7 at our table and the service was pretty fast.
+#&gt; 603                                                                                                                                   Food was so gooodd.
+#&gt; 604                                                                                                                                         2 Thumbs Up!!
+#&gt; 605                                                                                                                      A fantastic neighborhood gem !!!
+#&gt; 606                                                                                                                     Owner's are really great people.!
+#&gt; 607                                                                                                           The cow tongue and cheek tacos are amazing.
+#&gt; 608                            "Also were served hot bread and butter, and home made potato chips with bacon bits on top....very original and very good."
+#&gt; 609                                                                                             Great place to relax and have an awesome burger and beer.
+#&gt; 610                                                                                       If you stay in Vegas you must get breakfast here at least once.
+#&gt; 611                                                                                                         Great time - family dinner on a Sunday night.
+#&gt; 612                                                                                                         Great time - family dinner on a Sunday night.
+#&gt; 613                                                                                                                      Nargile - I think you are great.
+#&gt; 614                                                                                             I love the decor with the Chinese calligraphy wall paper.
+#&gt; 615                                                                                                                           "Love the margaritas, too!"
+#&gt; 616                                                                                                       (The bathroom is just next door and very nice.)
+#&gt; 617                                                                                            The steaks are all well trimmed and also perfectly cooked.
+#&gt; 618                                         "Be sure to order dessert, even if you need to pack it to-go - the tiramisu and cannoli are both to die for."
+#&gt; 619                                                                                                                           The nachos are a MUST HAVE!
+#&gt; 620                                                                                          Have been going since 2007 and every meal has been awesome!!
+#&gt; 621                                                                                  My boyfriend tried the Mediterranean Chicken Salad and fell in love.
+#&gt; 622                                                                                                     The Greek dressing was very creamy and flavorful.
+#&gt; 623                                                                           One of the few places in Phoenix that I would definately go back to again .
+#&gt; 624                                                                                        "This was my first crawfish experience, and it was delicious!"
+#&gt; 625                                                                                                                  I had a pretty satifying experience.
+#&gt; 626                                                                                         Great food and great service in a clean and friendly setting.
+#&gt; 627                                                                         My boyfriend and i sat at the bar and had a completely delightful experience.
+#&gt; 628                                                                                                    "For sushi on the Strip, this is the place to go."
+#&gt; 629                                                                                      The service was outshining &amp; I definitely recommend the Halibut.
+#&gt; 630                                                                                                                           The atmosphere here is fun.
+#&gt; 631                                                                                         The folks at Otto always make us feel so welcome and special.
+#&gt; 632                                                                                                               I can say that the desserts were yummy.
+#&gt; 633                                                                                                          You cant go wrong with any of the food here.
+#&gt; 634                                                                                               Our server was super nice and checked on us many times.
+#&gt; 635                                                                                                              Couldn't ask for a more satisfying meal.
+#&gt; 636                                                                                                          You cant go wrong with any of the food here.
+#&gt; 637           "If you love authentic Mexican food and want a whole bunch of interesting, yet delicious meats to choose from, you need to try this place."
+#&gt; 638                                                                                                               "If you're not familiar, check it out."
+#&gt; 639                       Everything on the menu is terrific and we were also thrilled that they made amazing accommodations for our vegetarian daughter.
+#&gt; 640                                                                                                                                 Very good lunch spot.
+#&gt; 641                                                                                                                       And service was super friendly.
+#&gt; 642                                                                                                                         This is a GREAT place to eat!
+#&gt; 643                                                                                                                                  Great pork sandwich.
+#&gt; 644                                                                        "I ate there twice on my last visit, and especially enjoyed the salmon salad."
+#&gt; 645                                                                                                          Everything was perfect the night we were in.
+#&gt; 646                                                                                                                               Reasonably priced also!
+#&gt; 647                                                                 "That just SCREAMS ""LEGIT"" in my book...somethat's also pretty rare here in Vegas."
+#&gt; 648                                                                                                  "You get incredibly fresh fish, prepared with care."
+#&gt; 649                                                                                                     The lighting is just dark enough to set the mood.
+#&gt; 650                                 "The staff is super nice and very quick even with the crazy crowds of the downtown juries, lawyers, and court staff."
+#&gt; 651                                                                             "I have eaten here multiple times, and each time the food was delicious."
+#&gt; 652                                                                                      "He also came back to check on us regularly, excellent service."
+#&gt; 653                                                                                                                  I had a pretty satifying experience.
+#&gt; 654                                                                                         These are the nicest restaurant owners I've ever come across.
+#&gt; 655                                                                                        Their rotating beers on tap is also a highlight of this place.
+#&gt; 656                                                                                                         The classic Maine Lobster Roll was fantastic.
+#&gt; 657                                Only Pros : Large seating area/ Nice bar area/ Great simple drink menu/ The BEST brick oven pizza with homemade dough!
+#&gt; 658                                                                                  The vegetables are so fresh and the sauce feels like authentic Thai.
+#&gt; 659                                                                                                                            Awesome selection of beer.
+#&gt; 660                                                                                     "The chips and salsa were really good, the salsa was very fresh."
+#&gt; 661                                                                                                                                    Great brunch spot.
+#&gt; 662                                                                                                        Favorite place in town for shawarrrrrrma!!!!!!
+#&gt; 663                                                                "Perfect for someone (me) who only likes beer ice cold, or in this case, even colder."
+#&gt; 664                                                                          It is PERFECT for a sit-down family meal or get together with a few friends.
+#&gt; 665                                                                                                         The classic Maine Lobster Roll was fantastic.
+#&gt; 666                                                                              "The wontons were thin, not thick and chewy, almost melt in your mouth."
+#&gt; 667                                                                                            I like Steiners because it's dark and it feels like a bar.
+#&gt; 668                                                                                                                "Seriously flavorful delights, folks."
+#&gt; 669                      "My breakfast was perpared great, with a beautiful presentation of 3 giant slices of Toast, lightly dusted with powdered sugar."
+#&gt; 670                                                                                                               The patio seating was very comfortable.
+#&gt; 671                                                                                                                         This is a GREAT place to eat!
+#&gt; 672                                                                                                                         Waitress was sweet and funny.
+#&gt; 673                                                                                                                        The pizza selections are good.
+#&gt; 674                                                                                      "I loved the grilled pizza, reminded me of legit Italian pizza."
+#&gt; 675                                                                                                          You cant go wrong with any of the food here.
+#&gt; 676                                                                                                                                    I love this place.
+#&gt; 677                                                                                                             These were so good we ordered them twice.
+#&gt; 678                                                                                                             The waitress and manager are so friendly.
+#&gt; 679                                                                                   I recently tried Caballero's and I have been back every week since!
+#&gt; 680                                                                                   I recently tried Caballero's and I have been back every week since!
+#&gt; 681                                                                    "When I'm on this side of town, this will definitely be a spot I'll hit up again!"
+#&gt; 682                                                                                                                    Their steaks are 100% recommended!
+#&gt; 683                                                                              The grilled chicken was so tender and yellow from the saffron seasoning.
+#&gt; 684                                                                                                            Never had anything to complain about here.
+#&gt; 685                                                                                             The menu had so much good stuff on it i could not decide!
+#&gt; 686                                                                                                                                  Great pork sandwich.
+#&gt; 687                                                       "As for the service: I'm a fan, because it's quick and you're being served by some nice folks."
+#&gt; 688                                                                                                                               Great Pizza and Salads!
+#&gt; 689                                                                          Wonderful lil tapas and the ambience made me feel all warm and fuzzy inside.
+#&gt; 690                                         "Be sure to order dessert, even if you need to pack it to-go - the tiramisu and cannoli are both to die for."
+#&gt; 691                                                                                                           The chefs were friendly and did a good job.
+#&gt; 692                                                                                                                      They know how to make them here.
+#&gt; 693                                                                                                                      They know how to make them here.
+#&gt; 694                       Everything on the menu is terrific and we were also thrilled that they made amazing accommodations for our vegetarian daughter.
+#&gt; 695                                                                             "I have eaten here multiple times, and each time the food was delicious."
+#&gt; 696                                                                                               Once you get inside you'll be impressed with the place.
+#&gt; 697                                                                                                                                   Very very fun chef.
+#&gt; 698                                                                  "Stopped by this place while in Madison for the Ironman, very friendly, kind staff."
+#&gt; 699                                                                                                                                 Very good lunch spot.
+#&gt; 700                                                                                                                                  Very friendly staff.
+#&gt; 701                                                                                   I recently tried Caballero's and I have been back every week since!
+#&gt; 702                                                                                 * Both the Hot &amp; Sour &amp; the Egg Flower Soups were absolutely 5 Stars!
+#&gt; 703                                                                                                                                       Fantastic food!
+#&gt; 704                                         "Be sure to order dessert, even if you need to pack it to-go - the tiramisu and cannoli are both to die for."
+#&gt; 705                                                                   Kids pizza is always a hit too with lots of great side dish options for the kiddos!
+#&gt; 706                                          "They will customize your order any way you'd like, my usual is Eggplant with Green Bean stir fry, love it!"
+#&gt; 707                                                                                                   Just as good as when I had it more than a year ago!
+#&gt; 708                                                                          "This isn't a small family restaurant, this is a fine dining establishment."
+#&gt; 709                                                                                                                      A fantastic neighborhood gem !!!
+#&gt; 710                                                                                         First time going but I think I will quickly become a regular.
+#&gt; 711                                                                                                         It's a great place and I highly recommend it.
+#&gt; 712                                                                                 * Both the Hot &amp; Sour &amp; the Egg Flower Soups were absolutely 5 Stars!
+#&gt; 713                                                                                                                       And service was super friendly.
+#&gt; 714                                                                                              "The food was great as always, compliments to the chef."
+#&gt; 715                                                                                                       Food was really good and I got full petty fast.
+#&gt; 716                                                                                                                Food was great and so was the serivce!
+#&gt; 717                                                                                 "Lastly, the mozzarella sticks, they were the best thing we ordered."
+#&gt; 718                                                                                                                                 This is a good joint.
+#&gt; 719                                                                                      "He also came back to check on us regularly, excellent service."
+#&gt; 720                                                                                              "The food was great as always, compliments to the chef."
+#&gt; 721                                                                                                                     Owner's are really great people.!
+#&gt; 722                                                                                                                                         2 Thumbs Up!!
+#&gt; 723                                                                                     "The chips and salsa were really good, the salsa was very fresh."
+#&gt; 724                                                                   "Not a weekly haunt, but definitely a place to come back to every once in a while."
+#&gt; 725                                                                                                        "Went in for happy hour, great list of wines."
+#&gt; 726                                                                                    This was my first and only Vegas buffet and it did not disappoint.
+#&gt; 727                                           They also now serve Indian naan bread with hummus and some spicy pine nut sauce that was out of this world.
+#&gt; 728                                                                                        Their rotating beers on tap is also a highlight of this place.
+#&gt; 729                                                                                                                         I really enjoyed eating here.
+#&gt; 730                                           They also now serve Indian naan bread with hummus and some spicy pine nut sauce that was out of this world.
+#&gt; 731                                                                                                                "Seriously flavorful delights, folks."
+#&gt; 732                                                                                                                                    Great brunch spot.
+#&gt; 733                                                                                             "Great steak, great sides, great wine, amazing desserts."
+#&gt; 734                                                                                                                                 Very good lunch spot.
+#&gt; 735                                                                                                                   Now this dish was quite flavourful.
+#&gt; 736                                                                                                                      I promise they won't disappoint.
+#&gt; 737                                                                                                                                It is worth the drive.
+#&gt; 738                                                                          "This isn't a small family restaurant, this is a fine dining establishment."
+#&gt; 739                                                                                                                       "After one bite, I was hooked."
+#&gt; 740                                                                           One of the few places in Phoenix that I would definately go back to again .
+#&gt; 741                                                                                                                                   Food was so gooodd.
+#&gt; 742                                                                              The grilled chicken was so tender and yellow from the saffron seasoning.
+#&gt; 743                                                                          This is some seriously good pizza and I'm an expert/connisseur on the topic.
+#&gt; 744                                                                           "I really do recommend this place, you can go wrong with this donut place!"
+#&gt; 745                                                                                                                              Pretty cool I would say.
+#&gt; 746                                                                                                          "All in all, I can assure you I'll be back."
+#&gt; 747                                                                                                           The crÃªpe was delicate and thin and moist.
+#&gt; 748                                                                                                                    Their steaks are 100% recommended!
+#&gt; 749                                                                                                                                      Extremely Tasty!
+#&gt; 750                                                                                        Now the pizza itself was good the peanut sauce was very tasty.
+#&gt; 751                                                                                                               "Come hungry, leave happy and stuffed!"
+#&gt; 752                                                     Their regular toasted bread was equally satisfying with the occasional pats of butter... Mmmm...!
+#&gt; 753                                      "Prices are very reasonable, flavors are spot on, the sauce is home made, and the slaw is not drenched in mayo."
+#&gt; 754                                                                                                                                   Very very fun chef.
+#&gt; 755                                                                                                  They really want to make your experience a good one.
+#&gt; 756                                                                                                                           Those burgers were amazing.
+#&gt; 757                                                                                                                                  He deserves 5 stars.
+#&gt; 758                          I will continue to come here on ladies night andddd date night ... highly recommend this place to anyone who is in the area.
+#&gt; 759                                                                                                                               Reasonably priced also!
+#&gt; 760                                                                                                                                Go To Place for Gyros.
+#&gt; 761                                                                                                                                           I LOVED it!
+#&gt; 762                                                                                                          The flair bartenders are absolutely amazing!
+#&gt; 763                                                                                                    "For sushi on the Strip, this is the place to go."
+#&gt; 764                                                                                                        I will come back here every time I'm in Vegas.
+#&gt; 765                                                                                                               All of the tapas dishes were delicious!
+#&gt; 766                                                                                          OMG I felt like I had never eaten Thai food until this dish.
+#&gt; 767                                                               This is an Outstanding little restaurant with some of the Best Food I have ever tasted.
+#&gt; 768                                                                                                                     This place is great!!!!!!!!!!!!!!
+#&gt; 769                                                                                                                       And service was super friendly.
+#&gt; 770                                                                                                               "I had strawberry tea, which was good."
+#&gt; 771                                                                                                     The Greek dressing was very creamy and flavorful.
+#&gt; 772                                                                                                                                 Pretty awesome place.
+#&gt; 773                                                                                                                     Dessert: Panna Cotta was amazing.
+#&gt; 774                                                                         I went to Bachi Burger on a friend's recommendation and was not disappointed.
+#&gt; 775                                                                                                    I could eat their bruschetta all day it is devine.
+#&gt; 776                                                                                                  "You get incredibly fresh fish, prepared with care."
+#&gt; 777                                                                                                                            "Plus, it's only 8 bucks."
+#&gt; 778                                                                                        Their rotating beers on tap is also a highlight of this place.
+#&gt; 779                                                 Four stars for the food &amp; the guy in the blue shirt for his great vibe &amp; still letting us in to eat !
+#&gt; 780                                                                                                        What I really like there is the crepe station.
+#&gt; 781                                                                                                                        "I'm so happy to be here!!!"""
+#&gt; 782                                                                              "Every time I eat here, I see caring teamwork to a professional degree."
+#&gt; 783                                                               When I received my Pita it was huge it did have a lot of meat in it so thumbs up there.
+#&gt; 784                                                    The vanilla ice cream was creamy and smooth while the profiterole (choux) pastry was fresh enough.
+#&gt; 785                                   Some may say this buffet is pricey but I think you get what you pay for and this place you are getting quite a lot!
+#&gt; 786                                                                                                                                Service was fantastic.
+#&gt; 787                                                                                                                      Seriously killer hot chai latte.
+#&gt; 788                                                                                                       The staff are also very friendly and efficient.
+#&gt; 789                                                                           The waitress was friendly and happy to accomodate for vegan/veggie options.
+#&gt; 790                                                                                                                     The jalapeno bacon is soooo good.
+#&gt; 791                                                                                       "A couple of months later, I returned and had an amazing meal."
+#&gt; 792                                                                                                                                 Pretty awesome place.
+#&gt; 793                                                                                  The vegetables are so fresh and the sauce feels like authentic Thai.
+#&gt; 794                                                                                                                 Both of the egg rolls were fantastic.
+#&gt; 795                                                                                                                   They have a really nice atmosphere.
+#&gt; 796                                                                                                                                 This is a good joint.
+#&gt; 797                                                                                                                             Waitress was good though!
+#&gt; 798                                                                                                                                           Both great!
+#&gt; 799                                                                                                                     What a great double cheeseburger!
+#&gt; 800                                                                                         "That said, our mouths and bellies were still quite pleased."
+#&gt; 801                                                                                                                            "Plus, it's only 8 bucks."
+#&gt; 802                                                                                          I would definitely recommend the wings as well as the pizza.
+#&gt; 803                                                                                                                  I did not expect this to be so good!
+#&gt; 804                                                                   "Not a weekly haunt, but definitely a place to come back to every once in a while."
+#&gt; 805                                                                                                                  We were promptly greeted and seated.
+#&gt; 806                                                                            Each day of the week they have a different deal and it's all so delicious!
+#&gt; 807                                                                                                                           Best tacos in town by far!!
+#&gt; 808                                                                                                                                   Good Service-check!
+#&gt; 809                                                                                                                            You won't be disappointed.
+#&gt; 810                                                                                     "Of all the dishes, the salmon was the best, but all were great."
+#&gt; 811                                                                                                       (The bathroom is just next door and very nice.)
+#&gt; 812                                                                                                  Good beer &amp; drink selection and good food selection.
+#&gt; 813                                                                        "I ate there twice on my last visit, and especially enjoyed the salmon salad."
+#&gt; 814                                                                          This is some seriously good pizza and I'm an expert/connisseur on the topic.
+#&gt; 815                                                                                   "Everyone is very attentive, providing excellent customer service."
+#&gt; 816                                               "The food is delicious and just spicy enough, so be sure to ask for spicier if you prefer it that way."
+#&gt; 817                                                                                                                                 I *heart* this place.
+#&gt; 818                                           They also now serve Indian naan bread with hummus and some spicy pine nut sauce that was out of this world.
+#&gt; 819                                                                                                       Food was really good and I got full petty fast.
+#&gt; 820                                                                      "It's close to my house, it's low-key, non-fancy, affordable prices, good food."
+#&gt; 821                                                                              "Every time I eat here, I see caring teamwork to a professional degree."
+#&gt; 822                                                                                                                                    I love this place.
+#&gt; 823                                                                                                                       I will be back many times soon.
+#&gt; 824                                               "The food is delicious and just spicy enough, so be sure to ask for spicier if you prefer it that way."
+#&gt; 825                                                                                        "I love the owner/chef, his one authentic Japanese cool dude!"
+#&gt; 826                                                                                                                  The Macarons here are insanely good.
+#&gt; 827                                            "I always order from the vegetarian menu during dinner, which has a wide array of options to choose from."
+#&gt; 828                                                                                                                     The food came out at a good pace.
+#&gt; 829                                                                                                                             Waitress was good though!
+#&gt; 830                                                                                                          Everything was perfect the night we were in.
+#&gt; 831                                                                                                                      A fantastic neighborhood gem !!!
+#&gt; 832                                                                                                                     Service is friendly and inviting.
+#&gt; 833                                                                                                                       "After one bite, I was hooked."
+#&gt; 834                                                                                                      I miss it and wish they had one in Philadelphia!
+#&gt; 835           "If you love authentic Mexican food and want a whole bunch of interesting, yet delicious meats to choose from, you need to try this place."
+#&gt; 836                                                                                   Their monster chicken fried steak and eggs is my all time favorite.
+#&gt; 837                                                                                                                 Both of the egg rolls were fantastic.
+#&gt; 838                                                                         My boyfriend and i sat at the bar and had a completely delightful experience.
+#&gt; 839                                                                                                                        "Overall, a great experience."
+#&gt; 840                                                                                                                  We were promptly greeted and seated.
+#&gt; 841                                      "This place is a jewel in Las Vegas, and exactly what I've been hoping to find in nearly ten years living here."
+#&gt; 842                                                                                                         "The staff are great, the ambiance is great."
+#&gt; 843                                         Great place to have a couple drinks and watch any and all sporting events as the walls are covered with TV's.
+#&gt; 844                                                                                                      I can assure you that you won't be disappointed.
+#&gt; 845                                          "The first time I ever came here I had an amazing experience, I still tell people how awesome the duck was."
+#&gt; 846                                                                   Kids pizza is always a hit too with lots of great side dish options for the kiddos!
+#&gt; 847                                                                                         The food was outstanding and the prices were very reasonable.
+#&gt; 848                      "My breakfast was perpared great, with a beautiful presentation of 3 giant slices of Toast, lightly dusted with powdered sugar."
+#&gt; 849                                                                                                              "Good value, great food, great service."
+#&gt; 850                                                                                         Great food and great service in a clean and friendly setting.
+#&gt; 851                                                                                                                               Great service and food.
+#&gt; 852                                                                    "When I'm on this side of town, this will definitely be a spot I'll hit up again!"
+#&gt; 853                                                                                                                                It is worth the drive.
+#&gt; 854                                                 Four stars for the food &amp; the guy in the blue shirt for his great vibe &amp; still letting us in to eat !
+#&gt; 855                                  They had a toro tartare with a cavier that was extraordinary and I liked the thinly sliced wagyu with white truffle.
+#&gt; 856                                                                                                                              So absolutley fantastic.
+#&gt; 857                                                                                                                       Great food and awesome service!
+#&gt; 858                                                                                                                                   Good Service-check!
+#&gt; 859                                                                                                                           Those burgers were amazing.
+#&gt; 860                                                                                         The cashier was friendly and even brought the food out to me.
+#&gt; 861           "If you love authentic Mexican food and want a whole bunch of interesting, yet delicious meats to choose from, you need to try this place."
+#&gt; 862                                                                                                                               Reasonably priced also!
+#&gt; 863                                                                                                       It'll be a regular stop on my trips to Phoenix!
+#&gt; 864                                                                                                          "All in all, I can assure you I'll be back."
+#&gt; 865                                                                                                               The patio seating was very comfortable.
+#&gt; 866                                                                                                        "Great atmosphere, friendly and fast service."
+#&gt; 867                                                    The vanilla ice cream was creamy and smooth while the profiterole (choux) pastry was fresh enough.
+#&gt; 868                                            "All in all an excellent restaurant highlighted by great service, a unique menu, and a beautiful setting."
+#&gt; 869                                                                                   My ribeye steak was cooked perfectly and had great mesquite flavor.
+#&gt; 870                                                                                                  Good beer &amp; drink selection and good food selection.
+#&gt; 871                                                                                                            "This place is like Chipotle, but BETTER."
+#&gt; 872                                                  "They have a plethora of salads and sandwiches, and everything I've tried gets my seal of approval."
+#&gt; 873                           "I'd say that would be the hardest decision... Honestly, all of M's dishes taste how they are supposed to taste (amazing)."
+#&gt; 874                                                                                                                       All the bread is made in-house!
+#&gt; 875                                                                  This wonderful experience made this place a must-stop whenever we are in town again.
+#&gt; 876                                                                                                                                       It was awesome.
+#&gt; 877                                                                                                                                    I love this place.
+#&gt; 878                                                                                                       It'll be a regular stop on my trips to Phoenix!
+#&gt; 879                                                                                                                       Pretty good beer selection too.
+#&gt; 880                                                                                                                     Best tater tots in the southwest.
+#&gt; 881                                                                                         These are the nicest restaurant owners I've ever come across.
+#&gt; 882                                                                                                                     The food came out at a good pace.
+#&gt; 883                                                                                                                      I hope this place sticks around.
+#&gt; 884                                                                                                       (The bathroom is just next door and very nice.)
+#&gt; 885                                               "Back to good BBQ, lighter fare, reasonable pricing and tell the public they are back to the old ways."
+#&gt; 886                                                                                         "That said, our mouths and bellies were still quite pleased."
+#&gt; 887                                                                                                     The price is reasonable and the service is great.
+#&gt; 888                                         "Be sure to order dessert, even if you need to pack it to-go - the tiramisu and cannoli are both to die for."
+#&gt; 889                                                                                           "Our waiter was very attentive, friendly, and informative."
+#&gt; 890                                                                       "In the summer, you can dine in a charming outdoor patio - so very delightful."
+#&gt; 891                                                                                                                                       It was awesome.
+#&gt; 892                                                                                                                They were golden-crispy and delicious.
+#&gt; 893                                                                                                                      If you haven't gone here GO NOW!
+#&gt; 894                                                                                                        What I really like there is the crepe station.
+#&gt; 895                                                                                                                                       Fantastic food!
+#&gt; 896                                                                             We walked away stuffed and happy about our first Vegas buffet experience.
+#&gt; 897                                                                                                                           Best tacos in town by far!!
+#&gt; 898                                                                                                                   The Jamaican mojitos are delicious.
+#&gt; 899                                                                                                                              So absolutley fantastic.
+#&gt; 900                                                                                                                    Great place fo take out or eat in.
+#&gt; 901                                                                                                                                        Nice ambiance.
+#&gt; 902                                                                                                                                       It was awesome.
+#&gt; 903                                                                  "Point your finger at any item on the menu, order it and you won't be disappointed."
+#&gt;     Liked
+#&gt; 1       0
+#&gt; 2       0
+#&gt; 3       0
+#&gt; 4       0
+#&gt; 5       0
+#&gt; 6       0
+#&gt; 7       0
+#&gt; 8       0
+#&gt; 9       0
+#&gt; 10      0
+#&gt; 11      0
+#&gt; 12      0
+#&gt; 13      0
+#&gt; 14      0
+#&gt; 15      0
+#&gt; 16      0
+#&gt; 17      0
+#&gt; 18      0
+#&gt; 19      0
+#&gt; 20      0
+#&gt; 21      0
+#&gt; 22      0
+#&gt; 23      0
+#&gt; 24      0
+#&gt; 25      0
+#&gt; 26      0
+#&gt; 27      0
+#&gt; 28      0
+#&gt; 29      0
+#&gt; 30      0
+#&gt; 31      0
+#&gt; 32      0
+#&gt; 33      0
+#&gt; 34      0
+#&gt; 35      0
+#&gt; 36      0
+#&gt; 37      0
+#&gt; 38      0
+#&gt; 39      0
+#&gt; 40      0
+#&gt; 41      0
+#&gt; 42      0
+#&gt; 43      0
+#&gt; 44      0
+#&gt; 45      0
+#&gt; 46      0
+#&gt; 47      0
+#&gt; 48      0
+#&gt; 49      0
+#&gt; 50      0
+#&gt; 51      0
+#&gt; 52      0
+#&gt; 53      0
+#&gt; 54      0
+#&gt; 55      0
+#&gt; 56      0
+#&gt; 57      0
+#&gt; 58      0
+#&gt; 59      0
+#&gt; 60      0
+#&gt; 61      0
+#&gt; 62      0
+#&gt; 63      0
+#&gt; 64      0
+#&gt; 65      0
+#&gt; 66      0
+#&gt; 67      0
+#&gt; 68      0
+#&gt; 69      0
+#&gt; 70      0
+#&gt; 71      0
+#&gt; 72      0
+#&gt; 73      0
+#&gt; 74      0
+#&gt; 75      0
+#&gt; 76      0
+#&gt; 77      0
+#&gt; 78      0
+#&gt; 79      0
+#&gt; 80      0
+#&gt; 81      0
+#&gt; 82      0
+#&gt; 83      0
+#&gt; 84      0
+#&gt; 85      0
+#&gt; 86      0
+#&gt; 87      0
+#&gt; 88      0
+#&gt; 89      0
+#&gt; 90      0
+#&gt; 91      0
+#&gt; 92      0
+#&gt; 93      0
+#&gt; 94      0
+#&gt; 95      0
+#&gt; 96      0
+#&gt; 97      0
+#&gt; 98      0
+#&gt; 99      0
+#&gt; 100     0
+#&gt; 101     0
+#&gt; 102     0
+#&gt; 103     0
+#&gt; 104     0
+#&gt; 105     0
+#&gt; 106     0
+#&gt; 107     0
+#&gt; 108     0
+#&gt; 109     0
+#&gt; 110     0
+#&gt; 111     0
+#&gt; 112     0
+#&gt; 113     0
+#&gt; 114     0
+#&gt; 115     0
+#&gt; 116     0
+#&gt; 117     0
+#&gt; 118     0
+#&gt; 119     0
+#&gt; 120     0
+#&gt; 121     0
+#&gt; 122     0
+#&gt; 123     0
+#&gt; 124     0
+#&gt; 125     0
+#&gt; 126     0
+#&gt; 127     0
+#&gt; 128     0
+#&gt; 129     0
+#&gt; 130     0
+#&gt; 131     0
+#&gt; 132     0
+#&gt; 133     0
+#&gt; 134     0
+#&gt; 135     0
+#&gt; 136     0
+#&gt; 137     0
+#&gt; 138     0
+#&gt; 139     0
+#&gt; 140     0
+#&gt; 141     0
+#&gt; 142     0
+#&gt; 143     0
+#&gt; 144     0
+#&gt; 145     0
+#&gt; 146     0
+#&gt; 147     0
+#&gt; 148     0
+#&gt; 149     0
+#&gt; 150     0
+#&gt; 151     0
+#&gt; 152     0
+#&gt; 153     0
+#&gt; 154     0
+#&gt; 155     0
+#&gt; 156     0
+#&gt; 157     0
+#&gt; 158     0
+#&gt; 159     0
+#&gt; 160     0
+#&gt; 161     0
+#&gt; 162     0
+#&gt; 163     0
+#&gt; 164     0
+#&gt; 165     0
+#&gt; 166     0
+#&gt; 167     0
+#&gt; 168     0
+#&gt; 169     0
+#&gt; 170     0
+#&gt; 171     0
+#&gt; 172     0
+#&gt; 173     0
+#&gt; 174     0
+#&gt; 175     0
+#&gt; 176     0
+#&gt; 177     0
+#&gt; 178     0
+#&gt; 179     0
+#&gt; 180     0
+#&gt; 181     0
+#&gt; 182     0
+#&gt; 183     0
+#&gt; 184     0
+#&gt; 185     0
+#&gt; 186     0
+#&gt; 187     0
+#&gt; 188     0
+#&gt; 189     0
+#&gt; 190     0
+#&gt; 191     0
+#&gt; 192     0
+#&gt; 193     0
+#&gt; 194     0
+#&gt; 195     0
+#&gt; 196     0
+#&gt; 197     0
+#&gt; 198     0
+#&gt; 199     0
+#&gt; 200     0
+#&gt; 201     0
+#&gt; 202     0
+#&gt; 203     0
+#&gt; 204     0
+#&gt; 205     0
+#&gt; 206     0
+#&gt; 207     0
+#&gt; 208     0
+#&gt; 209     0
+#&gt; 210     0
+#&gt; 211     0
+#&gt; 212     0
+#&gt; 213     0
+#&gt; 214     0
+#&gt; 215     0
+#&gt; 216     0
+#&gt; 217     0
+#&gt; 218     0
+#&gt; 219     0
+#&gt; 220     0
+#&gt; 221     0
+#&gt; 222     0
+#&gt; 223     0
+#&gt; 224     0
+#&gt; 225     0
+#&gt; 226     0
+#&gt; 227     0
+#&gt; 228     0
+#&gt; 229     0
+#&gt; 230     0
+#&gt; 231     0
+#&gt; 232     0
+#&gt; 233     0
+#&gt; 234     0
+#&gt; 235     0
+#&gt; 236     0
+#&gt; 237     0
+#&gt; 238     0
+#&gt; 239     0
+#&gt; 240     0
+#&gt; 241     0
+#&gt; 242     0
+#&gt; 243     0
+#&gt; 244     0
+#&gt; 245     0
+#&gt; 246     0
+#&gt; 247     0
+#&gt; 248     0
+#&gt; 249     0
+#&gt; 250     0
+#&gt; 251     0
+#&gt; 252     0
+#&gt; 253     0
+#&gt; 254     0
+#&gt; 255     0
+#&gt; 256     0
+#&gt; 257     0
+#&gt; 258     0
+#&gt; 259     0
+#&gt; 260     0
+#&gt; 261     0
+#&gt; 262     0
+#&gt; 263     0
+#&gt; 264     0
+#&gt; 265     0
+#&gt; 266     0
+#&gt; 267     0
+#&gt; 268     0
+#&gt; 269     0
+#&gt; 270     0
+#&gt; 271     0
+#&gt; 272     0
+#&gt; 273     0
+#&gt; 274     0
+#&gt; 275     0
+#&gt; 276     0
+#&gt; 277     0
+#&gt; 278     0
+#&gt; 279     0
+#&gt; 280     0
+#&gt; 281     0
+#&gt; 282     0
+#&gt; 283     0
+#&gt; 284     0
+#&gt; 285     0
+#&gt; 286     0
+#&gt; 287     0
+#&gt; 288     0
+#&gt; 289     0
+#&gt; 290     0
+#&gt; 291     0
+#&gt; 292     0
+#&gt; 293     0
+#&gt; 294     0
+#&gt; 295     0
+#&gt; 296     0
+#&gt; 297     0
+#&gt; 298     0
+#&gt; 299     0
+#&gt; 300     0
+#&gt; 301     0
+#&gt; 302     0
+#&gt; 303     0
+#&gt; 304     0
+#&gt; 305     0
+#&gt; 306     0
+#&gt; 307     0
+#&gt; 308     0
+#&gt; 309     0
+#&gt; 310     0
+#&gt; 311     0
+#&gt; 312     0
+#&gt; 313     0
+#&gt; 314     0
+#&gt; 315     0
+#&gt; 316     0
+#&gt; 317     0
+#&gt; 318     0
+#&gt; 319     0
+#&gt; 320     0
+#&gt; 321     0
+#&gt; 322     0
+#&gt; 323     0
+#&gt; 324     0
+#&gt; 325     0
+#&gt; 326     0
+#&gt; 327     0
+#&gt; 328     0
+#&gt; 329     0
+#&gt; 330     0
+#&gt; 331     0
+#&gt; 332     0
+#&gt; 333     0
+#&gt; 334     0
+#&gt; 335     0
+#&gt; 336     0
+#&gt; 337     0
+#&gt; 338     0
+#&gt; 339     0
+#&gt; 340     0
+#&gt; 341     0
+#&gt; 342     0
+#&gt; 343     0
+#&gt; 344     0
+#&gt; 345     0
+#&gt; 346     0
+#&gt; 347     0
+#&gt; 348     0
+#&gt; 349     0
+#&gt; 350     0
+#&gt; 351     0
+#&gt; 352     0
+#&gt; 353     0
+#&gt; 354     0
+#&gt; 355     0
+#&gt; 356     0
+#&gt; 357     0
+#&gt; 358     0
+#&gt; 359     0
+#&gt; 360     0
+#&gt; 361     0
+#&gt; 362     0
+#&gt; 363     0
+#&gt; 364     0
+#&gt; 365     0
+#&gt; 366     0
+#&gt; 367     0
+#&gt; 368     0
+#&gt; 369     0
+#&gt; 370     0
+#&gt; 371     0
+#&gt; 372     0
+#&gt; 373     0
+#&gt; 374     0
+#&gt; 375     0
+#&gt; 376     0
+#&gt; 377     0
+#&gt; 378     0
+#&gt; 379     0
+#&gt; 380     0
+#&gt; 381     0
+#&gt; 382     0
+#&gt; 383     0
+#&gt; 384     0
+#&gt; 385     0
+#&gt; 386     0
+#&gt; 387     0
+#&gt; 388     0
+#&gt; 389     0
+#&gt; 390     0
+#&gt; 391     0
+#&gt; 392     0
+#&gt; 393     0
+#&gt; 394     0
+#&gt; 395     0
+#&gt; 396     0
+#&gt; 397     0
+#&gt; 398     0
+#&gt; 399     0
+#&gt; 400     0
+#&gt; 401     0
+#&gt; 402     0
+#&gt; 403     0
+#&gt; 404     0
+#&gt; 405     0
+#&gt; 406     0
+#&gt; 407     0
+#&gt; 408     0
+#&gt; 409     0
+#&gt; 410     0
+#&gt; 411     0
+#&gt; 412     0
+#&gt; 413     0
+#&gt; 414     0
+#&gt; 415     0
+#&gt; 416     0
+#&gt; 417     0
+#&gt; 418     0
+#&gt; 419     0
+#&gt; 420     0
+#&gt; 421     0
+#&gt; 422     0
+#&gt; 423     0
+#&gt; 424     0
+#&gt; 425     0
+#&gt; 426     0
+#&gt; 427     0
+#&gt; 428     0
+#&gt; 429     0
+#&gt; 430     0
+#&gt; 431     0
+#&gt; 432     0
+#&gt; 433     0
+#&gt; 434     0
+#&gt; 435     0
+#&gt; 436     0
+#&gt; 437     0
+#&gt; 438     0
+#&gt; 439     0
+#&gt; 440     0
+#&gt; 441     0
+#&gt; 442     0
+#&gt; 443     0
+#&gt; 444     0
+#&gt; 445     0
+#&gt; 446     0
+#&gt; 447     0
+#&gt; 448     0
+#&gt; 449     0
+#&gt; 450     0
+#&gt; 451     0
+#&gt; 452     0
+#&gt; 453     0
+#&gt; 454     0
+#&gt; 455     0
+#&gt; 456     0
+#&gt; 457     0
+#&gt; 458     0
+#&gt; 459     0
+#&gt; 460     0
+#&gt; 461     0
+#&gt; 462     0
+#&gt; 463     0
+#&gt; 464     0
+#&gt; 465     0
+#&gt; 466     0
+#&gt; 467     0
+#&gt; 468     1
+#&gt; 469     1
+#&gt; 470     1
+#&gt; 471     1
+#&gt; 472     1
+#&gt; 473     1
+#&gt; 474     1
+#&gt; 475     1
+#&gt; 476     1
+#&gt; 477     1
+#&gt; 478     1
+#&gt; 479     1
+#&gt; 480     1
+#&gt; 481     1
+#&gt; 482     1
+#&gt; 483     1
+#&gt; 484     1
+#&gt; 485     1
+#&gt; 486     1
+#&gt; 487     1
+#&gt; 488     1
+#&gt; 489     1
+#&gt; 490     1
+#&gt; 491     1
+#&gt; 492     1
+#&gt; 493     1
+#&gt; 494     1
+#&gt; 495     1
+#&gt; 496     1
+#&gt; 497     1
+#&gt; 498     1
+#&gt; 499     1
+#&gt; 500     1
+#&gt; 501     1
+#&gt; 502     1
+#&gt; 503     1
+#&gt; 504     1
+#&gt; 505     1
+#&gt; 506     1
+#&gt; 507     1
+#&gt; 508     1
+#&gt; 509     1
+#&gt; 510     1
+#&gt; 511     1
+#&gt; 512     1
+#&gt; 513     1
+#&gt; 514     1
+#&gt; 515     1
+#&gt; 516     1
+#&gt; 517     1
+#&gt; 518     1
+#&gt; 519     1
+#&gt; 520     1
+#&gt; 521     1
+#&gt; 522     1
+#&gt; 523     1
+#&gt; 524     1
+#&gt; 525     1
+#&gt; 526     1
+#&gt; 527     1
+#&gt; 528     1
+#&gt; 529     1
+#&gt; 530     1
+#&gt; 531     1
+#&gt; 532     1
+#&gt; 533     1
+#&gt; 534     1
+#&gt; 535     1
+#&gt; 536     1
+#&gt; 537     1
+#&gt; 538     1
+#&gt; 539     1
+#&gt; 540     1
+#&gt; 541     1
+#&gt; 542     1
+#&gt; 543     1
+#&gt; 544     1
+#&gt; 545     1
+#&gt; 546     1
+#&gt; 547     1
+#&gt; 548     1
+#&gt; 549     1
+#&gt; 550     1
+#&gt; 551     1
+#&gt; 552     1
+#&gt; 553     1
+#&gt; 554     1
+#&gt; 555     1
+#&gt; 556     1
+#&gt; 557     1
+#&gt; 558     1
+#&gt; 559     1
+#&gt; 560     1
+#&gt; 561     1
+#&gt; 562     1
+#&gt; 563     1
+#&gt; 564     1
+#&gt; 565     1
+#&gt; 566     1
+#&gt; 567     1
+#&gt; 568     1
+#&gt; 569     1
+#&gt; 570     1
+#&gt; 571     1
+#&gt; 572     1
+#&gt; 573     1
+#&gt; 574     1
+#&gt; 575     1
+#&gt; 576     1
+#&gt; 577     1
+#&gt; 578     1
+#&gt; 579     1
+#&gt; 580     1
+#&gt; 581     1
+#&gt; 582     1
+#&gt; 583     1
+#&gt; 584     1
+#&gt; 585     1
+#&gt; 586     1
+#&gt; 587     1
+#&gt; 588     1
+#&gt; 589     1
+#&gt; 590     1
+#&gt; 591     1
+#&gt; 592     1
+#&gt; 593     1
+#&gt; 594     1
+#&gt; 595     1
+#&gt; 596     1
+#&gt; 597     1
+#&gt; 598     1
+#&gt; 599     1
+#&gt; 600     1
+#&gt; 601     1
+#&gt; 602     1
+#&gt; 603     1
+#&gt; 604     1
+#&gt; 605     1
+#&gt; 606     1
+#&gt; 607     1
+#&gt; 608     1
+#&gt; 609     1
+#&gt; 610     1
+#&gt; 611     1
+#&gt; 612     1
+#&gt; 613     1
+#&gt; 614     1
+#&gt; 615     1
+#&gt; 616     1
+#&gt; 617     1
+#&gt; 618     1
+#&gt; 619     1
+#&gt; 620     1
+#&gt; 621     1
+#&gt; 622     1
+#&gt; 623     1
+#&gt; 624     1
+#&gt; 625     1
+#&gt; 626     1
+#&gt; 627     1
+#&gt; 628     1
+#&gt; 629     1
+#&gt; 630     1
+#&gt; 631     1
+#&gt; 632     1
+#&gt; 633     1
+#&gt; 634     1
+#&gt; 635     1
+#&gt; 636     1
+#&gt; 637     1
+#&gt; 638     1
+#&gt; 639     1
+#&gt; 640     1
+#&gt; 641     1
+#&gt; 642     1
+#&gt; 643     1
+#&gt; 644     1
+#&gt; 645     1
+#&gt; 646     1
+#&gt; 647     1
+#&gt; 648     1
+#&gt; 649     1
+#&gt; 650     1
+#&gt; 651     1
+#&gt; 652     1
+#&gt; 653     1
+#&gt; 654     1
+#&gt; 655     1
+#&gt; 656     1
+#&gt; 657     1
+#&gt; 658     1
+#&gt; 659     1
+#&gt; 660     1
+#&gt; 661     1
+#&gt; 662     1
+#&gt; 663     1
+#&gt; 664     1
+#&gt; 665     1
+#&gt; 666     1
+#&gt; 667     1
+#&gt; 668     1
+#&gt; 669     1
+#&gt; 670     1
+#&gt; 671     1
+#&gt; 672     1
+#&gt; 673     1
+#&gt; 674     1
+#&gt; 675     1
+#&gt; 676     1
+#&gt; 677     1
+#&gt; 678     1
+#&gt; 679     1
+#&gt; 680     1
+#&gt; 681     1
+#&gt; 682     1
+#&gt; 683     1
+#&gt; 684     1
+#&gt; 685     1
+#&gt; 686     1
+#&gt; 687     1
+#&gt; 688     1
+#&gt; 689     1
+#&gt; 690     1
+#&gt; 691     1
+#&gt; 692     1
+#&gt; 693     1
+#&gt; 694     1
+#&gt; 695     1
+#&gt; 696     1
+#&gt; 697     1
+#&gt; 698     1
+#&gt; 699     1
+#&gt; 700     1
+#&gt; 701     1
+#&gt; 702     1
+#&gt; 703     1
+#&gt; 704     1
+#&gt; 705     1
+#&gt; 706     1
+#&gt; 707     1
+#&gt; 708     1
+#&gt; 709     1
+#&gt; 710     1
+#&gt; 711     1
+#&gt; 712     1
+#&gt; 713     1
+#&gt; 714     1
+#&gt; 715     1
+#&gt; 716     1
+#&gt; 717     1
+#&gt; 718     1
+#&gt; 719     1
+#&gt; 720     1
+#&gt; 721     1
+#&gt; 722     1
+#&gt; 723     1
+#&gt; 724     1
+#&gt; 725     1
+#&gt; 726     1
+#&gt; 727     1
+#&gt; 728     1
+#&gt; 729     1
+#&gt; 730     1
+#&gt; 731     1
+#&gt; 732     1
+#&gt; 733     1
+#&gt; 734     1
+#&gt; 735     1
+#&gt; 736     1
+#&gt; 737     1
+#&gt; 738     1
+#&gt; 739     1
+#&gt; 740     1
+#&gt; 741     1
+#&gt; 742     1
+#&gt; 743     1
+#&gt; 744     1
+#&gt; 745     1
+#&gt; 746     1
+#&gt; 747     1
+#&gt; 748     1
+#&gt; 749     1
+#&gt; 750     1
+#&gt; 751     1
+#&gt; 752     1
+#&gt; 753     1
+#&gt; 754     1
+#&gt; 755     1
+#&gt; 756     1
+#&gt; 757     1
+#&gt; 758     1
+#&gt; 759     1
+#&gt; 760     1
+#&gt; 761     1
+#&gt; 762     1
+#&gt; 763     1
+#&gt; 764     1
+#&gt; 765     1
+#&gt; 766     1
+#&gt; 767     1
+#&gt; 768     1
+#&gt; 769     1
+#&gt; 770     1
+#&gt; 771     1
+#&gt; 772     1
+#&gt; 773     1
+#&gt; 774     1
+#&gt; 775     1
+#&gt; 776     1
+#&gt; 777     1
+#&gt; 778     1
+#&gt; 779     1
+#&gt; 780     1
+#&gt; 781     1
+#&gt; 782     1
+#&gt; 783     1
+#&gt; 784     1
+#&gt; 785     1
+#&gt; 786     1
+#&gt; 787     1
+#&gt; 788     1
+#&gt; 789     1
+#&gt; 790     1
+#&gt; 791     1
+#&gt; 792     1
+#&gt; 793     1
+#&gt; 794     1
+#&gt; 795     1
+#&gt; 796     1
+#&gt; 797     1
+#&gt; 798     1
+#&gt; 799     1
+#&gt; 800     1
+#&gt; 801     1
+#&gt; 802     1
+#&gt; 803     1
+#&gt; 804     1
+#&gt; 805     1
+#&gt; 806     1
+#&gt; 807     1
+#&gt; 808     1
+#&gt; 809     1
+#&gt; 810     1
+#&gt; 811     1
+#&gt; 812     1
+#&gt; 813     1
+#&gt; 814     1
+#&gt; 815     1
+#&gt; 816     1
+#&gt; 817     1
+#&gt; 818     1
+#&gt; 819     1
+#&gt; 820     1
+#&gt; 821     1
+#&gt; 822     1
+#&gt; 823     1
+#&gt; 824     1
+#&gt; 825     1
+#&gt; 826     1
+#&gt; 827     1
+#&gt; 828     1
+#&gt; 829     1
+#&gt; 830     1
+#&gt; 831     1
+#&gt; 832     1
+#&gt; 833     1
+#&gt; 834     1
+#&gt; 835     1
+#&gt; 836     1
+#&gt; 837     1
+#&gt; 838     1
+#&gt; 839     1
+#&gt; 840     1
+#&gt; 841     1
+#&gt; 842     1
+#&gt; 843     1
+#&gt; 844     1
+#&gt; 845     1
+#&gt; 846     1
+#&gt; 847     1
+#&gt; 848     1
+#&gt; 849     1
+#&gt; 850     1
+#&gt; 851     1
+#&gt; 852     1
+#&gt; 853     1
+#&gt; 854     1
+#&gt; 855     1
+#&gt; 856     1
+#&gt; 857     1
+#&gt; 858     1
+#&gt; 859     1
+#&gt; 860     1
+#&gt; 861     1
+#&gt; 862     1
+#&gt; 863     1
+#&gt; 864     1
+#&gt; 865     1
+#&gt; 866     1
+#&gt; 867     1
+#&gt; 868     1
+#&gt; 869     1
+#&gt; 870     1
+#&gt; 871     1
+#&gt; 872     1
+#&gt; 873     1
+#&gt; 874     1
+#&gt; 875     1
+#&gt; 876     1
+#&gt; 877     1
+#&gt; 878     1
+#&gt; 879     1
+#&gt; 880     1
+#&gt; 881     1
+#&gt; 882     1
+#&gt; 883     1
+#&gt; 884     1
+#&gt; 885     1
+#&gt; 886     1
+#&gt; 887     1
+#&gt; 888     1
+#&gt; 889     1
+#&gt; 890     1
+#&gt; 891     1
+#&gt; 892     1
+#&gt; 893     1
+#&gt; 894     1
+#&gt; 895     1
+#&gt; 896     1
+#&gt; 897     1
+#&gt; 898     1
+#&gt; 899     1
+#&gt; 900     1
+#&gt; 901     1
+#&gt; 902     1
+#&gt; 903     1</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -3,3 +3,26 @@ pkgdown: 1.3.0
 pkgdown_sha: ~
 articles: []
 
+navbar:
+  title: "Sentianalyzer"
+  type: inverse
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: "Workflow"
+      href: vignettes/workflow.Rmd
+    - text: "Reference"
+      href: reference/index.html
+    - text: "Shiny"
+      menu:
+      - text: "1"
+      - href: vignettes/shiny.Rmd
+      - text: "2"
+      - href: vignettes/shiny.Rmd
+      - text: "3"
+      - href: vignettes/shiny.Rmd
+    
+    
+  right:
+    - icon: fa-github
+      href: https://github.com/zahrakhoshmanesh/SentiAnalyzer
