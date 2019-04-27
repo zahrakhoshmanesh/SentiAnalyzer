@@ -1,6 +1,6 @@
 context("test-BalanceData")
 
-test_that("test for function BalanceData :checking dataset is balanced and fix it to balanced dataset", {
+test_that("BalanceData function work as expected", {
   expect_error(BalanceData())
   data(package = "SentiAnalyzer", imbalance_data)
   expect_s3_class(imbalance_data, "data.frame")
