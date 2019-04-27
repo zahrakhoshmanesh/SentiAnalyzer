@@ -7,10 +7,10 @@
 BalanceData(dataset)
 }
 \arguments{
-\item{x}{unbalanced dataset, a dataframe : two column: first reviews and second binary class label: negative =0 and positive=1.}
+\item{dataset}{unbalanced dataset, a dataframe : two column: first text reviews and second binary class, label: negative =0 and positive=1.}
 }
 \value{
-balanced dataset, save as out.tsv name in inst folder
+balanced_dataframe balanced dataframe containing two columns: review texts and binary class , label: negative =0 and positive=1.
 }
 \description{
 Clean text and buil term matrix for bag of words model or TF DFI.
