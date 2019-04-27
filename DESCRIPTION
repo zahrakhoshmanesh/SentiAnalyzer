@@ -6,15 +6,17 @@ Authors@R: c(
     person("Atousa", "Zarindast", email = "atousa@iastate.edu", role = "aut"),
     person("Joshua", "budi", email = "joshua@iastate.edu", role = "aut"))  
 Description: What the package does (one paragraph).
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Suggests: 
-    testthat (>= 2.1.0),
+Depends:
+    R (>= 2.10)
+Suggests:
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    plotly
 Imports:
     assertthat,
     caret,
@@ -23,8 +25,13 @@ Imports:
     purrr,
     dplyr,
     ROSE,
-    testthat,
+    testthat (>= 2.1.0),
     tidyverse,
     SnowballC,
-    usethis
+    usethis,
+    ggplot2,
+    reshape2,
+    tidytext,
+    wordcloud
 VignetteBuilder: knitr
+
