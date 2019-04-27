@@ -10,74 +10,68 @@ output: html_document
 a
 ```
 
-### importing the dataset
-```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
-source_datasets=read.delim('../inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
-str(source_datasets$Liked)
-#Sys.setenv(JAVA_HOME="C:\\Program Files (x86)\\Java\\jdk1.8.0_201\\jre")
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold'}
+a
+```
 
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+a
+```
+
+
+
+#### importing the dataset (OPTIONAL)
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+imb_source_datasets=read.delim('./data-raw/Imbalance_Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
 ```
 
 ####dataset sample
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hold'}
-head(source_datasets)
+head(imb_source_datasets)
 ```
 
 ### tackling imbalanced data
-`BalanceData` function can be used to balance the called dataset. Using packages:`ROSE, balance the columns of the data. For oversampled data, used `ovun.sample' to balance over or under sampled data. Then check the balance of the columns
+The first step to process your data is to make sure that both of your variables have equal numbers of observations/unit. `BalanceData` function can be used to balance the called dataset. Using packages:`ROSE`, balance the columns of the data. For oversampled data, used `ovun.sample` to balance over or under sampled data. Then check the balance of the columns/variables.
+`BalanceData` will automatically save a balanced dataset saved in `/data` folder under name `data.rose.Rda`
 
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
-
-BalanceData<-function(x){
-#install.packages("ROSE")
-library(ROSE)
-data(hacide)
-df<-x
-
-#over sampling
-data_balanced_over <- ovun.sample(cls ~ ., data = hacide.train, method = "over",N = 1960)$data
-table(data_balanced_over$cls)
-
-data_balanced_under <- ovun.sample(cls ~ ., data = hacide.train, method = "under", N = 40, seed = 1)$data
-table(data_balanced_under$cls)
-
-data_balanced_both <- ovun.sample(cls ~ ., data = hacide.train, method = "both", p=0.5,N=1000, seed = 1)$data
-table(data_balanced_both$cls)
-
-data.rose <- ROSE(cls ~ ., data = hacide.train, seed = 1)$data
-table(data.rose$cls)
-
-#check table
-table(df$Liked)
-data_balanced_over <- ovun.sample(Liked ~ ., data = df, method = "over",N = 1000)$data
-table(data_balanced_over$Liked)
-
-data_balanced_under <- ovun.sample(Liked ~ ., data = df, method = "under", N = 500, seed = 1)$data
-table(data_balanced_under$Liked)
-
-data_balanced_both <- ovun.sample(Liked ~ ., data = df, method = "both", p=0.5,N=500, seed = 1)$data
-table(data_balanced_both$Liked)
-
-data.rose <- ROSE(Liked ~ ., data = df, seed = 1)$data
-table(data.rose$Liked)
-}
-
-
+BalanceData(imb_source_dataset)
 ```
 
+check the balanced dataset, they have same number of rows on both columns now
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hold' }
-
+str(data.rose)
+dim(data.rose)
 ```
-
-
-
 
 ### Cleaning the texts
+*input*:
+
+`CleanText()` calls for 3 arguments: 
+a. the dataset 
+b. document term matrix structure of choice (choose 1 from 3) 
+c. reduction rate (range 0-1)
+
+*output*: `CleanText()` returns a matrix `clean_dataset` saved as `data/clean_dataset.rda`
+
+
 packages used: `tm` and `SnowballC`
+
+
+##### a. text-mining the dataset
+integrating built-in functions from `tm`, `CleanText()` will "clean up" the words from the text and mine for the words that conveys a range sorts of sentiment and convert some formatting; this remains what is called as token (single) or corpus (all the tokens):
+*converts all text to lower case
+*remove numbers from the text
+*remove punctuations
+*remove stop words, e.g. "the", "a", "for", "and", etc
+*extract the stems of thegiven words using Porter's stemming algorithmn
+*remove extra white spaces that was left off by the removed texts 
+
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hold', echo=TRUE}
-#install.packages('tm')
-#install.packages('SnowballC')
 library(tm)
+```
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold', echo=FALSE}
 corpus=VCorpus(VectorSource(source_datasets$Review))
 #convert all review to lower case
 corpus= tm_map(corpus,content_transformer(tolower))
@@ -98,52 +92,44 @@ corpus$content[[3]][[1]]
 corpus$content[[4]][[1]]
 corpus$content[[5]][[1]]
 corpus$content[[61]][[1]]
-
-```
 ```
 
-## Creating the bag of words model
-creating document term matrix of words in reviews
-`DocumentTermMatrix` and `TermDocumentMatrix`
-using n gram, Bigram
-```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
-
-dtm = DocumentTermMatrix(corpus)
-# reduce dimension of sparse matrix with considering 99 percent of most frequent
-dtm = removeSparseTerms(dtm,0.99)
-dtm
-#plot(dtm, terms = findFreqTerms(tdm, lowfreq = 6)[1:25], corThreshold = 0.5)
-
-
-  BigramTokenizer <-  function(x)  unlist(lapply(ngrams(words(x), 2), paste, collapse = " "), use.names = FALSE)
-
-  tdm <- TermDocumentMatrix(corpus, control = list(tokenize = BigramTokenizer))
-  tdm
-  #inspect(removeSparseTerms(tdm[, 1:10], 0.99))
-  # convert matrix of independent variables to data frame
-dataset = as.data.frame(as.matrix(dtm))
-dim(dataset)
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold', echo=TRUE}
+head(corpus)
 ```
-at this point 
+
+##### b. Creating the document-term matrix/bag of words model
+Next, still within the scope of the same current function, `Cleantext()`, the corpus is formatted to a [document-term matrix](#https://en.wikipedia.org/wiki/Document-term_matrix) (DTM) and creating document term matrix of words in reviews. Essentially it creates a single column for every tokens in the corpus and counted for frequency of occurence on each tokens on the rows
+
+user also have the choice to choose either (the argument call is also done on CleanText) :
+1. bag of words
+2. tf-idf (term frequency-inverse document frequency)
+3. Bi-gram 
+
+##### c. choosing the reduction rate
+the document-term matrix will quickly expand the dataset dimension, especially the sparse terms, significantly. Depending on the dimension of the dataset can be adjusted be adjusted within the range 0 to 1. Essentially it is calling `tm::removeSparseTerms`
+
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=TRUE}
+CleanText(data.rose, 1, 0.99)
+```
+example:
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hold'}
-dim(dataset)
-names(dataset)[1:50]
-dataset[1:30]
+dim(clean_dataset)
+names(clean_dataset)[1:50]
+clean_dataset[1:10]
 ```
-
 
 
 ### Building  classification
+*input*: document-term matrix (result from `CleanText()` which is `clean_dataset`)
+*output*: list of training model parameters from 4 machine learning, random forest algorithms
 
-####3 classification are popular for text:
-1- decision tree
-2- naive bayes
-3- random forest
-
-## preparing the dataset and divide dataset to train and test
+##### preparing the dataset and divide dataset to train and test
 using package `caTools`
 split the training and the test set to 0.8:0.2 split ratio, 0.8 of the dataset is used to train the model and 0.2 part is the predicted using the model
-```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+
+cross-validation
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE, eval=FALSE}
 # convert matrix of independent variables to data frame
 dataset = as.data.frame(as.matrix(dtm))
 
@@ -163,155 +149,49 @@ set.seed(123)
 split=sample.split(dataset$target, SplitRatio = 0.8)
 training_set=subset(dataset,split==TRUE)
 test_set=subset(dataset,split==FALSE)
-
 ```
-
-
-
-## visualization
-
-```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
-#wsTDM <- Data(TermDocMatrix(dtm))
-#wsHClust <- hclust(dist(wsTDM), method = "ward")
-```
-
 
 ### classifier : Random Forest
-Now, the split dataset have the 3 options iof the algorithm that the user can pick do NLP on the dataset from 3 ML algorithms. 
-First using `randomForest` package
+Training the model with various machine learning algorithms. classification that are popular for text mining, and are available in our package:
+1. Decision Tree
+2. Naive Bayes
+3. k-Nearest Neighbors (kNN)
+4. Gradient-Boosting Machines (GBM) 
+
+The model training consist of `expand.grid()`, `train()` (formula, data, method, train control, tuneGrid, etc)
+
+`randomForest` and `caret()` package
 
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
-# fitting random forest classification to the training set
-#install.packages('randomForest')
-library(randomForest)
-dimention<-dim(dataset)
-numdim<-dimention[2]
-numdim
+library(testthat)
+library(assertthat)
+library(caret)
+```
 
-classifier = randomForest(x=training_set[-1*numdim],
-                          y=training_set$target,
-                          ntree=10
-                          )
-#predicting the test set result
-y_pred = predict(classifier,newdata=test_set[-1*numdim])
-
-#making the confusion matrix
-cm_randomforest=table(test_set[,numdim],y_pred)
-#cm_randomforest
-#str(cm_randomforest)
-TP=cm_randomforest[1,1]
-TP
-FP=cm_randomforest[1,2]
-FP
-FN=cm_randomforest[2,1]
-FN
-TN=cm_randomforest[2,2]
-TN
-
-Accuracy = (TP + TN) / (TP + TN + FP + FN)
-Accuracy
-
-Precision = TP / (TP + FP)
-Precision
-
-Recall = TP / (TP + FN)
-Recall
-
-F1_Score = 2 * Precision * Recall / (Precision + Recall)
-F1_Score
-
-
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
+BuildTraining(clean_dataset)[[2]]
 ```
 
 
-## Naive Bayes classifier
+### Build Prediction
+predict the classes using trained algorithms and give confusion matrix  in return
+*input*: document-term matrix (result from `CleanText()` which is `clean_dataset`)
+*output*: list of confusion matrices of 4 machine learning, random forest algorithms
 
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
-# Naive Bayes
-
-#install.packages('e1071')
-library(e1071)
-classifier = naiveBayes(x = training_set[-692],
-                        y = training_set$target)
-
-# Predicting the Test set results
-y_pred = predict(classifier, newdata = test_set[-692])
-
-# Making the Confusion Matrix
-cm_naivebayes = table(test_set[, 692], y_pred)
-cm_naivebayes
-TP=cm_naivebayes[1,1]
-TP
-FP=cm_naivebayes[1,2]
-FP
-FN=cm_naivebayes[2,1]
-FN
-TN=cm_naivebayes[2,2]
-TN
-
-Accuracy = (TP + TN) / (TP + TN + FP + FN)
-Accuracy
-
-Precision = TP / (TP + FP)
-Precision
-
-Recall = TP / (TP + FN)
-Recall
-
-F1_Score = 2 * Precision * Recall / (Precision + Recall)
-F1_Score
-
+BuildPrediction(clean_dataset)
 ```
 
-## Decision Tree Classifier
 
-```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
-# Decision Tree Classification
-
-
-# Splitting the dataset into the Training set and Test set
-#install.packages('caTools')
-library(caTools)
-set.seed(123)
-
-# Fitting Decision Tree Classification to the Training set
-#install.packages('rpart')
-library(rpart)
-classifier = rpart(formula = Liked ~ .,
-                   data = training_set)
-
-# Predicting the Test set results
-y_pred = predict(classifier, newdata = test_set[-692], type = 'class')
-
-# Making the Confusion Matrix
-cm_decisiontree = table(test_set[, 692], y_pred)
-
-cm_decisiontree
-
-TP=cm_decisiontree[1,1]
-TP
-FP=cm_decisiontree[1,2]
-FP
-FN=cm_decisiontree[2,1]
-FN
-TN=cm_decisiontree[2,2]
-TN
-
-Accuracy = (TP + TN) / (TP + TN + FP + FN)
-Accuracy
-
-Precision = TP / (TP + FP)
-Precision
-
-Recall = TP / (TP + FN)
-Recall
-
-F1_Score = 2 * Precision * Recall / (Precision + Recall)
-F1_Score
+### Comparison 
+among the 4 ML training model classifications 
 
 
 
-```
+
+
+
+
 
 
 ## Visualization
@@ -404,21 +284,4 @@ VisualizeData<-function(dataset){
 }
 
 
-
-
-
-
-```
-
-
-
-
-
-
-```{r message=FALSE, include=FALSE, warning=FALSE, results='hold'}
-a
-```
-
-```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
-a
 ```

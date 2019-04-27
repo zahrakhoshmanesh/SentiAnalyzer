@@ -1,5 +1,5 @@
 
-#' Clean text and buil term matrix for bag of words model or TF DFI.
+#' Clean text and build term matrix for bag of words model or TF DFI.
 #'
 #' @param x unbalanced dataset, a dataframe : two column: first reviews and second binary class label: negative =0 and positive=1.
 #' @return balanced dataset, save as out.tsv name in inst folder
