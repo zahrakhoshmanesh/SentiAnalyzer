@@ -6,18 +6,3 @@ articles:
   shiny: shiny.html
   workflow: workflow.html
 
-navbar:
-  title: "SentiAnalyzer"
-  type: inverse
-  left:
-    - icon: fa-home fa-lg
-      href: index.html
-    - text: "Workflow"
-      href: articles/workflow.html
-    - text: "shiny"
-      href: articles/shiny.html
-    - text: "Reference"
-      href: "reference/index.html"
-  right:
-    - icon: fa-github
-      href: https://github.com/zahrakhoshmanesh/SentiAnalyzer

@@ -51,8 +51,13 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
                '3' = t(TermDocumentMatrix(corpus, control = list(tokenize = BigramTokenizer)))
                 )
 
+<<<<<<< HEAD
   # reduce dimention of sparse matrix
   dtm = tm:: removeSparseTerms(dtm,reductionrate)
+=======
+  # reduce dimension of sparse matrix
+  dtm = removeSparseTerms(dtm,reductionrate)
+>>>>>>> bacece816463efd64f53e039f5e41ff9440393d0
 
   # convert matrix of independent variables to data frame
   clean_dataset = as.data.frame(as.matrix(dtm))

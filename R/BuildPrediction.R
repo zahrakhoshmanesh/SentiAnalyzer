@@ -34,9 +34,17 @@ BuildPrediction <- function(x) {
   df <- data.frame(matrix(list, nrow=length(list), byrow=T)) 
   names(df)<-"method"
   
-  t<-df%>%dplyr::mutate( prediction=purrr::map(.x=method,.f=function(d){predict(d,xx)}) )
-  t<-t%>%dplyr::mutate(conf=purrr::map(.x=prediction,.f=function(d){confusionMatrix(d,xx[, ncol(xx)])}))
-  t<-t[3]
-  return(t)
+  trained_df<- df %>%
+    dplyr::mutate(
+    prediction=purrr::map(.x=method,
+                          .f=function(d){predict(d,xx)}) )
+  
+  trained_df<-trained_df %>% 
+    dplyr::mutate(
+      conf=purrr::map(.x=prediction,
+                      .f=function(d){confusionMatrix(d,xx[, ncol(xx)])}))
+
+  trained_df<-trained_df[3]
+  return(trained_df)
 
 }
