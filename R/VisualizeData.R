@@ -7,16 +7,16 @@
 #' @author Zahra Khoshmanesh
 #' @export
 #' @import tidyverse
-#' @import assertthat
-#' @import testthat
 #' @import tidytext
 #' @import dplyr
 #' @import ggplot2
 #' @import wordcloud
 #' @import reshape2
+#' @import tibble
 #' @examples
 #' library(SentiAnalyzer)
-#' orignal_dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+#' direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
+#' orignal_dataset <- read.delim(direction,quote='',stringsAsFactors = FALSE)
 #' VisualizeData(orignal_dataset,15)
 
 VisualizeData<-function(dataset,termcount){
@@ -27,20 +27,16 @@ VisualizeData<-function(dataset,termcount){
   #library(wordcloud)
   #library(reshape2)
 
-  source_datasets=read.delim(dataset,quote='',stringsAsFactors = FALSE)
-  #source_datasets=read.delim('./inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)
-
+  source_datasets <- dataset
+ 
 
   text_df <- tibble(text = source_datasets[[1]])
 
-  tidy_text <- text_df %>%
-    unnest_tokens(word, text)
 
-  data(stop_words)
-  tidy_text <- tidy_text %>%
-    anti_join(stop_words)
-
-
+ tidy_text <- source_datasets[[1]] %>%
+    as.tibble %>% 
+   tidytext:: unnest_tokens(word, value) %>%
+     dplyr:: anti_join(tidytext:: stop_words)
 
 
  wordfreqplot = tidy_text %>%
@@ -52,18 +48,13 @@ VisualizeData<-function(dataset,termcount){
     xlab(NULL) +
     coord_flip()
 
- wordfreqplot
-
-
+ 
 
  wordcloadplot = tidy_text %>%
-    anti_join(stop_words) %>%
     count(word) %>%
     with(wordcloud(word, n, max.words = 100))
 
- wordcloadplot
-
-
+ 
 
  reshapplot = tidy_text %>%
     inner_join(get_sentiments("bing")) %>%
@@ -72,7 +63,8 @@ VisualizeData<-function(dataset,termcount){
     comparison.cloud(colors = c("gray20", "gray80"),
                      max.words = 100)
 
- reshapplot
+ 
+ #return(c(wordfreqplot,wordcloadplot,reshapplot))
 
 }
 

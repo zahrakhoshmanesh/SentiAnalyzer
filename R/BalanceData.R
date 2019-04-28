@@ -7,10 +7,10 @@
 #' @export
 #' @import ROSE
 #' @import usethis
-#' @import assertthat
 #' @examples
-#' library(SentiAnalyzer)
-#' imbalance_data<- read.delim(system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+#' library("SentiAnalyzer")
+#' direction <- system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv")
+#' imbalance_data<- read.delim(direction,quote='',stringsAsFactors = FALSE)
 #' BalanceData(imbalance_data)
 
 
@@ -37,12 +37,12 @@ BalanceData<-function(dataset){
   
   #write.table(data.rose, file='./inst/extdata/out.tsv', quote=FALSE, sep='\t', col.names = NA)
   
-  usethis::use_data(balanced_dataframe,overwrite = TRUE) #save output file in Data folder as balanced_dataframe.rda file
+  #usethis::use_data(balanced_dataframe,overwrite = TRUE) #save output file in Data folder as balanced_dataframe.rda file
   
   #check if file exist, message user that balancing was successful
-  if (file.access(system.file(package = "SentiAnalyzer", "balanced_dataframe"), mode = 0)==0){
-    print("balancing dataset is done! and new balanced dataset saved in Data folder as balanced_dataframe.rda file ")
-  }
+  #if (file.access(system.file(package = "SentiAnalyzer", "balanced_dataframe"), mode = 0)==0){
+  #  print("balancing dataset is done! and new balanced dataset saved in Data folder as balanced_dataframe.rda file ")
+  #}
   return(balanced_dataframe)
 }
 

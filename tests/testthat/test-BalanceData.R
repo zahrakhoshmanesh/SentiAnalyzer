@@ -5,9 +5,8 @@ test_that("BalanceData function work as expected", {
   data(package = "SentiAnalyzer", imbalance_data)
   expect_s3_class(imbalance_data, "data.frame")
   #output
-  balance_output <- BalanceData(dataset = imbalance_data)
-  #output is a data frame
-  expect_s3_class(balance_output, "data.frame")
+ balance_output <- BalanceData(dataset = imbalance_data)
+ expect_s3_class(balance_output, "data.frame")
  
  })
 

@@ -32,6 +32,11 @@ Imports:
     ggplot2,
     reshape2,
     tidytext,
-    wordcloud
+    wordcloud,
+    tibble,
+    NLP,
+    RWeka,
+    rJava,
+    matlib
 VignetteBuilder: knitr
 

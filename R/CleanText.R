@@ -8,12 +8,13 @@
 #' @author Zahra Khoshmanesh
 #' @export
 #' @import tm
+#' @import matlib
 #' @import SnowballC
-#' @import assertthat
-#' @import testthat
+#' @import NLP
 #' @examples
-#' library(SentiAnalyzer)
-#' orignal_dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+#' library("SentiAnalyzer")
+#' direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
+#' orignal_dataset <- read.delim(direction,quote='',stringsAsFactors = FALSE)
 #' CleanText(original_dataset,dtm_method=1,reductionrate=0.99)
 #' CleanText(original_dataset,dtm_method=2,reductionrate=0.99)
 #' CleanText(original_dataset,dtm_method=3,reductionrate=0.999)
@@ -27,25 +28,23 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
   #library(RWeka)
   #library(matlib)
   #source_datasets=read.delim(source_dataset,quote='',stringsAsFactors = FALSE)
-  source_datasets=source_dataset
-  corpus=tm::VCorpus(VectorSource(source_datasets[[1]]))
-  #convert all review to lower case
-  corpus= tm::tm_map(corpus,content_transformer(tolower))
-  # remove numbers from reviews
-  corpus=tm::tm_map(corpus,removeNumbers)
-  # remove punctuations from reviews
-  corpus=tm::tm_map(corpus,removePunctuation)
-  # remove Stop words from reviews
-  corpus=tm::tm_map(corpus,removeWords,stopwords())
-  # Stemming
-  corpus=tm::tm_map(corpus,stemDocument)
-  # remove extra space that created in cleaning stage when for example number remove
-  corpus=tm::tm_map(corpus,stripWhitespace)
+  origin_data=source_dataset
+  dim(origin_data)
+  dim(origin_data[[1]])
+  corpus <- tm::VCorpus(VectorSource(origin_data[[1]])) %>%
+      tm::tm_map(content_transformer(tolower)) %>% #convert all review to lower case
+      tm::tm_map(removeNumbers) %>% # remove numbers from reviews
+      tm::tm_map(removePunctuation) %>% # remove punctuations from reviews
+      tm::tm_map(removeWords,stopwords()) %>% # remove Stop words from reviews
+      tm::tm_map(stemDocument) %>% # Stemming
+      tm::tm_map(stripWhitespace)  # remove extra space that created in cleaning stage when for example number remove
+  
+  dim(corpus)
 
   #creating document term matrix of words in reviews
 
   # bigram
-  BigramTokenizer <-  function(x)  unlist(lapply(ngrams(words(x), 2), paste, collapse = " "), use.names = FALSE)
+  BigramTokenizer <-  function(x)  unlist(lapply(NLP::ngrams(NLP::words(x), 2), paste, collapse = " "), use.names = FALSE)
   dtm <-switch(dtm_method,
                '1' = tm::DocumentTermMatrix(corpus),
                '2' = tm::DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE))),
@@ -53,14 +52,14 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
                 )
 
   # reduce dimention of sparse matrix
-  dtm = removeSparseTerms(dtm,reductionrate)
+  dtm = tm:: removeSparseTerms(dtm,reductionrate)
 
   # convert matrix of independent variables to data frame
   clean_dataset = as.data.frame(as.matrix(dtm))
   # encode the target feature as factor
-  clean_dataset$target = factor(source_datasets[[-1]],level=c(0,1))
+  clean_dataset$target = factor(origin_data[[-1]],level=c(0,1))
   #assertthat(not_empty(dataset), noNA(dataset),is.data.frame(dataset))
-  usethis::use_data(clean_dataset,overwrite = TRUE)
+  #usethis::use_data(clean_dataset,overwrite = TRUE)
   return(clean_dataset)
 }
 
