@@ -2,7 +2,7 @@
 % Please edit documentation in R/BuildTraining.R
 \name{BuildTraining}
 \alias{BuildTraining}
-\title{Train Machine learning algorithms and give trained models}
+\title{Train Machine learning algorithms and return trained models}
 \usage{
 BuildTraining(x)
 }
@@ -13,7 +13,7 @@ BuildTraining(x)
 trained models
 }
 \description{
-Train Machine learning algorithms and give trained models
+Train Machine learning algorithms and return trained models
 }
 \examples{
 library(SentiAnalyzer)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Clean text and buil term matrix for bag of words model or TF DFI. — BalanceData • SentiAnalyzer</title>
+<title>Clean text and build term matrix for bag of words model or TF DFI. — BalanceData • SentiAnalyzer</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Clean text and buil term matrix for bag of words model or TF DFI. — BalanceData" />
+<meta property="og:title" content="Clean text and build term matrix for bag of words model or TF DFI. — BalanceData" />
 
-<meta property="og:description" content="Clean text and buil term matrix for bag of words model or TF DFI." />
+<meta property="og:description" content="Clean text and build term matrix for bag of words model or TF DFI." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -86,6 +86,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/Documentation.html">for documentation</a>
+    </li>
+    <li>
       <a href="../articles/ReadMe.html">ReadMe: A Guid to sentiment Analysis with R step by step</a>
     </li>
     <li>
@@ -112,14 +115,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Clean text and buil term matrix for bag of words model or TF DFI.</h1>
+    <h1>Clean text and build term matrix for bag of words model or TF DFI.</h1>
     
     <div class="hidden name"><code>BalanceData.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Clean text and buil term matrix for bag of words model or TF DFI.</p>
+    <p>Clean text and build term matrix for bag of words model or TF DFI.</p>
     
     </div>
 
@@ -129,23 +132,22 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>unbalanced dataset, a dataframe : two column: first reviews and second binary class label: negative =0 and positive=1.</p></td>
+      <th>dataset</th>
+      <td><p>unbalanced dataset, a dataframe : two column: first text reviews and second binary class, label: negative =0 and positive=1.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>balanced dataset, save as out.tsv name in inst folder</p>
+    <p>balanced_dataframe balanced dataframe containing two columns: review texts and binary class , label: negative =0 and positive=1.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>SentiAnalyzer</span>)
 <span class='no'>imbalance_data</span><span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.delim</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"SentiAnalyzer"</span>, <span class='st'>"extdata/Imbalance_Restaurant_Reviews.tsv"</span>),<span class='kw'>quote</span><span class='kw'>=</span><span class='st'>''</span>,<span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>BalanceData</span>(<span class='no'>imbalance_data</span>)</div><div class='output co'>#&gt; [1] "dataset is imbalance, balancing it in few seconds"
+<span class='fu'>BalanceData</span>(<span class='no'>imbalance_data</span>)</div><div class='output co'>#&gt; [1] "dataset is imbalance, Starting balancing it"
 #&gt; <span style='color: #00BB00;'>&lt;U+2714&gt;</span><span> Setting active project to </span><span style='color: #0000BB;'>'D:/R/SentiAnalyzer'</span><span>
-#&gt; </span><span style='color: #00BB00;'>&lt;U+2714&gt;</span><span> Saving </span><span style='color: #0000BB;'>'data.rose'</span><span> to </span><span style='color: #0000BB;'>'data/data.rose.rda'</span><span>
-#&gt; [1] "balancing dataset is done! and new balanced dataset saved in extdata folder under name out.tsv "</div><div class='output co'>#&gt;                                                                                                                                                    Review
+#&gt; </span><span style='color: #00BB00;'>&lt;U+2714&gt;</span><span> Saving </span><span style='color: #0000BB;'>'balanced_dataframe'</span><span> to </span><span style='color: #0000BB;'>'data/balanced_dataframe.rda'</span><span></div><div class='output co'>#&gt;                                                                                                                                                    Review
 #&gt; 1                                                                                                                                          Won't go back.
 #&gt; 2                                                                                              -Drinks took close to 30 minutes to come out at one point.
 #&gt; 3                                                                                                                                    The service was meh.
