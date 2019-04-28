@@ -29,8 +29,8 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
   #library(matlib)
   #source_datasets=read.delim(source_dataset,quote='',stringsAsFactors = FALSE)
   origin_data=source_dataset
-  dim(origin_data)
-  dim(origin_data[[1]])
+  #dim(origin_data)
+  #dim(origin_data[[1]])
   corpus <- tm::VCorpus(VectorSource(origin_data[[1]])) %>%
       tm::tm_map(content_transformer(tolower)) %>% #convert all review to lower case
       tm::tm_map(removeNumbers) %>% # remove numbers from reviews
@@ -39,7 +39,7 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
       tm::tm_map(stemDocument) %>% # Stemming
       tm::tm_map(stripWhitespace)  # remove extra space that created in cleaning stage when for example number remove
   
-  dim(corpus)
+  #dim(corpus)
 
   #creating document term matrix of words in reviews
 
@@ -51,13 +51,8 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
                '3' = t(TermDocumentMatrix(corpus, control = list(tokenize = BigramTokenizer)))
                 )
 
-<<<<<<< HEAD
   # reduce dimention of sparse matrix
   dtm = tm:: removeSparseTerms(dtm,reductionrate)
-=======
-  # reduce dimension of sparse matrix
-  dtm = removeSparseTerms(dtm,reductionrate)
->>>>>>> bacece816463efd64f53e039f5e41ff9440393d0
 
   # convert matrix of independent variables to data frame
   clean_dataset = as.data.frame(as.matrix(dtm))
