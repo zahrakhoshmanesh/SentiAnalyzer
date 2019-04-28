@@ -19,7 +19,8 @@ Visualize dataset and get some insight of data.
 }
 \examples{
 library(SentiAnalyzer)
-orignal_dataset <- read.delim(system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
+orignal_dataset <- read.delim(direction,quote='',stringsAsFactors = FALSE)
 VisualizeData(orignal_dataset,15)
 }
 \author{

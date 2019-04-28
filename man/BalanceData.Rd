@@ -16,8 +16,9 @@ balanced_dataframe balanced dataframe containing two columns: review texts and b
 Clean text and build term matrix for bag of words model or TF DFI.
 }
 \examples{
-library(SentiAnalyzer)
-imbalance_data<- read.delim(system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+library("SentiAnalyzer")
+direction <- system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv")
+imbalance_data<- read.delim(direction,quote='',stringsAsFactors = FALSE)
 BalanceData(imbalance_data)
 }
 \author{
