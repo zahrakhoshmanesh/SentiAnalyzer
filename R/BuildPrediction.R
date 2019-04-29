@@ -1,8 +1,8 @@
-#' predict the classes using trained algorithms and give cnfusion matrix  in return
+#' predict the classes using trained algorithms and give confusion matrix  in return
 
 #'
-#' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
-#' @return 3 confusion matrix for each trained classification algorithm
+#' @param x input is a dataframe for document-term matrix in which columns are the terms and row are binary variable 1 if that term exist in that data instance
+#' @return list of 4 confusion matrix for each trained classification algorithm
 #' @author Atousa Zarindast
 #' @export
 #' @import tidyverse

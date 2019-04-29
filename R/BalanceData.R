@@ -27,7 +27,7 @@ BalanceData<-function(dataset){
      {
        print("dataset is imbalance, Starting balancing it")
        balanced_dataframe <- ROSE:: ROSE(formula, data = source_datasets, seed = 1)$data
-       table(data.rose[[2]])
+       table(balanced_dataframe[[2]])
      }  
   else
     {

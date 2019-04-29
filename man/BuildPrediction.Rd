@@ -2,18 +2,18 @@
 % Please edit documentation in R/BuildPrediction.R
 \name{BuildPrediction}
 \alias{BuildPrediction}
-\title{predict the classes using trained algorithms and give cnfusion matrix  in return}
+\title{predict the classes using trained algorithms and give confusion matrix  in return}
 \usage{
 BuildPrediction(x)
 }
 \arguments{
-\item{x}{input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance}
+\item{x}{input is a dataframe for document-term matrix in which columns are the terms and row are binary variable 1 if that term exist in that data instance}
 }
 \value{
-3 confusion matrix for each trained classification algorithm
+list of 4 confusion matrix for each trained classification algorithm
 }
 \description{
-predict the classes using trained algorithms and give cnfusion matrix  in return
+predict the classes using trained algorithms and give confusion matrix  in return
 }
 \examples{
 library(SentiAnalyzer)
