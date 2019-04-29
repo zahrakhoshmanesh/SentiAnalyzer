@@ -86,12 +86,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Documentation.html">for documentation</a>
-    </li>
-    <li>
-      <a href="../articles/ReadMe.html">ReadMe: A Guid to sentiment Analysis with R step by step</a>
-    </li>
-    <li>
       <a href="../articles/shiny.html">Vignette Title</a>
     </li>
     <li>
@@ -143,11 +137,10 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>SentiAnalyzer</span>)
-<span class='no'>imbalance_data</span><span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.delim</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"SentiAnalyzer"</span>, <span class='st'>"extdata/Imbalance_Restaurant_Reviews.tsv"</span>),<span class='kw'>quote</span><span class='kw'>=</span><span class='st'>''</span>,<span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>BalanceData</span>(<span class='no'>imbalance_data</span>)</div><div class='output co'>#&gt; [1] "dataset is imbalance, Starting balancing it"
-#&gt; <span style='color: #00BB00;'>&lt;U+2714&gt;</span><span> Setting active project to </span><span style='color: #0000BB;'>'D:/R/SentiAnalyzer'</span><span>
-#&gt; </span><span style='color: #00BB00;'>&lt;U+2714&gt;</span><span> Saving </span><span style='color: #0000BB;'>'balanced_dataframe'</span><span> to </span><span style='color: #0000BB;'>'data/balanced_dataframe.rda'</span><span></div><div class='output co'>#&gt;                                                                                                                                                    Review
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"SentiAnalyzer"</span>)
+<span class='no'>direction</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"SentiAnalyzer"</span>, <span class='st'>"extdata/Imbalance_Restaurant_Reviews.tsv"</span>)
+<span class='no'>imbalance_data</span><span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.delim</a></span>(<span class='no'>direction</span>,<span class='kw'>quote</span><span class='kw'>=</span><span class='st'>''</span>,<span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>BalanceData</span>(<span class='no'>imbalance_data</span>)</div><div class='output co'>#&gt; [1] "dataset is imbalance, Starting balancing it"</div><div class='output co'>#&gt;                                                                                                                                                    Review
 #&gt; 1                                                                                                                                          Won't go back.
 #&gt; 2                                                                                              -Drinks took close to 30 minutes to come out at one point.
 #&gt; 3                                                                                                                                    The service was meh.
@@ -1954,7 +1947,7 @@
 #&gt; 900     1
 #&gt; 901     1
 #&gt; 902     1
-#&gt; 903     1</div></span></pre>
+#&gt; 903     1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

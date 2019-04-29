@@ -24,11 +24,12 @@ knitr::opts_chunk$set(
  
 ```
 
-
-
 #### importing the imbalance dataset (OPTIONAL)
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE}
-imbalance_data<- read.delim(system.file(package = "SentiAnalyzer", "inst/extdata/Imbalance_Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+#imbalance_data<- read.delim(system.file(package = "SentiAnalyzer", #"inst/extdata/Imbalance_Restaurant_Reviews.tsv"),quote='',stringsAsFactors = FALSE)
+
+imb <- system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv")
+imbalance_data <- read.delim(imb,quote='',stringsAsFactors = FALSE)
 ```
 
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hold'}
@@ -45,9 +46,9 @@ SentiAnalyzer::BalanceData(imbalance_data)
 
 check the balanced dataset, same number of rows and columns now
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hold' }
-balanced_data<- read.delim(system.file(package = "SentiAnalyzer", "inst/extdata/out.tsv"),quote='',stringsAsFactors = FALSE)
-str(balanced_data)
-dim(balanced_data)
+#balanced_data<- read.delim(system.file(package = "SentiAnalyzer", "inst/extdata/out.tsv"),quote='',stringsAsFactors = FALSE)
+#str(balanced_data)
+#dim(balanced_data)
 
 direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
 balanced_data <- read.delim(direction,quote='',stringsAsFactors = FALSE)
@@ -109,7 +110,7 @@ user also have the choice to choose either (the argument call is also done on Cl
 the document-term matrix will quickly expand the dataset dimension, especially the sparse terms, significantly. Depending on the dimension of the dataset can be adjusted be adjusted within the range 0 to 1. Essentially it is calling `tm::removeSparseTerms`
 
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=TRUE}
-SentiAnalyzer::CleanText(balanced_data, dtm_method=1, reductionrate=0.99)
+clean_dataset <- SentiAnalyzer::CleanText(balanced_data, dtm_method=1, reductionrate=0.99)
 ```
 example:
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hold'}
