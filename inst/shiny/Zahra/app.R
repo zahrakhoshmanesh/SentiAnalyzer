@@ -4,6 +4,7 @@ library(dplyr)
 library(ggplot2)
 library(wordcloud)
 library(reshape2)
+library(RColorBrewer)
 
 #preparing data
 
@@ -66,7 +67,7 @@ server <- function(input, output) {
   output$cloud <- renderPlot({
     
     wordcloadplot = tidy_text %>%
-      with(wordcloud(word, n, max.words = input$freq))
+      with(wordcloud(word, n, max.words = input$freq,rot.per=0.35,colors=brewer.pal(8, "Dark2")))
     
     
   })

@@ -35,6 +35,12 @@ Imports:
     wordcloud,
     tibble,
     NLP,
+    RWeka,
+    rJava,
+    matlib,
+    RColorBrewer,
+    randomForest,
+    e1071,
     matlib,
     shiny
 VignetteBuilder: knitr
