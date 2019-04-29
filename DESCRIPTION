@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: c(
     person("Zahra", "Khoshmanesh", email = "zkh@iastate.edu", role = c("aut", "cre")),
     person("Atousa", "Zarindast", email = "atousa@iastate.edu", role = "aut"),
-    person("Joshua", "budi", email = "joshua@iastate.edu", role = "aut"))  
+    person("Joshua", "budi", email = "budij@iastate.edu", role = "aut"))  
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -35,6 +35,7 @@ Imports:
     wordcloud,
     tibble,
     NLP,
-    matlib
+    matlib,
+    shiny
 VignetteBuilder: knitr
 

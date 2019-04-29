@@ -14,6 +14,7 @@
 #' library(SentiAnalyzer)
 #' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
 #' my_training_data <- BuildTraining(csv_data)
+
 comparison <- function(x){
 
   df<-BuildPrediction(x)

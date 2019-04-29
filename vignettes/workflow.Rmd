@@ -171,6 +171,9 @@ Example shown is for Gradient Boosting Machine trained model
 SentiAnalyzer::BuildTraining(clean_dataset)[[2]] 
 ```
 
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE, eval=TRUE}
+df_trained <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+```
 
 ### Build Prediction
 predict the classes using trained algorithms and give confusion matrix  in return
@@ -178,7 +181,7 @@ predict the classes using trained algorithms and give confusion matrix  in retur
 *output*: list of various parameter values of 4 machine learning algorithms
 
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=TRUE, eval=TRUE}
-SentiAnalyzer::BuildPrediction(clean_dataset)[[2]]
+SentiAnalyzer::BuildPrediction(df_trained)
 ```
 
 ### Comparison 
@@ -186,7 +189,7 @@ among the 4 ML training model classifications
 *input*: document-term matrix (result from `CleanText()` which is `clean_dataset`)
 *output*: list of confusion matrices of 4 machine learning algorithms
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=TRUE, eval=TRUE}
-SentiAnalyzer::comparison(clean_dataset)
+SentiAnalyzer::comparison(df_trained)
 ```
 
 
