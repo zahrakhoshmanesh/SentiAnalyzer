@@ -1,11 +1,9 @@
 ---
-title: "Workflow: SentiAnalyzer"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "SentiAnalyzer presentation"
+output: powerpoint_presentation
+author: "Zahra, Atousa, Joshua"
 ---
+
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -17,10 +15,10 @@ knitr::opts_chunk$set(
 ### Sentiment analysis for consumer review
 
 SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which includes natural language processing (NLP) of consumer sentiments. The dataset that SentiAnalyzer can work with for now is short text and a binary quantification, e.g. whether consumer hits the like button. The NLP of the sentiment is analyzed through the options of algorithms to compile the words and the machinge learning training model of choice.  
-
+---
 ## Installation
 `install.packages("SentiAnalyzer")`
-
+---
 ## Usage
 
 Three steps of processing your review dataset: 
@@ -30,12 +28,12 @@ Three steps of processing your review dataset:
 3. choose the algorithm that is training the model 
 4. Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review
 
-
+---
 ## tackling imbalanced data
 The first step to process your data is to make sure that both of your variables have equal numbers of observations/unit. `BalanceData` function can be used to balance the called dataset. Using packages: `ROSE`, balance the columns of the data. For oversampled data, used `ovun.sample` to balance over or under sampled data. Then check the balance of the columns/variables.
 
 `BalanceData` will automatically save a balanced dataset saved in `/data` folder under name `data.rose.Rda`
-
+---
 #### importing the imbalance dataset (OPTIONAL)
 ```{r include=FALSE}
 imb <- system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv")
@@ -49,7 +47,7 @@ head(imbalance_data)
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE}
 SentiAnalyzer::BalanceData(imbalance_data)
 ```
-
+---
 check the balanced dataset, same number of rows and columns now
 
 ```{r include=FALSE}
@@ -61,7 +59,7 @@ balanced_data <- read.delim(direction,quote='',stringsAsFactors = FALSE)
 dim(balanced_data)
 str(balanced_data)
 ```
-
+---
 
 ## Cleaning the text
 **input**: `CleanText()` calls for 3 arguments: 
@@ -73,7 +71,7 @@ c. reduction rate (range 0-1)
 **output**: `CleanText()` returns a matrix `clean_dataset` saved as `data/clean_dataset.rda`
 
 packages used: `tm` and `SnowballC`
-
+---
 ##### a. text-mining the dataset
 integrating built-in functions from `tm`, `CleanText()` will "clean up" the words from the text and mine for the words that conveys a range sorts of sentiment and convert some formatting; this remains what is called as token (single) or corpus (all the tokens):
 
@@ -84,7 +82,7 @@ integrating built-in functions from `tm`, `CleanText()` will "clean up" the word
 *remove stop words, e.g. "the", "a", "for", "and", etc
 *extract the stems of thegiven words using Porter's stemming algorithmn
 *remove extra white spaces that was left off by the removed texts 
-
+---
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE}
 library(tm)
 ```
@@ -98,7 +96,7 @@ corpus=tm_map(corpus,removeWords,stopwords()) # remove Stop words from reviews
 corpus=tm_map(corpus,stemDocument) # Stemming
 corpus=tm_map(corpus,stripWhitespace) # remove extra space that's created in cleaning stage above
 ```
-
+---
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=FALSE}
 corpus$content[[1]][[1]]
 corpus$content[[2]][[1]]
@@ -107,7 +105,7 @@ corpus$content[[4]][[1]]
 corpus$content[[5]][[1]]
 corpus$content[[6]][[1]]
 ```
-
+---
 ##### b. Creating the document-term matrix/bag of words model
 
 Next, still within the scope of the same current function, `Cleantext()`, the corpus is formatted to a [document-term matrix](#https://en.wikipedia.org/wiki/Document-term_matrix) (DTM) and creating document term matrix of words in reviews. Essentially it creates a single column for every tokens in the corpus and counted for frequency of occurence on each tokens on the rows
@@ -117,7 +115,7 @@ user also have the choice to choose either (the argument call is also done on `C
 1. bag of words
 2. tf-idf (term frequency-inverse document frequency)
 3. Bi-gram 
-
+---
 ##### c. choosing the reduction rate
 the document-term matrix will quickly expand the dataset dimension, especially the sparse terms, significantly. Depending on the dimension of the dataset can be adjusted be adjusted within the range 0 to 1. Essentially it is calling `tm::removeSparseTerms`
 
@@ -131,13 +129,13 @@ names(clean_dataset)[1:50]
 head(clean_dataset[1:10])
 tail(clean_dataset[1:10])
 ```
-
+---
 ## Building  classification
 
 **input**: document-term matrix (result from `CleanText()` which is `clean_dataset`)
 
 **output**: list of training model parameters from 4 machine learning, random forest algorithms
-
+---
 ##### preparing the dataset and divide dataset to train and test
 using package `caTools`
 
@@ -165,7 +163,7 @@ split=sample.split(dataset$target, SplitRatio = 0.8)
 training_set=subset(dataset,split==TRUE)
 test_set=subset(dataset,split==FALSE)
 ```
-
+---
 ## Classifier : Random Forest
 Training the model with various machine learning algorithms. classification that are popular for text mining, and are available in our package:
 
@@ -177,7 +175,7 @@ Training the model with various machine learning algorithms. classification that
 The model training consist of `expand.grid()`, `train()` (formula, data, method, train control, tuneGrid, etc)
 
 `randomForest` and `caret()` package
-
+---
 ```{r message=FALSE, include=FALSE}
 library(testthat)
 library(assertthat)
@@ -192,7 +190,7 @@ SentiAnalyzer::BuildTraining(clean_dataset)[[2]]
 ```{r message=FALSE, include=FALSE, warning=FALSE, results='hide', echo=FALSE, eval=TRUE}
 df_trained <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
 ```
-
+---
 ### Build Prediction
 predict the classes using trained algorithms and give confusion matrix  in return
 **input**: document-term matrix (result from `CleanText()` which is `clean_dataset`)
@@ -202,7 +200,7 @@ predict the classes using trained algorithms and give confusion matrix  in retur
 df_predicted <- SentiAnalyzer::BuildPrediction(df_trained)
 ```
 
-
+---
 ### Comparison 
 among the 4 ML training model classifications 
 
@@ -212,7 +210,7 @@ among the 4 ML training model classifications
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
 SentiAnalyzer::comparison(df_trained)
 ```
-
+---
 
 ## Visualization
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}

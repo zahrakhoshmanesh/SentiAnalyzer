@@ -29,15 +29,12 @@ VisualizeData<-function(dataset,termcount){
 
   source_datasets <- dataset
  
-
   text_df <- tibble(text = source_datasets[[1]])
-
 
  tidy_text <- source_datasets[[1]] %>%
     as.tibble %>% 
    tidytext:: unnest_tokens(word, value) %>%
      dplyr:: anti_join(tidytext:: stop_words)
-
 
  wordfreqplot = tidy_text %>%
     count(word, sort = TRUE) %>%
@@ -48,13 +45,9 @@ VisualizeData<-function(dataset,termcount){
     xlab(NULL) +
     coord_flip()
 
- 
-
  wordcloadplot = tidy_text %>%
     count(word) %>%
     with(wordcloud(word, n, max.words = 100))
-
- 
 
  reshapplot = tidy_text %>%
     inner_join(get_sentiments("bing")) %>%
@@ -62,7 +55,6 @@ VisualizeData<-function(dataset,termcount){
     acast(word ~ sentiment, value.var = "n", fill = 0) %>%
     comparison.cloud(colors = c("gray20", "gray80"),
                      max.words = 100)
-
  
  #return(c(wordfreqplot,wordcloadplot,reshapplot))
 
