@@ -37,6 +37,9 @@ Imports:
     NLP,
     RWeka,
     rJava,
-    matlib
+    matlib,
+    RColorBrewer,
+    randomForest,
+    e1071
 VignetteBuilder: knitr
 

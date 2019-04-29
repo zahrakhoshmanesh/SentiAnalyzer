@@ -2,7 +2,7 @@
 % Please edit documentation in R/BalanceData.R
 \name{BalanceData}
 \alias{BalanceData}
-\title{Clean text and buil term matrix for bag of words model or TF DFI.}
+\title{Clean text and build term matrix for bag of words model or TF DFI.}
 \usage{
 BalanceData(dataset)
 }
@@ -13,7 +13,7 @@ BalanceData(dataset)
 balanced_dataframe balanced dataframe containing two columns: review texts and binary class , label: negative =0 and positive=1.
 }
 \description{
-Clean text and buil term matrix for bag of words model or TF DFI.
+Clean text and build term matrix for bag of words model or TF DFI.
 }
 \examples{
 library("SentiAnalyzer")

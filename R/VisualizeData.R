@@ -13,6 +13,7 @@
 #' @import wordcloud
 #' @import reshape2
 #' @import tibble
+#' @import RColorBrewer
 #' @examples
 #' library(SentiAnalyzer)
 #' direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
@@ -52,9 +53,9 @@ VisualizeData<-function(dataset,termcount){
 
  wordcloadplot = tidy_text %>%
     count(word) %>%
-    with(wordcloud(word, n, max.words = 100))
-
+    with(wordcloud(word, n, max.words = 100,rot.per=0.35,colors=brewer.pal(8, "Dark2")))
  
+
 
  reshapplot = tidy_text %>%
     inner_join(get_sentiments("bing")) %>%
