@@ -42,6 +42,7 @@ Imports:
     randomForest,
     e1071,
     matlib,
-    shiny
+    shiny, 
+    shinythemes
 VignetteBuilder: knitr
 
