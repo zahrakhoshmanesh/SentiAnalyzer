@@ -43,6 +43,7 @@ Imports:
     e1071,
     matlib,
     shiny, 
-    shinythemes
+    shinythemes,
+    klaR
 VignetteBuilder: knitr
 
