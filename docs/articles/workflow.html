@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Workflow • SentiAnalyzer</title>
+<title>Workflow: SentiAnalyzer • SentiAnalyzer</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Workflow">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Workflow: SentiAnalyzer">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -53,10 +53,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/shiny.html">Vignette Title</a>
+      <a href="../articles/shiny.html">Shiny</a>
     </li>
     <li>
-      <a href="../articles/workflow.html">Workflow</a>
+      <a href="../articles/workflow.html">Workflow: SentiAnalyzer</a>
     </li>
   </ul>
 </li>
@@ -73,10 +73,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Workflow</h1>
-                        <h4 class="author">Joshua Budi</h4>
+      <h1>Workflow: SentiAnalyzer</h1>
             
-            <h4 class="date">2019-04-29</h4>
       
       
       <div class="hidden name"><code>workflow.Rmd</code></div>
@@ -85,9 +83,6 @@
 
     
     
-<div id="sentianalyzer" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sentianalyzer" class="anchor"></a>SentiAnalyzer</h1>
 <div id="sentiment-analysis-for-consumer-review" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sentiment-analysis-for-consumer-review" class="anchor"></a>Sentiment analysis for consumer review</h3>
@@ -104,7 +99,7 @@
 <p>Three steps of processing your review dataset:</p>
 <ol style="list-style-type: decimal">
 <li>balancing the dataset</li>
-<li>“streamlining the text to get a sense of the major keywords</li>
+<li>"streamlining the text to get a sense of the major keywords</li>
 <li>choose the algorithm that is training the model</li>
 <li>Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review</li>
 </ol>
@@ -112,41 +107,40 @@
 <div id="tackling-imbalanced-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#tackling-imbalanced-data" class="anchor"></a>tackling imbalanced data</h2>
-<p>The first step to process your data is to make sure that both of your variables have equal numbers of observations/unit. <code>BalanceData</code> function can be used to balance the called dataset. Using packages:<code>ROSE</code>, balance the columns of the data. For oversampled data, used <code>ovun.sample</code> to balance over or under sampled data. Then check the balance of the columns/variables.</p>
+<p>The first step to process your data is to make sure that both of your variables have equal numbers of observations/unit. <code>BalanceData</code> function can be used to balance the called dataset. Using packages: <code>ROSE</code>, balance the columns of the data. For oversampled data, used <code>ovun.sample</code> to balance over or under sampled data. Then check the balance of the columns/variables.</p>
 <p><code>BalanceData</code> will automatically save a balanced dataset saved in <code>/data</code> folder under name <code>data.rose.Rda</code></p>
 <div id="importing-the-imbalance-dataset-optional" class="section level4">
 <h4 class="hasAnchor">
 <a href="#importing-the-imbalance-dataset-optional" class="anchor"></a>importing the imbalance dataset (OPTIONAL)</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(imbalance_data)
-<span class="co">#&gt;                                                                                                            Review</span>
-<span class="co">#&gt; 1                                                                                              Crust is not good.</span>
-<span class="co">#&gt; 2                                                                       Not tasty and the texture was just nasty.</span>
-<span class="co">#&gt; 3                                                                  Now I am getting angry and I want my damn pho.</span>
-<span class="co">#&gt; 4                                                                           Honeslty it didn't taste THAT fresh.)</span>
-<span class="co">#&gt; 5 The potatoes were like rubber and you could tell they had been made up ahead of time being kept under a warmer.</span>
-<span class="co">#&gt; 6                                                                                              Would not go back.</span>
-<span class="co">#&gt;   Liked</span>
-<span class="co">#&gt; 1     0</span>
-<span class="co">#&gt; 2     0</span>
-<span class="co">#&gt; 3     0</span>
-<span class="co">#&gt; 4     0</span>
-<span class="co">#&gt; 5     0</span>
-<span class="co">#&gt; 6     0</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BalanceData">BalanceData</a></span>(imbalance_data)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(imbalance_data)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co">#&gt;                                                                                                            Review</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co">#&gt; 1                                                                                              Crust is not good.</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; 2                                                                       Not tasty and the texture was just nasty.</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; 3                                                                  Now I am getting angry and I want my damn pho.</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt; 4                                                                           Honeslty it didn't taste THAT fresh.)</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; 5 The potatoes were like rubber and you could tell they had been made up ahead of time being kept under a warmer.</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt; 6                                                                                              Would not go back.</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt;   Liked</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; 1     0</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; 2     0</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; 3     0</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; 4     0</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; 5     0</span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; 6     0</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BalanceData">BalanceData</a></span>(imbalance_data)</a></code></pre></div>
 <p>check the balanced dataset, same number of rows and columns now</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(balanced_data)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(balanced_data)
-<span class="co">#&gt; [1] 1000    2</span>
-<span class="co">#&gt; 'data.frame':    1000 obs. of  2 variables:</span>
-<span class="co">#&gt;  $ Review: chr  "Wow... Loved this place." "Crust is not good." "Not tasty and the texture was just nasty." "Stopped by during the late May bank holiday off Rick Steve recommendation and loved it." ...</span>
-<span class="co">#&gt;  $ Liked : int  1 0 0 1 1 0 0 0 1 1 ...</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(balanced_data)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(balanced_data)</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; [1] 1000    2</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; 'data.frame':    1000 obs. of  2 variables:</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt;  $ Review: chr  "Wow... Loved this place." "Crust is not good." "Not tasty and the texture was just nasty." "Stopped by during the late May bank holiday off Rick Steve recommendation and loved it." ...</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt;  $ Liked : int  1 0 0 1 1 0 0 0 1 1 ...</span></a></code></pre></div>
 </div>
 </div>
 <div id="cleaning-the-text" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cleaning-the-text" class="anchor"></a>Cleaning the text</h2>
-<p><strong>input</strong>:</p>
-<p><code><a href="../reference/CleanText.html">CleanText()</a></code> calls for 3 arguments:</p>
+<p><strong>input</strong>: <code><a href="../reference/CleanText.html">CleanText()</a></code> calls for 3 arguments:</p>
 <ol style="list-style-type: lower-alpha">
 <li>the dataset</li>
 <li>document term matrix structure of choice (choose 1 from 3)</li>
@@ -158,8 +152,8 @@
 <h5 class="hasAnchor">
 <a href="#a--text-mining-the-dataset" class="anchor"></a>a. text-mining the dataset</h5>
 <p>integrating built-in functions from <code>tm</code>, <code><a href="../reference/CleanText.html">CleanText()</a></code> will “clean up” the words from the text and mine for the words that conveys a range sorts of sentiment and convert some formatting; this remains what is called as token (single) or corpus (all the tokens):</p>
-<p><em>converts all text to lower case </em>remove numbers from the text <em>remove punctuations </em>remove stop words, e.g. “the”, “a”, “for”, “and”, etc <em>extract the stems of thegiven words using Porter’s stemming algorithmn </em>remove extra white spaces that was left off by the removed texts</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tm)</code></pre></div>
+<p>-converts all text to lower case -remove numbers from the text -remove punctuations -remove stop words, e.g. “the”, “a”, “for”, “and”, etc -extract the stems of thegiven words using Porter’s stemming algorithmn -remove extra white spaces that was left off by the removed texts</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tm)</a></code></pre></div>
 <pre><code>#&gt; [1] "wow love place"
 #&gt; [1] "crust good"
 #&gt; [1] "tasti textur just nasti"
@@ -180,9 +174,9 @@
 </div>
 <div id="c--choosing-the-reduction-rate" class="section level5">
 <h5 class="hasAnchor">
-<a href="#c--choosing-the-reduction-rate" class="anchor"></a>c. choosing the reduction rate</h5>
+<a href="#c--choosing-the-reduction-rate" class="anchor"></a>c. choosing the reduction rate</h5>
 <p>the document-term matrix will quickly expand the dataset dimension, especially the sparse terms, significantly. Depending on the dimension of the dataset can be adjusted be adjusted within the range 0 to 1. Essentially it is calling <code><a href="https://www.rdocumentation.org/packages/tm/topics/removeSparseTerms">tm::removeSparseTerms</a></code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clean_dataset &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/CleanText">CleanText</a></span>(balanced_data, <span class="dt">dtm_method=</span><span class="dv">1</span>, <span class="dt">reductionrate=</span><span class="fl">0.99</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">clean_dataset &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/CleanText">CleanText</a></span>(balanced_data, <span class="dt">dtm_method=</span><span class="dv">1</span>, <span class="dt">reductionrate=</span><span class="fl">0.99</span>)</a></code></pre></div>
 <p>example:</p>
 <pre><code>#&gt; [1] 1000   97
 #&gt;  [1] "also"       "alway"      "amaz"       "atmospher"  "awesom"    
@@ -195,1001 +189,14 @@
 #&gt; [36] "fri"        "friend"     "get"        "good"       "got"       
 #&gt; [41] "great"      "ive"        "just"       "know"       "like"      
 #&gt; [46] "love"       "made"       "manag"      "meal"       "menu"      
+#&gt;   also alway amaz atmospher awesom back bad best better bland
+#&gt; 1    0     0    0         0      0    0   0    0      0     0
+#&gt; 2    0     0    0         0      0    0   0    0      0     0
+#&gt; 3    0     0    0         0      0    0   0    0      0     0
+#&gt; 4    0     0    0         0      0    0   0    0      0     0
+#&gt; 5    0     0    0         0      0    0   0    0      0     0
+#&gt; 6    0     0    0         0      0    0   0    0      0     0
 #&gt;      also alway amaz atmospher awesom back bad best better bland
-#&gt; 1       0     0    0         0      0    0   0    0      0     0
-#&gt; 2       0     0    0         0      0    0   0    0      0     0
-#&gt; 3       0     0    0         0      0    0   0    0      0     0
-#&gt; 4       0     0    0         0      0    0   0    0      0     0
-#&gt; 5       0     0    0         0      0    0   0    0      0     0
-#&gt; 6       0     0    0         0      0    0   0    0      0     0
-#&gt; 7       0     0    0         0      0    0   0    0      0     0
-#&gt; 8       0     0    0         0      0    0   0    0      0     0
-#&gt; 9       0     0    0         0      0    0   0    0      0     0
-#&gt; 10      0     0    0         0      0    0   0    0      0     0
-#&gt; 11      0     0    0         0      0    0   0    0      0     0
-#&gt; 12      0     0    0         0      0    1   0    0      0     0
-#&gt; 13      0     0    0         0      0    0   0    0      0     0
-#&gt; 14      0     0    0         0      0    0   0    0      0     0
-#&gt; 15      0     0    0         0      0    0   0    0      0     0
-#&gt; 16      0     0    0         0      0    0   0    0      0     0
-#&gt; 17      0     0    0         0      0    0   0    0      0     0
-#&gt; 18      0     0    0         0      0    0   0    0      0     0
-#&gt; 19      0     0    0         0      0    0   0    0      0     0
-#&gt; 20      0     0    0         0      0    0   0    0      0     0
-#&gt; 21      0     0    0         0      0    0   0    0      0     0
-#&gt; 22      0     0    1         0      0    0   0    0      0     0
-#&gt; 23      1     0    0         0      0    0   0    0      0     0
-#&gt; 24      0     0    0         0      0    0   0    0      0     0
-#&gt; 25      0     0    0         0      0    0   0    0      0     0
-#&gt; 26      0     0    0         0      0    0   0    0      0     0
-#&gt; 27      0     0    0         0      0    0   0    0      0     0
-#&gt; 28      0     0    0         0      0    0   0    0      0     0
-#&gt; 29      0     0    0         0      0    0   0    0      0     0
-#&gt; 30      0     0    0         0      0    0   0    0      0     0
-#&gt; 31      1     0    0         0      0    0   0    0      0     0
-#&gt; 32      0     0    0         0      0    0   0    0      0     0
-#&gt; 33      0     0    0         0      0    0   0    0      0     0
-#&gt; 34      0     0    0         0      0    0   0    0      0     0
-#&gt; 35      0     0    0         0      0    0   0    0      0     0
-#&gt; 36      0     0    0         0      0    0   0    0      0     0
-#&gt; 37      0     0    0         0      0    0   0    0      0     0
-#&gt; 38      0     0    0         0      0    0   0    0      0     0
-#&gt; 39      0     0    0         0      0    0   0    0      0     0
-#&gt; 40      0     0    0         0      0    0   0    0      0     0
-#&gt; 41      0     0    0         0      0    0   0    0      0     0
-#&gt; 42      0     0    0         0      0    0   0    0      0     0
-#&gt; 43      0     0    0         0      0    0   0    0      0     0
-#&gt; 44      0     0    0         0      0    0   0    0      0     0
-#&gt; 45      0     0    0         0      0    0   0    0      0     0
-#&gt; 46      0     0    0         0      0    0   0    0      0     0
-#&gt; 47      0     0    0         0      0    0   1    0      0     0
-#&gt; 48      0     0    0         0      0    0   0    0      0     0
-#&gt; 49      0     0    0         0      0    0   0    0      0     0
-#&gt; 50      0     0    0         0      0    0   0    0      0     0
-#&gt; 51      0     0    0         0      0    0   0    0      0     0
-#&gt; 52      0     0    0         0      0    0   0    0      0     0
-#&gt; 53      0     0    0         0      0    0   0    0      0     0
-#&gt; 54      0     0    0         0      0    0   0    0      0     0
-#&gt; 55      0     0    0         0      0    0   0    0      0     0
-#&gt; 56      0     0    0         0      0    0   0    0      0     0
-#&gt; 57      0     0    0         0      0    0   0    0      0     0
-#&gt; 58      0     0    0         0      0    0   0    0      0     0
-#&gt; 59      0     0    0         0      0    0   0    0      0     0
-#&gt; 60      0     0    0         0      0    0   0    0      0     0
-#&gt; 61      0     0    0         0      0    0   0    0      0     0
-#&gt; 62      0     0    0         0      0    0   0    0      0     0
-#&gt; 63      0     0    0         0      0    0   0    0      0     0
-#&gt; 64      0     0    0         0      0    1   0    0      0     0
-#&gt; 65      0     0    0         0      0    0   0    0      0     0
-#&gt; 66      0     0    0         0      0    0   0    0      0     0
-#&gt; 67      0     1    0         0      0    0   0    0      0     0
-#&gt; 68      0     0    1         0      0    1   0    0      0     0
-#&gt; 69      0     0    0         0      0    0   0    0      0     0
-#&gt; 70      0     0    0         0      0    0   0    0      0     0
-#&gt; 71      0     0    0         0      0    0   0    0      0     0
-#&gt; 72      0     0    0         0      0    0   0    0      0     0
-#&gt; 73      0     0    0         0      0    0   0    0      0     0
-#&gt; 74      0     0    0         0      0    0   0    0      0     0
-#&gt; 75      0     0    0         0      0    0   0    0      0     0
-#&gt; 76      0     0    0         0      0    0   0    0      0     0
-#&gt; 77      0     0    0         0      0    0   1    0      0     0
-#&gt; 78      0     0    0         0      0    0   0    0      0     0
-#&gt; 79      0     0    0         0      0    0   0    0      0     0
-#&gt; 80      0     0    0         0      0    0   0    0      0     0
-#&gt; 81      0     0    0         0      0    0   0    0      0     0
-#&gt; 82      0     0    0         0      0    0   0    0      0     0
-#&gt; 83      0     0    0         0      0    0   0    0      0     1
-#&gt; 84      0     0    0         0      0    0   0    0      0     0
-#&gt; 85      0     0    0         0      0    0   0    0      0     0
-#&gt; 86      0     0    0         0      0    0   0    0      0     0
-#&gt; 87      0     0    0         0      0    0   0    0      0     0
-#&gt; 88      0     0    1         0      0    0   0    0      0     0
-#&gt; 89      0     0    0         0      0    0   0    0      0     0
-#&gt; 90      0     0    0         0      0    0   0    0      0     0
-#&gt; 91      0     0    0         0      0    0   0    0      0     0
-#&gt; 92      0     0    0         0      0    0   0    0      0     0
-#&gt; 93      0     0    0         0      0    0   0    0      0     0
-#&gt; 94      0     0    0         0      0    0   0    1      0     0
-#&gt; 95      0     0    0         0      0    0   0    0      0     0
-#&gt; 96      0     0    0         0      0    0   0    0      0     0
-#&gt; 97      0     0    0         0      0    1   0    0      0     0
-#&gt; 98      0     0    0         0      0    0   0    0      0     0
-#&gt; 99      0     0    0         0      0    0   0    0      0     0
-#&gt; 100     0     0    0         0      0    0   0    0      0     0
-#&gt; 101     0     0    0         0      0    0   0    0      0     0
-#&gt; 102     0     0    0         0      0    0   0    0      0     0
-#&gt; 103     0     0    0         0      0    0   0    1      0     0
-#&gt; 104     0     0    0         0      0    0   0    0      0     0
-#&gt; 105     0     0    0         0      0    0   0    0      1     0
-#&gt; 106     0     0    0         0      0    0   0    0      0     0
-#&gt; 107     0     0    0         0      0    0   0    0      0     0
-#&gt; 108     0     0    0         0      0    0   0    0      0     0
-#&gt; 109     0     0    0         0      0    1   0    0      0     0
-#&gt; 110     0     0    0         0      0    0   0    0      0     0
-#&gt; 111     0     0    0         0      0    0   0    0      0     0
-#&gt; 112     0     0    0         0      0    0   0    0      0     0
-#&gt; 113     0     0    0         0      0    0   0    0      0     0
-#&gt; 114     0     0    0         0      0    0   0    0      0     0
-#&gt; 115     0     0    0         0      0    0   0    0      0     0
-#&gt; 116     0     0    0         0      0    0   0    0      0     0
-#&gt; 117     0     0    0         0      0    0   0    0      0     0
-#&gt; 118     0     0    0         1      0    0   0    0      1     0
-#&gt; 119     0     0    0         0      0    0   0    0      0     0
-#&gt; 120     0     0    0         0      0    0   0    0      0     0
-#&gt; 121     0     0    0         0      0    0   0    0      0     0
-#&gt; 122     0     0    0         0      0    0   0    0      0     0
-#&gt; 123     0     0    0         0      0    0   0    0      0     0
-#&gt; 124     0     0    0         0      0    0   0    2      0     0
-#&gt; 125     0     0    0         0      0    0   0    0      0     0
-#&gt; 126     0     0    0         0      0    0   0    0      1     0
-#&gt; 127     0     0    0         0      0    0   1    0      0     1
-#&gt; 128     0     0    0         0      0    0   0    0      0     0
-#&gt; 129     0     0    0         0      0    0   0    0      0     0
-#&gt; 130     0     0    0         0      0    0   0    0      0     0
-#&gt; 131     0     0    0         0      0    0   0    0      0     0
-#&gt; 132     0     0    0         0      0    0   0    0      0     0
-#&gt; 133     0     0    0         0      0    0   0    0      0     0
-#&gt; 134     0     0    0         0      0    0   0    0      0     0
-#&gt; 135     0     0    0         0      0    0   0    0      0     0
-#&gt; 136     0     0    0         0      0    0   0    0      0     0
-#&gt; 137     0     0    0         0      0    0   0    0      0     0
-#&gt; 138     0     0    0         0      0    0   0    1      0     0
-#&gt; 139     0     0    0         0      0    0   0    0      0     0
-#&gt; 140     0     0    0         0      0    0   0    0      0     0
-#&gt; 141     0     0    0         0      0    0   0    0      0     0
-#&gt; 142     0     0    0         0      0    0   0    0      0     0
-#&gt; 143     0     0    0         0      0    0   0    0      0     0
-#&gt; 144     0     0    0         0      0    0   0    0      0     0
-#&gt; 145     0     0    0         0      0    0   0    0      0     0
-#&gt; 146     0     0    0         0      0    0   0    0      0     0
-#&gt; 147     0     1    0         0      0    0   0    0      0     0
-#&gt; 148     0     0    0         0      0    0   0    0      0     0
-#&gt; 149     0     0    0         0      0    0   0    0      0     0
-#&gt; 150     0     0    0         0      0    0   0    0      0     0
-#&gt; 151     0     0    0         0      0    0   0    0      0     0
-#&gt; 152     0     0    0         0      0    0   0    0      0     0
-#&gt; 153     0     0    0         0      0    0   0    0      0     0
-#&gt; 154     0     0    0         0      0    0   0    0      0     0
-#&gt; 155     0     0    0         0      0    0   0    0      0     0
-#&gt; 156     0     1    0         0      0    0   0    0      0     0
-#&gt; 157     0     0    0         0      0    0   0    0      0     0
-#&gt; 158     0     0    0         0      0    0   0    0      0     0
-#&gt; 159     0     0    0         0      0    0   0    0      0     0
-#&gt; 160     0     0    0         0      0    0   0    0      0     0
-#&gt; 161     0     0    0         0      0    1   0    0      0     0
-#&gt; 162     0     0    0         0      0    0   0    0      0     0
-#&gt; 163     0     0    0         0      0    0   0    0      0     0
-#&gt; 164     0     0    0         0      0    0   0    0      0     0
-#&gt; 165     0     1    0         0      0    0   0    0      0     0
-#&gt; 166     0     0    0         0      0    0   0    0      0     0
-#&gt; 167     0     0    0         0      0    0   0    1      0     0
-#&gt; 168     0     0    0         0      0    0   0    0      0     0
-#&gt; 169     0     0    0         0      0    0   1    0      0     0
-#&gt; 170     0     0    0         0      0    0   0    0      0     0
-#&gt; 171     1     0    0         0      0    0   0    0      0     0
-#&gt; 172     0     0    0         0      0    0   0    0      0     0
-#&gt; 173     0     0    0         0      0    0   0    0      0     0
-#&gt; 174     0     0    0         0      0    0   0    0      0     0
-#&gt; 175     1     0    1         0      0    0   0    0      0     0
-#&gt; 176     0     0    0         0      0    1   0    0      0     0
-#&gt; 177     0     0    0         0      0    0   0    0      0     0
-#&gt; 178     0     0    0         1      0    0   0    0      0     0
-#&gt; 179     0     0    0         0      0    1   0    0      0     0
-#&gt; 180     0     0    0         0      0    0   0    0      0     0
-#&gt; 181     0     0    0         0      0    0   0    0      0     1
-#&gt; 182     1     0    0         0      0    1   0    0      0     0
-#&gt; 183     0     0    0         0      0    0   0    0      0     0
-#&gt; 184     0     0    0         0      0    0   0    0      0     0
-#&gt; 185     0     0    0         0      0    0   0    0      0     0
-#&gt; 186     1     0    0         0      0    0   0    0      0     0
-#&gt; 187     0     0    0         0      0    0   0    0      0     0
-#&gt; 188     0     0    0         0      0    0   0    0      0     0
-#&gt; 189     0     0    0         0      0    0   0    0      0     0
-#&gt; 190     1     0    0         0      0    0   0    0      0     0
-#&gt; 191     0     0    0         0      0    0   0    0      0     0
-#&gt; 192     0     0    0         0      0    0   0    0      0     0
-#&gt; 193     0     0    0         0      0    0   0    0      0     0
-#&gt; 194     0     0    0         0      0    0   0    0      0     0
-#&gt; 195     0     0    0         0      0    0   0    1      0     0
-#&gt; 196     0     0    0         0      0    0   0    1      0     0
-#&gt; 197     0     0    0         0      0    0   0    0      0     0
-#&gt; 198     0     0    0         0      0    0   0    0      0     0
-#&gt; 199     0     0    0         0      0    0   0    0      0     0
-#&gt; 200     0     0    0         0      0    0   0    0      0     0
-#&gt; 201     0     0    0         0      0    0   0    0      0     0
-#&gt; 202     0     0    0         0      0    0   0    0      0     0
-#&gt; 203     0     0    0         0      0    0   0    0      0     0
-#&gt; 204     0     0    0         0      0    0   0    0      0     0
-#&gt; 205     0     0    0         0      0    0   0    0      0     0
-#&gt; 206     0     0    0         0      0    0   0    0      0     0
-#&gt; 207     0     0    0         0      0    0   0    0      0     0
-#&gt; 208     0     0    0         0      0    0   0    0      0     0
-#&gt; 209     0     0    0         0      0    0   0    0      0     0
-#&gt; 210     0     0    0         0      0    0   0    0      0     0
-#&gt; 211     0     0    0         0      0    0   0    0      0     0
-#&gt; 212     0     0    0         0      0    0   0    0      0     0
-#&gt; 213     0     0    0         0      0    0   0    0      0     0
-#&gt; 214     0     0    0         0      0    1   0    0      0     0
-#&gt; 215     0     0    0         0      0    0   0    0      0     0
-#&gt; 216     0     0    0         0      0    0   0    0      0     0
-#&gt; 217     0     0    0         0      0    0   0    0      0     0
-#&gt; 218     0     0    0         0      0    0   0    0      0     0
-#&gt; 219     0     0    0         0      0    0   0    0      0     0
-#&gt; 220     0     0    0         0      0    0   0    0      0     0
-#&gt; 221     0     0    0         0      0    0   0    0      0     0
-#&gt; 222     0     0    0         0      0    0   0    0      0     0
-#&gt; 223     0     0    0         0      0    0   0    0      0     0
-#&gt; 224     0     0    0         0      0    0   0    0      0     0
-#&gt; 225     0     0    0         0      0    0   1    0      0     0
-#&gt; 226     0     0    0         0      0    0   0    0      0     0
-#&gt; 227     0     0    0         0      0    0   0    0      0     0
-#&gt; 228     0     1    0         0      0    0   0    0      0     0
-#&gt; 229     1     0    0         0      0    0   0    0      0     0
-#&gt; 230     0     0    1         0      0    0   0    0      0     0
-#&gt; 231     0     0    0         0      0    0   0    0      0     0
-#&gt; 232     0     0    0         0      0    0   1    0      0     0
-#&gt; 233     0     0    0         0      0    0   0    0      0     0
-#&gt; 234     0     0    0         0      0    0   0    0      0     0
-#&gt; 235     0     0    0         0      0    0   0    0      0     0
-#&gt; 236     0     0    0         0      0    0   0    0      0     0
-#&gt; 237     0     0    0         0      0    0   0    0      0     0
-#&gt; 238     0     0    1         0      0    0   0    0      0     0
-#&gt; 239     0     0    0         0      0    1   0    0      0     0
-#&gt; 240     0     0    0         0      0    0   0    0      0     0
-#&gt; 241     0     0    0         0      0    0   0    0      0     0
-#&gt; 242     0     0    0         0      0    0   0    0      0     0
-#&gt; 243     0     0    0         0      0    0   0    0      0     0
-#&gt; 244     1     0    0         0      0    0   0    0      0     0
-#&gt; 245     0     0    0         0      0    0   0    0      0     0
-#&gt; 246     0     0    0         0      0    0   0    0      0     0
-#&gt; 247     0     0    0         0      0    0   0    0      0     0
-#&gt; 248     0     0    0         0      0    0   0    0      1     0
-#&gt; 249     0     0    0         0      0    0   0    0      0     0
-#&gt; 250     0     0    0         0      0    1   0    0      0     0
-#&gt; 251     0     0    0         0      0    0   0    0      0     0
-#&gt; 252     0     0    0         0      0    0   0    0      0     0
-#&gt; 253     0     0    0         0      0    0   0    0      0     0
-#&gt; 254     0     0    0         0      0    0   0    0      0     0
-#&gt; 255     0     0    0         0      0    0   0    0      0     0
-#&gt; 256     0     0    0         0      0    0   0    0      0     0
-#&gt; 257     0     0    0         0      0    0   0    0      0     0
-#&gt; 258     0     0    0         0      0    0   0    0      0     0
-#&gt; 259     0     0    0         0      0    0   0    0      0     0
-#&gt; 260     0     0    0         0      0    0   0    0      0     0
-#&gt; 261     0     0    0         0      0    0   0    0      0     0
-#&gt; 262     0     0    0         0      0    0   0    0      0     0
-#&gt; 263     0     0    0         1      0    0   0    0      0     0
-#&gt; 264     0     0    0         0      0    0   0    0      0     0
-#&gt; 265     0     0    0         0      0    0   0    0      0     0
-#&gt; 266     0     0    0         0      0    0   0    0      0     0
-#&gt; 267     0     0    0         0      0    0   0    0      0     0
-#&gt; 268     0     0    0         0      0    0   0    0      0     0
-#&gt; 269     0     0    0         0      0    0   0    0      0     0
-#&gt; 270     0     0    0         0      0    0   0    0      0     0
-#&gt; 271     0     0    0         0      0    0   0    0      0     0
-#&gt; 272     0     0    0         0      0    0   0    0      0     0
-#&gt; 273     0     0    0         0      0    0   0    0      0     0
-#&gt; 274     0     0    0         0      0    0   0    0      0     0
-#&gt; 275     0     0    0         0      0    0   0    0      0     0
-#&gt; 276     0     0    0         0      0    0   0    0      1     0
-#&gt; 277     0     0    0         0      0    0   0    0      0     0
-#&gt; 278     0     0    0         0      0    0   0    0      0     0
-#&gt; 279     0     0    0         0      0    0   0    0      0     0
-#&gt; 280     0     0    0         0      0    0   0    0      0     1
-#&gt; 281     0     0    0         0      0    0   0    0      0     0
-#&gt; 282     0     0    0         0      0    0   0    0      0     0
-#&gt; 283     0     0    0         0      0    0   0    0      0     0
-#&gt; 284     0     0    0         0      0    0   0    0      0     0
-#&gt; 285     0     0    0         0      0    0   0    0      0     0
-#&gt; 286     0     0    0         0      0    0   0    0      0     0
-#&gt; 287     0     0    0         0      0    0   0    0      0     0
-#&gt; 288     0     0    0         0      0    0   0    0      1     0
-#&gt; 289     0     0    1         0      0    0   0    0      0     0
-#&gt; 290     0     0    0         0      0    0   0    0      0     0
-#&gt; 291     0     0    0         0      0    0   0    0      0     0
-#&gt; 292     0     0    0         0      0    0   0    0      0     0
-#&gt; 293     0     0    0         0      0    0   0    0      0     0
-#&gt; 294     0     0    0         0      0    1   0    0      0     0
-#&gt; 295     0     0    0         0      0    0   0    0      0     0
-#&gt; 296     0     0    0         0      0    0   0    0      0     0
-#&gt; 297     0     0    0         0      0    0   0    0      0     0
-#&gt; 298     0     0    0         0      0    0   0    0      0     0
-#&gt; 299     0     0    0         0      0    0   0    0      0     0
-#&gt; 300     0     0    0         0      0    0   0    0      0     0
-#&gt; 301     0     0    0         0      0    0   0    0      0     0
-#&gt; 302     0     0    0         0      0    0   0    0      0     0
-#&gt; 303     0     0    0         0      0    0   0    0      0     0
-#&gt; 304     0     0    0         0      0    0   0    0      0     0
-#&gt; 305     0     0    0         0      0    0   0    0      0     0
-#&gt; 306     0     0    0         0      0    0   0    0      0     0
-#&gt; 307     0     0    0         0      0    1   0    0      0     0
-#&gt; 308     0     0    0         0      0    1   0    0      0     0
-#&gt; 309     0     0    0         0      0    0   0    0      0     0
-#&gt; 310     0     0    0         0      0    0   0    0      0     0
-#&gt; 311     0     0    0         0      0    0   0    0      0     0
-#&gt; 312     0     0    0         0      0    0   0    0      0     0
-#&gt; 313     0     0    0         0      0    0   0    0      0     0
-#&gt; 314     0     0    0         0      0    1   0    0      0     0
-#&gt; 315     0     0    0         0      0    0   0    0      0     0
-#&gt; 316     0     0    0         0      0    0   0    0      0     0
-#&gt; 317     0     0    0         0      0    0   0    0      0     0
-#&gt; 318     0     0    0         0      0    2   0    0      0     0
-#&gt; 319     0     0    0         0      0    0   0    0      0     0
-#&gt; 320     0     0    0         0      0    0   0    0      0     0
-#&gt; 321     0     0    0         0      0    0   0    0      0     0
-#&gt; 322     1     0    0         0      0    0   0    0      0     0
-#&gt; 323     0     0    0         0      0    0   0    0      0     0
-#&gt; 324     0     0    1         0      0    0   0    0      0     0
-#&gt; 325     0     0    0         0      0    0   0    0      0     0
-#&gt; 326     0     0    0         0      0    0   0    0      0     0
-#&gt; 327     0     0    0         0      0    0   0    0      0     0
-#&gt; 328     0     0    0         0      0    0   0    0      1     0
-#&gt; 329     0     0    0         0      0    0   0    0      0     0
-#&gt; 330     0     0    0         0      0    0   0    0      0     0
-#&gt; 331     0     1    0         0      0    0   0    0      0     0
-#&gt; 332     0     0    0         0      0    1   0    0      0     0
-#&gt; 333     0     0    0         1      0    0   0    0      0     0
-#&gt; 334     0     0    0         0      0    0   0    0      0     0
-#&gt; 335     0     0    0         0      0    0   0    0      0     0
-#&gt; 336     0     0    0         0      0    0   0    0      0     0
-#&gt; 337     0     0    0         0      0    0   0    0      0     0
-#&gt; 338     0     0    0         0      0    0   0    0      0     0
-#&gt; 339     0     0    0         0      0    0   0    0      0     0
-#&gt; 340     0     0    0         0      0    0   0    0      0     0
-#&gt; 341     0     0    0         0      0    0   0    0      0     0
-#&gt; 342     0     0    0         0      0    0   0    1      0     0
-#&gt; 343     0     0    0         0      0    0   0    0      0     0
-#&gt; 344     0     0    0         0      0    0   0    0      0     0
-#&gt; 345     0     0    0         0      0    0   0    0      0     0
-#&gt; 346     0     0    0         0      0    0   0    0      0     0
-#&gt; 347     0     0    0         0      0    0   0    0      1     0
-#&gt; 348     0     0    0         1      0    0   0    0      0     0
-#&gt; 349     0     0    0         0      0    0   0    0      0     0
-#&gt; 350     0     0    0         0      0    0   0    0      0     0
-#&gt; 351     0     0    0         0      0    0   0    0      0     0
-#&gt; 352     0     0    0         0      0    0   0    0      0     0
-#&gt; 353     0     0    0         0      0    0   0    0      0     0
-#&gt; 354     0     0    0         0      0    0   0    0      0     0
-#&gt; 355     0     0    0         0      0    0   0    0      0     0
-#&gt; 356     0     0    0         0      0    0   0    0      0     0
-#&gt; 357     0     0    0         0      0    0   0    0      0     0
-#&gt; 358     0     1    0         0      0    0   0    0      0     0
-#&gt; 359     0     0    0         0      0    0   0    1      0     0
-#&gt; 360     0     0    0         0      0    0   0    0      0     0
-#&gt; 361     0     0    0         0      0    0   0    0      0     1
-#&gt; 362     0     0    0         0      0    0   0    1      0     0
-#&gt; 363     0     0    0         0      0    0   0    0      0     0
-#&gt; 364     0     0    0         0      0    1   0    0      0     0
-#&gt; 365     0     0    0         0      0    0   0    0      0     0
-#&gt; 366     0     0    0         0      0    0   0    0      0     0
-#&gt; 367     0     0    0         0      0    0   0    0      0     0
-#&gt; 368     0     0    0         0      0    1   0    0      0     0
-#&gt; 369     0     0    0         0      0    0   0    0      0     0
-#&gt; 370     0     0    0         0      0    0   0    0      0     0
-#&gt; 371     0     0    0         0      0    0   0    0      0     0
-#&gt; 372     0     0    0         0      0    0   0    0      0     0
-#&gt; 373     0     0    0         0      0    0   0    0      0     0
-#&gt; 374     0     0    0         0      0    0   0    0      0     0
-#&gt; 375     0     0    0         0      0    0   0    1      0     0
-#&gt; 376     0     0    0         0      0    0   0    1      0     0
-#&gt; 377     0     0    0         0      0    1   0    0      0     0
-#&gt; 378     0     0    1         0      0    0   0    0      0     0
-#&gt; 379     0     0    0         0      0    0   0    0      0     0
-#&gt; 380     0     0    0         0      0    0   0    0      0     0
-#&gt; 381     0     0    0         0      0    1   0    0      0     0
-#&gt; 382     0     0    0         0      0    0   0    0      0     0
-#&gt; 383     0     0    0         0      0    0   0    0      0     0
-#&gt; 384     0     0    0         0      0    0   0    0      0     0
-#&gt; 385     0     0    0         0      0    1   0    0      0     0
-#&gt; 386     0     0    0         0      0    0   0    0      0     0
-#&gt; 387     0     0    0         0      0    1   0    0      0     0
-#&gt; 388     0     0    0         0      0    0   0    0      0     0
-#&gt; 389     0     0    0         0      0    0   0    0      0     0
-#&gt; 390     0     0    0         0      0    1   0    0      0     0
-#&gt; 391     0     0    0         0      0    0   0    0      0     0
-#&gt; 392     0     0    0         0      0    0   0    0      0     0
-#&gt; 393     0     1    0         0      0    0   0    0      0     0
-#&gt; 394     0     0    0         0      0    0   0    0      0     0
-#&gt; 395     0     0    0         0      0    0   0    0      0     0
-#&gt; 396     0     0    0         0      0    0   0    0      0     0
-#&gt; 397     0     0    0         0      0    0   0    0      0     0
-#&gt; 398     0     1    0         0      0    0   0    0      0     0
-#&gt; 399     0     0    0         1      0    0   0    0      0     0
-#&gt; 400     0     0    0         0      0    0   0    0      0     0
-#&gt; 401     0     0    0         0      0    0   0    0      0     0
-#&gt; 402     0     0    0         0      0    0   0    0      0     0
-#&gt; 403     0     0    0         0      0    0   0    0      0     0
-#&gt; 404     0     0    0         0      0    0   0    0      0     0
-#&gt; 405     0     0    0         0      0    0   0    0      0     0
-#&gt; 406     0     0    0         0      0    0   0    0      0     0
-#&gt; 407     0     0    0         0      0    0   0    0      0     0
-#&gt; 408     0     0    0         0      0    0   0    0      0     0
-#&gt; 409     0     0    0         0      0    0   0    0      0     0
-#&gt; 410     0     0    0         0      0    0   0    0      0     0
-#&gt; 411     0     0    0         0      0    0   0    1      0     0
-#&gt; 412     0     0    0         0      0    0   0    0      0     0
-#&gt; 413     0     0    0         0      0    0   0    0      0     0
-#&gt; 414     0     0    0         0      0    0   0    0      0     0
-#&gt; 415     0     0    0         0      0    0   1    0      0     0
-#&gt; 416     0     0    0         0      0    0   0    0      0     0
-#&gt; 417     0     0    0         0      0    0   0    0      0     0
-#&gt; 418     0     0    0         0      0    0   0    0      0     0
-#&gt; 419     0     0    0         0      0    0   0    0      0     0
-#&gt; 420     0     0    0         0      0    0   0    0      0     0
-#&gt; 421     0     0    0         0      0    0   0    0      0     0
-#&gt; 422     0     0    0         0      0    0   0    0      0     0
-#&gt; 423     0     0    0         0      0    0   0    0      0     0
-#&gt; 424     0     0    0         0      0    0   0    0      0     0
-#&gt; 425     0     0    0         0      0    0   0    0      0     0
-#&gt; 426     0     0    0         0      0    0   0    0      0     0
-#&gt; 427     0     0    0         0      0    0   0    0      0     0
-#&gt; 428     0     0    0         0      0    0   0    0      0     0
-#&gt; 429     0     0    0         0      0    0   0    0      0     0
-#&gt; 430     0     0    0         0      0    0   0    0      0     0
-#&gt; 431     0     0    0         0      0    0   0    0      0     0
-#&gt; 432     0     0    0         0      0    0   0    0      0     0
-#&gt; 433     0     0    0         0      0    0   0    0      0     0
-#&gt; 434     0     0    0         0      0    0   0    0      0     0
-#&gt; 435     0     0    0         0      0    0   0    0      0     0
-#&gt; 436     0     0    0         0      0    0   0    0      0     0
-#&gt; 437     0     0    0         0      0    1   0    0      0     0
-#&gt; 438     0     0    0         0      0    0   0    0      0     0
-#&gt; 439     0     0    0         0      0    0   0    0      0     0
-#&gt; 440     0     0    0         0      0    0   0    0      0     0
-#&gt; 441     0     0    0         0      0    0   0    0      0     0
-#&gt; 442     0     0    0         0      0    1   0    0      0     0
-#&gt; 443     0     0    0         0      0    0   0    0      0     0
-#&gt; 444     0     0    0         0      0    0   0    0      0     0
-#&gt; 445     0     0    0         0      0    0   0    0      0     0
-#&gt; 446     0     0    0         0      0    0   0    0      0     0
-#&gt; 447     0     0    0         0      0    1   0    0      0     0
-#&gt; 448     0     0    0         0      0    0   0    0      0     0
-#&gt; 449     0     0    0         0      0    0   0    0      0     0
-#&gt; 450     0     0    0         0      0    0   0    0      0     0
-#&gt; 451     0     0    0         0      0    1   0    0      0     0
-#&gt; 452     0     0    0         0      0    0   0    0      0     0
-#&gt; 453     0     0    0         0      0    0   2    0      0     0
-#&gt; 454     0     0    0         0      0    0   0    0      0     0
-#&gt; 455     0     0    0         0      0    0   1    0      0     0
-#&gt; 456     0     0    0         0      0    0   0    0      0     0
-#&gt; 457     0     0    0         0      0    0   0    0      0     0
-#&gt; 458     0     0    0         0      0    0   0    0      0     0
-#&gt; 459     0     0    0         0      0    0   0    1      0     0
-#&gt; 460     0     0    0         0      0    0   0    0      0     0
-#&gt; 461     0     0    0         0      0    0   0    0      0     0
-#&gt; 462     0     0    0         0      0    0   0    0      0     0
-#&gt; 463     0     0    0         0      0    0   0    0      0     0
-#&gt; 464     0     0    0         0      0    0   0    0      0     0
-#&gt; 465     0     0    0         0      0    0   0    0      0     0
-#&gt; 466     0     0    0         0      0    0   0    0      0     0
-#&gt; 467     0     0    0         0      0    1   0    0      0     0
-#&gt; 468     0     0    0         0      0    0   0    0      0     0
-#&gt; 469     0     0    0         0      0    0   0    0      0     0
-#&gt; 470     0     0    0         0      0    0   0    0      0     0
-#&gt; 471     0     0    0         0      0    0   0    0      0     0
-#&gt; 472     0     0    0         0      0    0   0    0      0     0
-#&gt; 473     0     0    0         0      0    0   0    0      0     0
-#&gt; 474     0     0    0         0      0    0   0    0      0     0
-#&gt; 475     0     0    0         0      0    0   0    0      0     0
-#&gt; 476     0     0    0         0      0    0   0    0      0     0
-#&gt; 477     0     0    0         0      0    0   0    0      0     0
-#&gt; 478     1     0    0         0      0    0   0    0      0     0
-#&gt; 479     0     0    0         0      0    0   0    0      0     0
-#&gt; 480     0     0    0         0      0    0   0    0      0     0
-#&gt; 481     0     0    0         0      0    0   0    0      0     0
-#&gt; 482     0     0    0         0      0    0   0    0      0     0
-#&gt; 483     0     0    0         0      0    0   0    0      0     0
-#&gt; 484     0     0    0         0      0    0   0    1      0     0
-#&gt; 485     0     0    0         0      0    1   0    0      0     0
-#&gt; 486     0     0    0         0      0    0   0    0      0     0
-#&gt; 487     0     0    0         0      0    0   0    0      0     0
-#&gt; 488     0     0    0         0      0    1   0    0      0     0
-#&gt; 489     0     0    0         0      0    0   0    0      0     0
-#&gt; 490     0     0    0         0      1    0   0    0      0     0
-#&gt; 491     0     0    0         0      0    1   0    0      0     0
-#&gt; 492     0     0    0         0      0    0   0    0      0     0
-#&gt; 493     0     0    0         0      0    0   0    0      0     0
-#&gt; 494     0     0    0         0      0    0   0    0      0     0
-#&gt; 495     0     1    0         0      0    0   0    0      0     0
-#&gt; 496     0     0    0         0      0    0   0    0      0     0
-#&gt; 497     1     0    0         0      0    0   0    0      0     0
-#&gt; 498     0     0    0         0      0    0   0    0      0     0
-#&gt; 499     0     0    0         0      0    0   0    0      0     0
-#&gt; 500     0     0    0         0      0    0   0    0      0     0
-#&gt; 501     1     0    1         0      0    0   0    0      0     0
-#&gt; 502     0     0    0         0      0    0   0    0      0     0
-#&gt; 503     0     0    0         0      0    0   0    0      0     0
-#&gt; 504     0     0    0         0      0    0   0    0      0     0
-#&gt; 505     0     0    0         0      0    0   0    0      0     0
-#&gt; 506     0     0    0         0      0    0   0    0      0     0
-#&gt; 507     0     0    0         0      0    0   0    0      0     0
-#&gt; 508     0     0    0         0      0    0   0    0      0     0
-#&gt; 509     0     0    0         0      0    0   0    0      0     0
-#&gt; 510     0     0    0         0      0    0   0    0      0     0
-#&gt; 511     0     0    0         0      0    0   0    0      0     0
-#&gt; 512     0     0    0         0      0    0   0    0      0     0
-#&gt; 513     0     0    0         0      0    0   0    1      0     0
-#&gt; 514     1     0    0         0      0    0   0    0      0     0
-#&gt; 515     0     0    0         0      0    0   0    0      0     0
-#&gt; 516     0     0    0         0      0    0   0    0      0     0
-#&gt; 517     0     0    0         0      0    0   0    0      0     0
-#&gt; 518     0     0    0         0      0    0   0    0      0     0
-#&gt; 519     0     0    0         0      0    1   0    0      0     0
-#&gt; 520     0     0    0         0      0    0   0    0      0     0
-#&gt; 521     0     0    0         0      0    0   0    0      0     0
-#&gt; 522     0     0    0         0      0    0   0    0      0     0
-#&gt; 523     0     0    0         0      0    0   0    0      0     0
-#&gt; 524     0     0    0         0      0    0   0    0      0     0
-#&gt; 525     0     0    1         0      0    0   0    0      0     0
-#&gt; 526     0     0    0         0      0    0   0    0      0     0
-#&gt; 527     0     0    0         0      0    0   0    0      0     0
-#&gt; 528     0     0    0         0      0    0   0    0      0     0
-#&gt; 529     0     0    0         0      0    0   0    0      0     0
-#&gt; 530     1     0    0         0      0    0   0    0      0     0
-#&gt; 531     0     0    0         0      0    0   0    0      0     0
-#&gt; 532     0     0    0         0      0    0   0    0      0     0
-#&gt; 533     0     0    0         0      0    0   0    1      0     0
-#&gt; 534     0     0    0         0      0    0   0    0      0     0
-#&gt; 535     0     0    0         0      0    0   0    0      0     0
-#&gt; 536     0     0    0         0      0    0   0    0      0     0
-#&gt; 537     0     0    0         0      0    0   0    0      0     0
-#&gt; 538     0     0    1         0      0    0   0    0      0     0
-#&gt; 539     0     0    0         0      0    0   0    0      0     0
-#&gt; 540     0     0    0         0      0    0   0    1      0     0
-#&gt; 541     0     0    1         0      0    0   0    0      0     0
-#&gt; 542     0     0    0         0      0    0   0    0      0     0
-#&gt; 543     0     0    0         0      0    0   0    0      0     0
-#&gt; 544     0     0    0         0      0    1   0    0      0     0
-#&gt; 545     0     0    0         0      0    0   0    0      0     0
-#&gt; 546     0     0    0         0      0    0   0    0      0     0
-#&gt; 547     0     0    0         0      0    1   0    0      0     0
-#&gt; 548     0     0    0         0      0    0   0    0      0     0
-#&gt; 549     0     0    0         0      0    0   0    0      0     0
-#&gt; 550     0     0    0         0      0    0   0    0      0     0
-#&gt; 551     0     0    0         0      0    0   0    0      0     0
-#&gt; 552     0     0    0         0      0    0   0    0      0     0
-#&gt; 553     0     0    0         0      0    0   0    0      0     0
-#&gt; 554     0     0    0         0      0    0   0    0      0     0
-#&gt; 555     0     0    0         0      0    0   0    0      0     0
-#&gt; 556     0     0    0         0      0    0   0    0      0     0
-#&gt; 557     0     0    0         0      0    0   0    0      0     0
-#&gt; 558     0     0    0         0      0    0   0    0      0     0
-#&gt; 559     0     0    0         0      0    0   0    0      0     0
-#&gt; 560     0     0    0         0      0    0   0    0      0     0
-#&gt; 561     0     0    0         0      0    0   0    0      0     1
-#&gt; 562     0     0    0         0      0    0   0    0      0     0
-#&gt; 563     0     0    0         0      0    0   0    0      0     0
-#&gt; 564     0     0    0         0      0    0   0    0      0     0
-#&gt; 565     0     0    0         0      0    0   0    0      0     0
-#&gt; 566     0     0    0         0      0    1   0    0      0     0
-#&gt; 567     0     0    0         0      0    1   0    0      0     0
-#&gt; 568     0     0    0         0      0    0   0    0      0     0
-#&gt; 569     0     0    0         0      0    0   0    0      0     0
-#&gt; 570     0     0    0         0      0    0   0    0      0     0
-#&gt; 571     0     0    0         0      0    0   0    0      0     0
-#&gt; 572     0     0    0         0      0    0   0    0      0     0
-#&gt; 573     0     0    0         0      0    0   0    0      0     0
-#&gt; 574     1     0    0         0      0    1   0    0      0     0
-#&gt; 575     0     0    0         0      0    0   0    0      0     0
-#&gt; 576     0     0    0         0      0    0   0    0      0     0
-#&gt; 577     0     0    0         0      0    0   0    0      0     0
-#&gt; 578     0     0    0         0      0    0   0    0      1     0
-#&gt; 579     1     0    0         0      0    0   0    0      0     0
-#&gt; 580     0     0    0         0      0    0   0    0      0     0
-#&gt; 581     0     0    0         0      0    0   0    0      0     0
-#&gt; 582     0     0    0         0      0    0   0    0      0     0
-#&gt; 583     0     0    0         0      0    0   0    0      0     0
-#&gt; 584     0     0    0         0      0    0   0    0      0     0
-#&gt; 585     0     0    0         0      0    0   0    0      0     0
-#&gt; 586     0     0    0         0      0    0   0    0      0     0
-#&gt; 587     0     0    0         0      0    1   0    0      0     0
-#&gt; 588     0     0    0         0      0    0   0    0      0     0
-#&gt; 589     0     0    0         0      0    0   0    0      0     0
-#&gt; 590     0     0    0         0      0    0   0    0      0     0
-#&gt; 591     0     0    0         0      0    0   0    0      0     0
-#&gt; 592     0     0    0         0      0    0   0    0      0     0
-#&gt; 593     0     0    0         0      0    0   0    0      0     0
-#&gt; 594     0     0    0         0      0    0   0    0      0     0
-#&gt; 595     0     0    0         0      0    0   0    0      0     0
-#&gt; 596     1     0    0         0      0    0   0    0      0     0
-#&gt; 597     0     0    0         0      0    0   0    0      0     0
-#&gt; 598     0     0    0         0      0    0   0    0      0     0
-#&gt; 599     0     0    0         0      0    0   0    1      0     0
-#&gt; 600     0     0    0         0      0    0   0    0      0     0
-#&gt; 601     0     0    0         0      0    0   0    0      0     0
-#&gt; 602     0     0    0         0      0    0   0    0      0     0
-#&gt; 603     1     0    0         0      0    0   0    1      0     0
-#&gt; 604     0     0    0         0      0    0   0    0      0     0
-#&gt; 605     0     0    0         0      0    0   0    0      0     0
-#&gt; 606     0     0    0         0      0    0   0    0      0     0
-#&gt; 607     0     0    0         0      1    0   0    0      0     0
-#&gt; 608     0     0    0         0      0    0   0    0      0     0
-#&gt; 609     0     0    0         0      0    0   0    0      0     0
-#&gt; 610     0     0    0         0      0    0   0    0      0     0
-#&gt; 611     0     0    0         0      0    0   0    0      0     0
-#&gt; 612     0     0    0         0      0    0   0    0      0     0
-#&gt; 613     0     0    0         0      0    0   0    0      0     0
-#&gt; 614     0     0    0         0      0    0   0    0      0     0
-#&gt; 615     0     0    0         0      0    0   0    0      0     0
-#&gt; 616     0     0    1         0      0    0   0    0      0     0
-#&gt; 617     0     0    0         0      0    0   0    0      0     0
-#&gt; 618     0     0    0         0      0    0   0    0      0     0
-#&gt; 619     0     0    0         0      0    0   0    0      0     0
-#&gt; 620     0     0    0         0      0    0   0    0      0     0
-#&gt; 621     0     0    0         0      0    0   0    0      0     1
-#&gt; 622     0     0    0         0      0    0   0    0      0     0
-#&gt; 623     0     0    0         0      0    0   0    0      0     0
-#&gt; 624     0     0    0         0      0    0   0    0      0     0
-#&gt; 625     0     0    0         0      1    0   0    0      0     0
-#&gt; 626     0     0    0         0      0    0   0    0      0     0
-#&gt; 627     0     0    0         0      0    0   0    1      0     0
-#&gt; 628     0     0    0         0      0    0   0    0      1     0
-#&gt; 629     0     0    0         0      0    0   0    0      0     0
-#&gt; 630     0     1    0         0      0    0   0    0      0     0
-#&gt; 631     0     0    0         0      0    0   0    0      0     0
-#&gt; 632     0     0    0         0      0    0   0    0      0     0
-#&gt; 633     0     0    0         0      0    0   0    0      0     0
-#&gt; 634     0     0    0         0      0    0   0    0      0     0
-#&gt; 635     0     0    0         0      0    0   0    0      0     0
-#&gt; 636     0     0    0         0      0    0   0    0      0     0
-#&gt; 637     0     0    0         0      0    0   0    0      0     0
-#&gt; 638     0     0    0         0      0    0   0    0      0     0
-#&gt; 639     0     0    0         0      0    0   0    0      0     0
-#&gt; 640     0     0    0         0      0    0   0    0      0     0
-#&gt; 641     0     0    0         0      0    0   0    0      0     0
-#&gt; 642     0     0    0         0      0    0   0    0      0     0
-#&gt; 643     0     0    0         0      0    0   0    0      0     0
-#&gt; 644     0     0    0         0      0    0   0    0      0     0
-#&gt; 645     0     0    0         0      0    0   0    0      0     0
-#&gt; 646     0     0    0         0      0    0   1    0      0     0
-#&gt; 647     0     0    0         0      0    0   0    0      0     0
-#&gt; 648     0     0    0         0      0    0   0    1      0     0
-#&gt; 649     0     0    0         0      0    0   0    0      0     0
-#&gt; 650     0     0    0         0      0    1   0    0      0     0
-#&gt; 651     0     0    0         0      0    0   0    0      0     0
-#&gt; 652     0     0    0         0      1    0   0    0      0     0
-#&gt; 653     0     0    0         0      0    0   0    0      0     0
-#&gt; 654     0     0    0         0      0    0   0    0      0     0
-#&gt; 655     0     0    0         0      0    0   0    0      0     0
-#&gt; 656     0     0    0         0      0    0   0    0      0     0
-#&gt; 657     0     0    0         0      0    0   0    0      0     0
-#&gt; 658     1     0    0         0      0    0   0    0      0     0
-#&gt; 659     0     0    0         0      0    0   0    0      0     0
-#&gt; 660     0     0    0         1      0    0   0    0      0     0
-#&gt; 661     0     0    1         0      0    0   0    0      0     0
-#&gt; 662     0     0    0         0      0    0   0    0      0     0
-#&gt; 663     0     0    0         0      0    0   0    0      0     0
-#&gt; 664     0     0    0         0      0    0   0    0      0     0
-#&gt; 665     0     0    0         0      0    0   0    0      0     0
-#&gt; 666     0     0    0         0      0    0   0    0      0     0
-#&gt; 667     0     0    0         0      0    0   0    0      0     0
-#&gt; 668     0     0    0         0      0    0   0    0      0     0
-#&gt; 669     0     0    0         0      0    0   0    0      0     0
-#&gt; 670     0     0    0         0      0    0   0    0      0     0
-#&gt; 671     0     0    0         0      0    0   0    0      0     0
-#&gt; 672     0     0    0         0      0    0   0    0      0     0
-#&gt; 673     0     0    0         0      0    0   0    0      0     0
-#&gt; 674     0     0    0         0      0    0   0    0      0     0
-#&gt; 675     0     0    0         0      1    0   0    0      0     0
-#&gt; 676     0     0    0         0      0    0   0    0      0     0
-#&gt; 677     0     0    0         0      0    1   0    0      0     0
-#&gt; 678     0     0    0         0      0    0   0    0      0     0
-#&gt; 679     0     0    0         0      0    0   0    0      0     0
-#&gt; 680     0     0    0         0      0    0   0    0      0     0
-#&gt; 681     0     0    0         0      0    0   0    0      0     0
-#&gt; 682     0     0    0         0      0    0   0    0      0     0
-#&gt; 683     0     0    1         0      0    0   0    0      0     0
-#&gt; 684     0     0    0         1      0    0   0    0      0     0
-#&gt; 685     0     0    0         0      0    0   0    0      0     0
-#&gt; 686     0     0    0         0      0    0   0    0      0     0
-#&gt; 687     0     0    0         0      0    0   0    0      0     0
-#&gt; 688     0     0    0         0      0    0   0    0      0     0
-#&gt; 689     0     0    0         0      0    0   0    1      0     0
-#&gt; 690     0     0    0         0      0    0   0    0      0     0
-#&gt; 691     0     0    1         0      0    0   0    0      0     0
-#&gt; 692     0     0    0         0      0    1   0    0      0     0
-#&gt; 693     0     0    0         0      0    1   0    0      0     0
-#&gt; 694     0     0    0         0      0    0   0    0      0     0
-#&gt; 695     0     0    0         0      0    0   0    0      0     0
-#&gt; 696     0     0    0         0      0    0   0    0      0     0
-#&gt; 697     0     0    1         0      0    0   0    0      0     0
-#&gt; 698     0     0    0         0      0    0   0    0      0     0
-#&gt; 699     0     0    0         0      0    1   0    0      0     0
-#&gt; 700     0     0    0         0      0    0   0    0      0     0
-#&gt; 701     0     0    0         0      0    0   0    0      0     0
-#&gt; 702     0     0    0         0      0    0   0    0      0     0
-#&gt; 703     0     0    0         0      1    0   0    0      0     0
-#&gt; 704     0     0    0         0      0    0   0    0      0     0
-#&gt; 705     0     0    0         0      0    0   0    0      0     0
-#&gt; 706     0     0    0         0      0    0   0    0      0     0
-#&gt; 707     0     0    0         1      0    0   0    0      0     0
-#&gt; 708     0     0    0         0      0    0   0    0      0     0
-#&gt; 709     0     0    0         0      0    0   0    0      0     0
-#&gt; 710     0     0    0         0      0    0   0    0      0     0
-#&gt; 711     0     0    0         0      0    0   0    0      0     0
-#&gt; 712     0     0    0         0      0    0   0    0      0     0
-#&gt; 713     0     0    0         0      0    0   0    0      0     0
-#&gt; 714     0     0    0         0      0    0   0    0      0     0
-#&gt; 715     0     0    0         0      0    0   0    0      0     0
-#&gt; 716     0     0    0         0      0    0   0    1      0     0
-#&gt; 717     0     0    0         1      0    0   0    0      0     0
-#&gt; 718     0     0    0         0      0    0   0    0      0     0
-#&gt; 719     0     0    0         0      0    0   0    0      0     0
-#&gt; 720     0     0    0         0      0    0   0    0      0     0
-#&gt; 721     0     0    0         0      0    0   0    0      0     0
-#&gt; 722     0     0    0         0      0    0   0    0      0     0
-#&gt; 723     0     1    0         0      0    0   0    0      0     0
-#&gt; 724     0     0    0         0      0    0   0    0      0     0
-#&gt; 725     0     0    0         0      1    0   0    0      0     0
-#&gt; 726     0     0    0         0      1    0   0    0      0     0
-#&gt; 727     0     0    0         0      0    0   0    0      0     0
-#&gt; 728     0     0    0         0      0    0   0    0      0     0
-#&gt; 729     1     0    0         0      0    0   0    0      0     0
-#&gt; 730     0     0    0         0      0    0   0    0      0     0
-#&gt; 731     0     0    0         0      0    0   0    0      0     0
-#&gt; 732     0     0    0         0      0    0   0    0      0     0
-#&gt; 733     0     0    0         0      0    0   0    0      0     0
-#&gt; 734     0     0    0         0      0    0   0    0      0     0
-#&gt; 735     1     0    0         0      0    0   0    0      0     0
-#&gt; 736     0     0    0         0      0    1   0    0      0     0
-#&gt; 737     1     0    0         0      0    0   1    0      0     0
-#&gt; 738     0     0    0         0      0    0   0    0      0     0
-#&gt; 739     0     0    0         0      0    0   0    0      0     0
-#&gt; 740     0     0    0         0      0    0   0    0      0     0
-#&gt; 741     0     0    0         0      0    0   0    0      0     0
-#&gt; 742     0     0    0         0      0    0   0    0      0     0
-#&gt; 743     0     0    0         0      0    0   0    0      0     0
-#&gt; 744     0     0    0         0      0    0   0    0      0     0
-#&gt; 745     0     0    0         0      0    1   0    0      0     0
-#&gt; 746     0     0    0         0      0    0   0    0      0     0
-#&gt; 747     0     0    0         0      0    0   0    0      0     0
-#&gt; 748     0     1    0         0      0    0   0    0      0     0
-#&gt; 749     0     0    0         0      0    0   0    0      0     0
-#&gt; 750     0     0    0         0      0    0   0    0      0     0
-#&gt; 751     0     0    0         0      0    0   0    0      0     0
-#&gt; 752     0     0    0         0      0    0   0    0      0     0
-#&gt; 753     0     0    0         0      0    0   0    0      0     0
-#&gt; 754     0     0    0         0      0    0   0    0      0     0
-#&gt; 755     0     0    0         0      0    0   0    0      0     0
-#&gt; 756     0     0    0         0      0    0   0    0      0     0
-#&gt; 757     0     0    0         0      0    0   0    0      0     0
-#&gt; 758     0     0    0         0      0    0   0    0      0     0
-#&gt; 759     0     0    0         0      0    0   0    0      0     0
-#&gt; 760     0     0    0         0      0    0   0    0      0     0
-#&gt; 761     0     0    0         0      0    0   0    0      0     0
-#&gt; 762     0     0    0         0      0    0   0    0      0     0
-#&gt; 763     0     0    0         0      0    0   0    0      0     0
-#&gt; 764     0     0    0         0      0    0   1    0      0     0
-#&gt; 765     0     0    0         0      0    0   0    0      0     0
-#&gt; 766     0     0    0         0      0    0   0    0      0     0
-#&gt; 767     0     0    0         0      0    1   0    0      0     0
-#&gt; 768     0     0    1         0      0    0   0    0      0     0
-#&gt; 769     0     0    0         0      0    0   0    0      0     0
-#&gt; 770     0     0    0         0      0    0   0    0      0     0
-#&gt; 771     0     0    0         0      0    0   0    0      0     0
-#&gt; 772     0     0    0         0      0    0   0    0      0     0
-#&gt; 773     0     0    0         0      0    0   0    0      0     0
-#&gt; 774     0     0    0         0      0    0   0    0      0     0
-#&gt; 775     0     0    1         0      0    0   0    0      0     0
-#&gt; 776     0     0    0         0      0    0   0    0      0     0
-#&gt; 777     0     0    0         0      0    0   0    0      0     0
-#&gt; 778     0     0    0         0      0    0   0    0      0     0
-#&gt; 779     0     0    0         0      0    0   1    0      0     0
-#&gt; 780     0     0    0         0      0    0   0    0      0     0
-#&gt; 781     0     0    0         0      0    0   0    0      0     0
-#&gt; 782     0     0    0         0      1    0   0    0      0     0
-#&gt; 783     0     0    0         0      0    0   0    0      0     0
-#&gt; 784     0     0    0         0      0    0   0    0      0     1
-#&gt; 785     0     0    0         0      0    0   0    0      0     0
-#&gt; 786     0     0    0         0      0    0   0    0      0     0
-#&gt; 787     0     0    0         0      0    1   0    0      0     0
-#&gt; 788     0     0    0         0      0    0   0    0      0     0
-#&gt; 789     0     0    0         0      0    0   0    0      0     0
-#&gt; 790     0     0    0         1      0    0   0    0      0     0
-#&gt; 791     0     0    0         0      0    0   0    0      0     0
-#&gt; 792     0     0    0         0      0    0   0    0      0     0
-#&gt; 793     0     0    0         0      0    0   0    0      0     0
-#&gt; 794     0     0    0         0      0    0   0    0      0     0
-#&gt; 795     0     0    0         0      0    0   0    0      0     0
-#&gt; 796     0     0    0         0      0    0   0    0      0     0
-#&gt; 797     0     0    0         0      0    0   0    0      0     0
-#&gt; 798     0     0    0         0      0    0   0    0      0     0
-#&gt; 799     0     0    0         0      0    0   0    0      0     0
-#&gt; 800     0     0    0         0      0    0   0    0      0     0
-#&gt; 801     0     0    0         0      0    0   0    0      0     0
-#&gt; 802     0     0    0         0      0    0   0    0      0     0
-#&gt; 803     0     0    0         0      0    0   0    0      0     0
-#&gt; 804     0     0    0         0      0    0   0    0      0     0
-#&gt; 805     0     0    0         0      0    0   0    0      0     0
-#&gt; 806     0     0    0         0      0    0   0    0      0     0
-#&gt; 807     0     0    0         0      0    0   0    0      0     0
-#&gt; 808     0     0    0         0      0    0   0    0      0     0
-#&gt; 809     0     0    0         0      0    0   0    1      0     0
-#&gt; 810     0     0    1         0      1    0   0    0      0     0
-#&gt; 811     0     0    0         0      0    0   0    0      0     0
-#&gt; 812     0     0    0         0      0    0   0    0      0     0
-#&gt; 813     0     0    0         0      0    0   0    0      0     0
-#&gt; 814     0     0    0         0      0    0   0    0      0     0
-#&gt; 815     0     0    0         0      0    0   0    0      0     0
-#&gt; 816     0     0    0         0      0    0   0    0      0     0
-#&gt; 817     0     0    0         0      0    0   0    0      0     0
-#&gt; 818     0     0    0         0      0    0   0    0      0     0
-#&gt; 819     0     0    0         0      0    0   0    0      0     0
-#&gt; 820     0     0    0         0      0    0   0    0      0     0
-#&gt; 821     0     0    0         0      0    0   0    0      0     0
-#&gt; 822     0     0    0         0      0    0   0    0      0     0
-#&gt; 823     0     0    0         0      0    0   0    0      0     0
-#&gt; 824     0     0    0         0      0    0   0    0      0     0
-#&gt; 825     0     0    0         0      0    0   0    0      0     0
-#&gt; 826     0     0    0         0      0    0   0    0      0     0
-#&gt; 827     0     0    0         0      0    0   0    0      0     0
-#&gt; 828     0     0    0         0      0    0   0    0      0     0
-#&gt; 829     0     0    0         0      0    0   0    1      0     0
-#&gt; 830     0     0    0         0      0    0   0    0      0     0
-#&gt; 831     0     0    0         0      0    0   0    0      0     0
-#&gt; 832     0     0    0         0      0    0   0    0      0     0
-#&gt; 833     0     0    0         0      0    0   0    0      0     0
-#&gt; 834     0     0    0         0      0    0   0    1      0     0
-#&gt; 835     0     0    0         0      0    0   0    0      0     0
-#&gt; 836     0     0    0         0      0    0   0    0      0     0
-#&gt; 837     0     0    0         0      0    0   0    0      0     0
-#&gt; 838     0     0    0         0      0    0   0    0      0     1
-#&gt; 839     0     0    0         0      0    0   0    0      0     0
-#&gt; 840     0     0    0         0      0    1   0    0      0     0
-#&gt; 841     0     0    0         0      0    0   0    0      1     0
-#&gt; 842     0     0    0         0      0    0   0    0      0     0
-#&gt; 843     0     0    0         0      0    0   0    0      0     0
-#&gt; 844     0     0    0         0      0    1   0    0      0     0
-#&gt; 845     0     0    0         0      0    0   0    0      0     0
-#&gt; 846     0     0    0         0      0    0   0    0      0     0
-#&gt; 847     0     0    0         0      0    0   0    0      0     0
-#&gt; 848     0     0    0         0      1    0   0    0      0     0
-#&gt; 849     0     0    0         0      0    0   0    0      0     0
-#&gt; 850     0     0    0         0      0    0   1    0      0     0
-#&gt; 851     0     0    0         0      0    0   0    0      0     0
-#&gt; 852     0     0    0         0      0    0   0    0      0     0
-#&gt; 853     0     0    0         0      0    0   0    0      0     0
-#&gt; 854     0     0    0         0      0    0   0    0      0     0
-#&gt; 855     0     0    0         0      0    0   0    0      0     0
-#&gt; 856     0     0    0         0      0    0   0    0      0     0
-#&gt; 857     0     0    0         0      0    0   0    0      0     0
-#&gt; 858     0     0    0         0      0    0   0    0      0     0
-#&gt; 859     0     0    0         0      0    1   0    0      0     0
-#&gt; 860     0     0    0         0      0    0   0    0      0     0
-#&gt; 861     0     0    0         0      0    0   0    0      0     0
-#&gt; 862     0     0    0         0      0    1   0    0      0     0
-#&gt; 863     0     0    0         0      0    0   0    0      0     0
-#&gt; 864     0     0    0         0      0    0   0    0      0     0
-#&gt; 865     0     1    0         0      0    0   0    0      0     0
-#&gt; 866     0     0    0         0      0    0   0    0      0     0
-#&gt; 867     0     0    0         0      1    0   0    0      0     0
-#&gt; 868     0     0    0         0      0    0   0    0      0     0
-#&gt; 869     0     0    0         0      0    0   0    0      0     0
-#&gt; 870     0     0    0         0      0    0   0    1      0     0
-#&gt; 871     0     0    0         0      0    0   0    0      0     0
-#&gt; 872     0     0    0         0      0    0   0    0      0     0
-#&gt; 873     0     0    0         0      0    0   0    0      0     0
-#&gt; 874     0     0    0         0      0    0   0    0      0     0
-#&gt; 875     0     0    0         0      0    0   0    0      0     0
-#&gt; 876     0     0    0         0      0    0   0    0      0     0
-#&gt; 877     0     0    0         0      0    0   0    0      1     0
-#&gt; 878     0     0    0         0      0    0   0    0      0     0
-#&gt; 879     0     0    0         0      0    0   0    0      0     0
-#&gt; 880     0     0    1         0      0    0   0    0      0     0
-#&gt; 881     0     0    0         0      0    0   0    0      0     0
-#&gt; 882     0     0    0         0      0    0   0    0      0     0
-#&gt; 883     0     0    0         0      0    0   0    0      0     0
-#&gt; 884     0     0    0         0      0    0   0    0      0     0
-#&gt; 885     0     0    0         0      0    0   0    0      0     0
-#&gt; 886     0     0    0         0      0    0   0    0      0     0
-#&gt; 887     0     0    0         0      0    0   0    0      0     0
-#&gt; 888     0     0    0         0      0    0   0    0      0     0
-#&gt; 889     0     0    0         0      0    0   0    0      0     0
-#&gt; 890     0     0    0         0      0    0   0    0      0     0
-#&gt; 891     0     0    0         0      0    0   0    0      0     0
-#&gt; 892     1     0    0         0      0    0   0    0      0     0
-#&gt; 893     0     0    0         0      0    0   0    0      0     0
-#&gt; 894     0     0    0         0      0    0   0    0      0     0
-#&gt; 895     0     0    0         0      0    0   0    0      0     0
-#&gt; 896     0     0    0         0      0    0   0    0      0     0
-#&gt; 897     0     0    0         0      0    0   0    0      0     0
-#&gt; 898     0     0    0         0      0    0   0    0      0     0
-#&gt; 899     0     0    0         0      0    0   0    0      0     0
-#&gt; 900     0     0    0         0      0    0   0    0      0     0
-#&gt; 901     0     0    0         0      0    0   0    0      0     0
-#&gt; 902     0     0    0         0      0    0   0    0      0     0
-#&gt; 903     0     0    0         0      0    0   0    0      0     0
-#&gt; 904     0     0    0         0      0    0   0    0      0     0
-#&gt; 905     0     0    0         0      0    0   0    0      0     0
-#&gt; 906     1     0    0         0      0    0   0    0      0     0
-#&gt; 907     0     0    0         0      0    0   0    0      0     0
-#&gt; 908     0     0    1         0      0    0   0    0      0     0
-#&gt; 909     0     0    0         0      0    0   0    0      0     0
-#&gt; 910     0     0    0         0      0    0   0    0      0     0
-#&gt; 911     0     0    0         0      0    0   0    0      0     0
-#&gt; 912     0     0    0         0      0    0   0    0      0     0
-#&gt; 913     0     0    0         0      0    0   0    0      0     0
-#&gt; 914     0     0    0         0      0    0   0    0      0     0
-#&gt; 915     0     0    0         0      0    0   0    0      0     0
-#&gt; 916     0     0    0         0      0    0   0    0      0     0
-#&gt; 917     0     0    0         0      0    0   0    0      1     0
-#&gt; 918     0     0    0         0      0    0   0    0      0     0
-#&gt; 919     0     0    0         0      0    0   0    0      0     0
-#&gt; 920     0     0    0         0      0    0   0    0      0     0
-#&gt; 921     0     0    0         0      0    1   0    0      0     0
-#&gt; 922     0     0    0         0      0    0   0    0      0     0
-#&gt; 923     0     0    0         0      0    0   0    0      0     0
-#&gt; 924     0     0    0         0      0    0   0    0      0     0
-#&gt; 925     0     0    0         0      0    0   0    0      0     0
-#&gt; 926     0     0    0         0      0    0   0    0      0     0
-#&gt; 927     0     0    0         0      0    0   1    0      0     0
-#&gt; 928     1     0    0         0      0    0   0    0      0     0
-#&gt; 929     0     0    0         0      0    0   0    0      0     0
-#&gt; 930     0     0    0         0      0    0   0    0      0     0
-#&gt; 931     0     0    0         0      0    0   0    0      0     0
-#&gt; 932     0     0    0         0      0    0   0    0      0     0
-#&gt; 933     0     0    0         0      0    0   0    0      0     0
-#&gt; 934     0     0    0         0      0    1   0    0      0     0
-#&gt; 935     0     0    0         0      0    0   0    0      0     0
-#&gt; 936     0     0    0         0      0    0   0    0      0     0
-#&gt; 937     0     0    0         0      0    0   0    0      0     0
-#&gt; 938     0     0    0         0      0    0   0    0      0     0
-#&gt; 939     0     0    0         0      0    0   0    0      0     0
-#&gt; 940     0     0    0         0      0    0   0    0      0     0
-#&gt; 941     0     0    0         0      0    0   0    0      0     0
-#&gt; 942     0     0    0         0      0    1   0    0      0     0
-#&gt; 943     0     0    0         0      0    0   0    0      0     0
-#&gt; 944     0     0    0         0      0    0   0    0      0     0
-#&gt; 945     0     0    0         0      0    0   0    0      0     1
-#&gt; 946     0     0    0         0      0    0   0    0      0     0
-#&gt; 947     0     0    0         0      0    0   0    0      0     0
-#&gt; 948     0     0    0         0      0    0   0    0      0     0
-#&gt; 949     0     0    0         0      0    0   0    0      0     0
-#&gt; 950     0     0    0         0      0    0   0    1      0     0
-#&gt; 951     0     0    0         0      0    0   0    0      0     0
-#&gt; 952     1     1    0         0      0    0   0    0      0     0
-#&gt; 953     0     0    0         0      0    0   0    0      0     0
-#&gt; 954     0     0    0         0      0    0   0    0      0     0
-#&gt; 955     0     0    0         0      0    0   0    0      0     0
-#&gt; 956     0     0    0         0      0    1   0    0      0     0
-#&gt; 957     0     0    0         0      0    0   0    0      0     0
-#&gt; 958     0     0    0         0      0    0   0    0      0     0
-#&gt; 959     0     0    0         0      0    0   1    0      0     0
-#&gt; 960     0     0    0         0      0    0   0    0      0     0
-#&gt; 961     0     0    0         0      0    0   0    0      0     0
-#&gt; 962     0     0    0         0      0    0   0    0      0     0
-#&gt; 963     0     0    0         0      0    0   0    0      0     0
-#&gt; 964     0     0    0         0      0    0   0    0      0     0
-#&gt; 965     0     0    0         0      0    0   0    0      0     0
-#&gt; 966     0     0    0         0      0    0   0    0      0     0
-#&gt; 967     0     0    0         0      0    0   0    0      0     0
-#&gt; 968     0     0    0         0      0    1   0    0      0     0
-#&gt; 969     0     0    0         0      0    0   0    0      1     0
-#&gt; 970     0     0    0         0      0    1   0    0      0     0
-#&gt; 971     0     0    0         0      0    0   0    0      0     0
-#&gt; 972     0     0    0         0      0    0   0    0      1     0
-#&gt; 973     0     0    0         0      0    0   0    0      0     0
-#&gt; 974     0     0    0         0      0    0   0    0      0     0
-#&gt; 975     0     0    0         0      0    0   0    0      0     0
-#&gt; 976     0     0    0         0      0    0   0    0      0     0
-#&gt; 977     0     0    0         0      0    0   1    0      0     0
-#&gt; 978     0     0    0         0      0    0   0    0      0     0
-#&gt; 979     0     0    0         0      0    0   0    0      0     0
-#&gt; 980     0     0    0         0      0    0   0    0      0     0
-#&gt; 981     0     0    0         0      0    0   0    0      0     0
-#&gt; 982     0     0    0         0      0    0   0    0      0     0
-#&gt; 983     0     0    0         0      0    0   0    0      0     0
-#&gt; 984     0     0    0         0      0    0   0    0      0     0
-#&gt; 985     0     0    0         0      0    0   0    0      0     0
-#&gt; 986     0     0    0         0      0    0   0    0      1     0
-#&gt; 987     0     0    0         0      0    0   0    0      0     0
-#&gt; 988     0     0    0         0      0    0   0    0      0     0
-#&gt; 989     0     0    0         0      0    0   0    0      0     0
-#&gt; 990     0     0    0         0      0    0   0    0      0     0
-#&gt; 991     0     0    0         0      0    0   0    0      0     1
-#&gt; 992     0     0    0         0      0    0   0    0      0     0
-#&gt; 993     0     0    0         0      0    0   0    0      0     0
-#&gt; 994     0     0    0         0      0    0   0    0      0     0
 #&gt; 995     0     0    0         0      0    0   0    0      0     0
 #&gt; 996     0     0    0         0      0    0   0    0      0     0
 #&gt; 997     0     0    0         0      0    0   0    0      0     0
@@ -1224,70 +231,61 @@
 <p>The model training consist of <code><a href="https://www.rdocumentation.org/packages/base/topics/expand.grid">expand.grid()</a></code>, <code>train()</code> (formula, data, method, train control, tuneGrid, etc)</p>
 <p><code>randomForest</code> and <code>caret()</code> package</p>
 <p>Example shown is for Gradient Boosting Machine trained model</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BuildTraining">BuildTraining</a></span>(clean_dataset)[[<span class="dv">2</span>]] 
-<span class="co">#&gt; Stochastic Gradient Boosting </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; 1000 samples</span>
-<span class="co">#&gt;   96 predictor</span>
-<span class="co">#&gt;    2 classes: 'No', 'Yes' </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; No pre-processing</span>
-<span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span>
-<span class="co">#&gt; Summary of sample sizes: 900, 900, 900, 900, 900, 900, ... </span>
-<span class="co">#&gt; Resampling results across tuning parameters:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   interaction.depth  n.trees  Accuracy  Kappa</span>
-<span class="co">#&gt;   1                   50      0.628     0.256</span>
-<span class="co">#&gt;   1                  100      0.625     0.250</span>
-<span class="co">#&gt;   1                  150      0.628     0.256</span>
-<span class="co">#&gt;   1                  200      0.628     0.256</span>
-<span class="co">#&gt;   1                  250      0.639     0.278</span>
-<span class="co">#&gt;   5                   50      0.614     0.228</span>
-<span class="co">#&gt;   5                  100      0.622     0.244</span>
-<span class="co">#&gt;   5                  150      0.624     0.248</span>
-<span class="co">#&gt;   5                  200      0.619     0.238</span>
-<span class="co">#&gt;   5                  250      0.629     0.258</span>
-<span class="co">#&gt;   9                   50      0.615     0.230</span>
-<span class="co">#&gt;   9                  100      0.617     0.234</span>
-<span class="co">#&gt;   9                  150      0.622     0.244</span>
-<span class="co">#&gt;   9                  200      0.622     0.244</span>
-<span class="co">#&gt;   9                  250      0.625     0.250</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Tuning parameter 'shrinkage' was held constant at a value of 0.1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Tuning parameter 'n.minobsinnode' was held constant at a value of 20</span>
-<span class="co">#&gt; Accuracy was used to select the optimal model using the largest value.</span>
-<span class="co">#&gt; The final values used for the model were n.trees = 250,</span>
-<span class="co">#&gt;  interaction.depth = 1, shrinkage = 0.1 and n.minobsinnode = 20.</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BuildTraining">BuildTraining</a></span>(clean_dataset)[[<span class="dv">2</span>]] </a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; Stochastic Gradient Boosting </span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt; 1000 samples</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt;   96 predictor</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt;    2 classes: 'No', 'Yes' </span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; No pre-processing</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; Summary of sample sizes: 900, 900, 900, 900, 900, 900, ... </span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; Resampling results across tuning parameters:</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt;   interaction.depth  n.trees  Accuracy  Kappa</span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt;   1                   50      0.628     0.256</span></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt;   1                  100      0.625     0.250</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt;   1                  150      0.628     0.256</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt;   1                  200      0.628     0.256</span></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt;   1                  250      0.639     0.278</span></a>
+<a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt;   5                   50      0.614     0.228</span></a>
+<a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt;   5                  100      0.622     0.244</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt;   5                  150      0.624     0.248</span></a>
+<a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt;   5                  200      0.619     0.238</span></a>
+<a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt;   5                  250      0.629     0.258</span></a>
+<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt;   9                   50      0.615     0.230</span></a>
+<a class="sourceLine" id="cb8-25" title="25"><span class="co">#&gt;   9                  100      0.617     0.234</span></a>
+<a class="sourceLine" id="cb8-26" title="26"><span class="co">#&gt;   9                  150      0.622     0.244</span></a>
+<a class="sourceLine" id="cb8-27" title="27"><span class="co">#&gt;   9                  200      0.622     0.244</span></a>
+<a class="sourceLine" id="cb8-28" title="28"><span class="co">#&gt;   9                  250      0.625     0.250</span></a>
+<a class="sourceLine" id="cb8-29" title="29"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-30" title="30"><span class="co">#&gt; Tuning parameter 'shrinkage' was held constant at a value of 0.1</span></a>
+<a class="sourceLine" id="cb8-31" title="31"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-32" title="32"><span class="co">#&gt; Tuning parameter 'n.minobsinnode' was held constant at a value of 20</span></a>
+<a class="sourceLine" id="cb8-33" title="33"><span class="co">#&gt; Accuracy was used to select the optimal model using the largest value.</span></a>
+<a class="sourceLine" id="cb8-34" title="34"><span class="co">#&gt; The final values used for the model were n.trees = 250,</span></a>
+<a class="sourceLine" id="cb8-35" title="35"><span class="co">#&gt;  interaction.depth = 1, shrinkage = 0.1 and n.minobsinnode = 20.</span></a></code></pre></div>
 <div id="build-prediction" class="section level3">
 <h3 class="hasAnchor">
 <a href="#build-prediction" class="anchor"></a>Build Prediction</h3>
-<p>predict the classes using trained algorithms and give confusion matrix in return <strong>input</strong>: document-term matrix (result from <code><a href="../reference/CleanText.html">CleanText()</a></code> which is <code>clean_dataset</code>) <strong>output</strong>: list of various parameter values of 4 machine learning algorithms</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_predicted &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BuildPrediction">BuildPrediction</a></span>(df_trained)</code></pre></div>
+<p>predict the classes using trained algorithms and give confusion matrix in return</p>
+<p><strong>input</strong>: document-term matrix (result from <code><a href="../reference/CleanText.html">CleanText()</a></code> which is <code>clean_dataset</code>)</p>
+<p><strong>output</strong>: list of various parameter values of 4 machine learning algorithms</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">df_predicted &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BuildPrediction">BuildPrediction</a></span>(df_trained)</a></code></pre></div>
 </div>
-<div id="comparison" class="section level3">
+<div id="comparison-of-ml-training-models" class="section level3">
 <h3 class="hasAnchor">
-<a href="#comparison" class="anchor"></a>Comparison</h3>
+<a href="#comparison-of-ml-training-models" class="anchor"></a>Comparison of ML training models</h3>
 <p>among the 4 ML training model classifications</p>
 <p><strong>input</strong>: document-term matrix (result from <code><a href="../reference/CleanText.html">CleanText()</a></code> which is <code>clean_dataset</code>)</p>
 <p><strong>output</strong>: list of confusion matrices of 4 machine learning algorithms</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/comparison">comparison</a></span>(df_trained)
-<span class="co">#&gt;                                                                                                                                                                                                                                                                 conf</span>
-<span class="co">#&gt; 1    Yes, 344, 156, 133, 367, 0.711, 0.422, 0.681812228772885, 0.738939621986751, 0.5, 5.76496325383768e-42, 0.195624786869267, 0.688, 0.734, 0.721174004192872, 0.701720841300191, 0.721174004192872, 0.688, 0.704196519959058, 0.5, 0.344, 0.477, 0.711, sens_spec</span>
-<span class="co">#&gt; 2 Yes, 368, 132, 234, 266, 0.634, 0.268, 0.603284141203633, 0.663924251215197, 0.5, 9.97753553956993e-18, 1.29639724224859e-07, 0.736, 0.532, 0.611295681063123, 0.668341708542714, 0.611295681063123, 0.736, 0.667876588021779, 0.5, 0.368, 0.602, 0.634, sens_spec</span>
-<span class="co">#&gt; 3   Yes, 466, 34, 228, 272, 0.738, 0.476, 0.70957102415533, 0.765020130244701, 0.5, 2.49177113811723e-53, 8.91920454264016e-33, 0.932, 0.544, 0.671469740634006, 0.888888888888889, 0.671469740634006, 0.932, 0.780569514237856, 0.5, 0.466, 0.694, 0.738, sens_spec</span>
-<span class="co">#&gt; 4         Yes, 476, 24, 26, 474, 0.95, 0.9, 0.934609512084506, 0.962664602395338, 0.5, 9.31846353326986e-217, 0.887537083981715, 0.952, 0.948, 0.948207171314741, 0.951807228915663, 0.948207171314741, 0.952, 0.950099800399202, 0.5, 0.476, 0.502, 0.95, sens_spec</span>
-<span class="co">#&gt;   accuracy precision recall   f1score</span>
-<span class="co">#&gt; 1    0.711  0.721174  0.688 0.7041965</span>
-<span class="co">#&gt; 2    0.634 0.6112957  0.736 0.6678766</span>
-<span class="co">#&gt; 3    0.738 0.6714697  0.932 0.7805695</span>
-<span class="co">#&gt; 4     0.95 0.9482072  0.952 0.9500998</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">Cmx &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/comparison">comparison</a></span>(df_trained)</a></code></pre></div>
 </div>
-</div>
-<div id="visualization" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualization" class="anchor"></a>Visualization</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/VisualizeData.html">VisualizeData</a></span>(balanced_data,<span class="dv">15</span>)</code></pre></div>
+<div id="visualization" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualization" class="anchor"></a>Visualization</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/VisualizeData.html">VisualizeData</a></span>(balanced_data,<span class="dv">15</span>)</a></code></pre></div>
 </div>
 </div>
   </div>
@@ -1297,17 +295,12 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#sentianalyzer">SentiAnalyzer</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#installation">Installation</a></li>
       <li><a href="#usage">Usage</a></li>
       <li><a href="#tackling-imbalanced-data">tackling imbalanced data</a></li>
       <li><a href="#cleaning-the-text">Cleaning the text</a></li>
       <li><a href="#building-classification">Building classification</a></li>
       <li><a href="#classifier-random-forest">Classifier : Random Forest</a></li>
-      <li><a href="#visualization">Visualization</a></li>
-      </ul>
-</li>
       </ul>
 </div>
       </div>

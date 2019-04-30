@@ -77,13 +77,12 @@ packages used: `tm` and `SnowballC`
 ##### a. text-mining the dataset
 integrating built-in functions from `tm`, `CleanText()` will "clean up" the words from the text and mine for the words that conveys a range sorts of sentiment and convert some formatting; this remains what is called as token (single) or corpus (all the tokens):
 
-
--converts all text to lower case
--remove numbers from the text
--remove punctuations
--remove stop words, e.g. "the", "a", "for", "and", etc
--extract the stems of thegiven words using Porter's stemming algorithmn
--remove extra white spaces that was left off by the removed texts 
+*converts all text to lower case
+*remove numbers from the text
+*remove punctuations
+*remove stop words, e.g. "the", "a", "for", "and", etc
+*extract the stems of thegiven words using Porter's stemming algorithmn
+*remove extra white spaces that was left off by the removed texts 
 
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE}
 library(tm)
