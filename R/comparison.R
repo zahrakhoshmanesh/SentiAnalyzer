@@ -38,3 +38,13 @@ comparison <- function(x){
                   f1score=purrr::map(.x=conf,.f=f1score))
   return(df)
 }
+
+heatmap <- function(listCmx) { #listCmx is list returned by BuildPrediction function
+  Cmx_4param <- Cmx[2:5]
+  Cmx_4param <- unlist(Cmx_4param)
+  Cmx_4param <- as.data.frame(Cmx_4param) %>% as.matrix()
+  Cmx_4param <- set_names(Cmx_4param, c("accuracy","precision","recall","f1-score"))
+  rownames(Cmx_4param) <- c("Decision tree","Naive Bayes","k-Nearest Neighbors", "Gradient-Boosting")
+  plotly::plot_ly(z=Cmx_4param,x=rownames(Cmx_4param),y=colnames(Cmx_4param), type="heatmap")
+  
+}

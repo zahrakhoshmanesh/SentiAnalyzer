@@ -48,13 +48,9 @@ VisualizeData<-function(dataset,termcount){
 
  wordcloadplot = tidy_text %>%
     count(word) %>%
-<<<<<<< HEAD
     with(wordcloud(word, n, max.words = 100))
-=======
     with(wordcloud(word, n, max.words = 100,rot.per=0.35,colors=brewer.pal(8, "Dark2")))
  
-
->>>>>>> 0ee5173087a3792c9cf5aa8c4c541924b8983ded
 
  reshapplot = tidy_text %>%
     inner_join(get_sentiments("bing")) %>%

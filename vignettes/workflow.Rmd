@@ -78,12 +78,12 @@ packages used: `tm` and `SnowballC`
 integrating built-in functions from `tm`, `CleanText()` will "clean up" the words from the text and mine for the words that conveys a range sorts of sentiment and convert some formatting; this remains what is called as token (single) or corpus (all the tokens):
 
 
-*converts all text to lower case
-*remove numbers from the text
-*remove punctuations
-*remove stop words, e.g. "the", "a", "for", "and", etc
-*extract the stems of thegiven words using Porter's stemming algorithmn
-*remove extra white spaces that was left off by the removed texts 
+-converts all text to lower case
+-remove numbers from the text
+-remove punctuations
+-remove stop words, e.g. "the", "a", "for", "and", etc
+-extract the stems of thegiven words using Porter's stemming algorithmn
+-remove extra white spaces that was left off by the removed texts 
 
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE}
 library(tm)
@@ -195,7 +195,9 @@ df_trained <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.c
 
 ### Build Prediction
 predict the classes using trained algorithms and give confusion matrix  in return
+
 **input**: document-term matrix (result from `CleanText()` which is `clean_dataset`)
+
 **output**: list of various parameter values of 4 machine learning algorithms
 
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
@@ -203,18 +205,18 @@ df_predicted <- SentiAnalyzer::BuildPrediction(df_trained)
 ```
 
 
-### Comparison 
+### Comparison of ML training models
 among the 4 ML training model classifications 
 
 **input**: document-term matrix (result from `CleanText()` which is `clean_dataset`)
   
 **output**: list of confusion matrices of 4 machine learning algorithms
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
-SentiAnalyzer::comparison(df_trained)
+Cmx <- SentiAnalyzer::comparison(df_trained)
 ```
 
 
-## Visualization
+### Visualization
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
 VisualizeData(balanced_data,15)
 ```

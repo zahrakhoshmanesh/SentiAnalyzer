@@ -35,8 +35,6 @@ Imports:
     wordcloud,
     tibble,
     NLP,
-    RWeka,
-    rJava,
     matlib,
     RColorBrewer,
     randomForest,
