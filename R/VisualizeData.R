@@ -48,7 +48,10 @@ VisualizeData<-function(dataset,termcount){
 
  wordcloadplot = tidy_text %>%
     count(word) %>%
+<<<<<<< HEAD
     with(wordcloud(word, n, max.words = 100))
+=======
+>>>>>>> 3ee068cb91c57f932f9db43a3b3c1f8648e2ef74
     with(wordcloud(word, n, max.words = 100,rot.per=0.35,colors=brewer.pal(8, "Dark2")))
  
 
