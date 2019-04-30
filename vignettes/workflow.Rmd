@@ -214,8 +214,21 @@ among the 4 ML training model classifications
 Cmx <- SentiAnalyzer::comparison(df_trained)
 ```
 
+### Heatmap
+
+**input**: confusion matrix from `Comparison`
+
+**output**: interactive plotly heat map and table
+```{r}
+heatmapCmx(Cmx)
+```
+
 
 ### Visualization
+
+**input**: a balanced dataset of text and binary sentiment review
+
+**output**: wordcloud plot and frequency of words bar plot
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
 VisualizeData(balanced_data,15)
 ```

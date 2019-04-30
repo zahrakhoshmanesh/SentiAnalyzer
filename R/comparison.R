@@ -3,7 +3,7 @@
 #' @param x input is a dataframe for document-term matrix in which columns are the terms and row are binary variable 1 if that term exist in that data instance
 #' @return visualization of trained algorithms (for classifiying textual data), comparision and select the best!
 #' @author Atousa Zarindast
-#' @export
+#' @export 
 #' @import tidyverse
 #' @import tidyr
 #' @import assertthat
@@ -39,12 +39,36 @@ comparison <- function(x){
   return(df)
 }
 
-heatmap <- function(listCmx) { #listCmx is list returned by BuildPrediction function
-  Cmx_4param <- Cmx[2:5]
-  Cmx_4param <- unlist(Cmx_4param)
-  Cmx_4param <- as.data.frame(Cmx_4param) %>% as.matrix()
-  Cmx_4param <- set_names(Cmx_4param, c("accuracy","precision","recall","f1-score"))
-  rownames(Cmx_4param) <- c("Decision tree","Naive Bayes","k-Nearest Neighbors", "Gradient-Boosting")
-  plotly::plot_ly(z=Cmx_4param,x=rownames(Cmx_4param),y=colnames(Cmx_4param), type="heatmap")
+heatmapCmx <- function(listCmx) { #listCmx is list returned by BuildPrediction function
   
+  Cmx_4param <- Cmx[2:5]
+  Cmx_4param <- as.data.frame(Cmx_4param) 
+  colnames(Cmx_4param) <- c("accuracy","precision","recall","f1-score")
+  rownames(Cmx_4param) <- c("Decision tree","Naive Bayes","k-Nearest Neighbors", "Gradient-Boosting")
+  
+  plotly::plot_ly(z=data.matrix(Cmx_4param),
+                  x=colnames(Cmx_4param),
+                  y=rownames(Cmx_4param), 
+                  type="heatmap")
+  
+  plotly::plot_ly(
+    type = 'table',
+    header = list(
+      values = c('<b>Confusion Matrix</b>', colnames(Cmx_4param)),
+      line = list(color = '#506784'),
+      fill = list(color = '#119DFF'),
+      align = c('left','center'),
+      font = list(color = 'white', size = 12)
+    ),
+    cells = list(
+      values = rbind(rownames(Cmx_4param), 
+                     data.matrix(Cmx_4param)),
+      line = list(color = '#506784'),
+      fill = list(color = c('#25FEFD', 'white')),
+      align = c('left', 'left'),
+      font = list(color = c('#black'), size = 12)
+    ))
+  
+  
+
 }
