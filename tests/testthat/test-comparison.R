@@ -19,6 +19,6 @@ test_that("comparison work as expected", {
   
   expect_equal(class(test_val), "data.frame")
   #output has one col
-  expect_equivalent(dim(test_val), c(4,5))
+  expect_equivalent(dim(test_val), c(5,5))
   #expect_equal(sapply(-ncol(testing),class), c("integer"|"numeric"))#
 })
