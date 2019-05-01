@@ -1,4 +1,4 @@
-#' Train Machine learning algorithms and give trained models
+#' Train Machine learning algorithms and return trained models
 #'
 #' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
 #' @return trained models
@@ -32,7 +32,7 @@ BuildTraining <- function(x) {
 
   res_name <- colnames(x)[ncol(x)]
   formula <- as.formula(paste(res_name, ' ~ .'))
-  #cross valication
+  #cross validation
 
   ############Decision tree with cross validation training#######################
 
@@ -85,10 +85,12 @@ BuildTraining <- function(x) {
   #confusion matrix
   # NB_con<-confusionMatrix(prediction_naive_parameterset, x[,ncol(x)])
   # NB_con
-  treeGrid_knn = expand.grid(k = c(1:50))
-
+ 
+  
 
   ###### kNN with Cross Validation ############
+  treeGrid_knn = expand.grid(k = c(1:50))
+
   model_knn_10 = train(
     formula,
     data = x,
@@ -101,8 +103,8 @@ BuildTraining <- function(x) {
   #prediction
   # prediction_knn_parameterset = predict(model_knn_10, x)
   #confusion matrix
-  #KKN_con<-confusionMatrix(prediction_knn_parameterset, x[,ncol(x)])
-  #KKN_con
+  #KNN_con<-confusionMatrix(prediction_knn_parameterset, x[,ncol(x)])
+  #KNN_con
 
 
   #####GBM
@@ -145,8 +147,7 @@ BuildTraining <- function(x) {
 
   #plot(gbmFit2)
 
-  list <-
-    list(x=x, gbmFit2, model_knn_10, model_naive_10, model_dectree_10)
+  list <- list(x=x, gbmFit2, model_knn_10, model_naive_10, model_dectree_10)
   return(list)
 
 }

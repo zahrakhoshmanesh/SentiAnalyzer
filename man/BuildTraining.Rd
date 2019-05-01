@@ -2,7 +2,7 @@
 % Please edit documentation in R/BuildTraining.R
 \name{BuildTraining}
 \alias{BuildTraining}
-\title{Train Machine learning algorithms and give trained models}
+\title{Train Machine learning algorithms and return trained models}
 \usage{
 BuildTraining(x)
 }
@@ -13,7 +13,12 @@ BuildTraining(x)
 trained models
 }
 \description{
-Train Machine learning algorithms and give trained models
+Train Machine learning algorithms and return trained models
+}
+\examples{
+library(SentiAnalyzer)
+csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+my_training_data <- BuildTraining(csv_data)
 }
 \author{
 Atousa Zarindast

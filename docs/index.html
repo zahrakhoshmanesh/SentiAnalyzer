@@ -18,7 +18,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -45,6 +45,21 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/shiny.html">Shiny</a>
+    </li>
+    <li>
+      <a href="articles/workflow.html">Workflow: SentiAnalyzer</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -56,200 +71,31 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
-    
-
-    
-    
-<div id="functions" class="section level2">
+  <div class="contents col-md-9">
+<div id="sentianalyzer" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#sentianalyzer" class="anchor"></a>SentiAnalyzer</h1></div>
+<div id="sentiment-analysis-for-consumer-review" class="section level3">
+<h3 class="hasAnchor">
+<a href="#sentiment-analysis-for-consumer-review" class="anchor"></a>Sentiment analysis for consumer review</h3>
+<p>SentiAnalyzer is a “one-stop” solution for analysis of of consumer reviews which includes natural language processing (NLP) of consumer sentiments. The dataset that SentiAnalyzer can work with for now is short text and a binary quantification, e.g. whether consumer hits the like button. The NLP of the sentiment is analyzed through the options of algorithms to compile the words and the machinge learning training model of choice.</p>
+</div>
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions" class="anchor"></a>Functions</h2>
-<div id="having-sence-of-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#having-sence-of-data" class="anchor"></a>1- Having Sence of Data</h3>
-<p>In this function, user can have a quick view on data. The shiny version of this function fully implemented and can be use by user.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#' Visualize dataset and get some insight of data.</span>
-<span class="co">#'</span>
-<span class="co">#' @param x dataset.</span>
-<span class="co">#' @return some diagram and insight of data</span>
-<span class="co">#' @author Zahra Khoshmanesh</span>
-<span class="co">#' @export</span>
-<span class="co">#' @import tidyverse</span>
-<span class="co">#' @examples</span>
-<span class="co">#' VisualizeData('./data/Restaurant_Reviews.tsv')</span>
-
-
-VisualizeData&lt;-<span class="cf">function</span>(dataset){
-
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidytext)
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(wordcloud)
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(reshape2)
-
-  source_datasets=<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.delim</a></span>(dataset,<span class="dt">quote=</span><span class="st">''</span>,<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-  <span class="co">#source_datasets=read.delim('./inst/Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)</span>
-
-
-  text_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">text =</span> source_datasets[[<span class="dv">1</span>]])
-
-  tidy_text &lt;-<span class="st"> </span>text_df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">unnest_tokens</span>(word, text)
-
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(stop_words)
-  tidy_text &lt;-<span class="st"> </span>tidy_text <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">anti_join</span>(stop_words)
-
-
-
-
- wordfreqplot =<span class="st"> </span>tidy_text <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">count</span>(word, <span class="dt">sort =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/reorder.factor">reorder</a></span>(word, n)) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(word, n)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="ot">NULL</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">coord_flip</span>()
-
- wordfreqplot
-
-
-
- wordcloadplot =<span class="st"> </span>tidy_text <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">anti_join</span>(stop_words) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">count</span>(word) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(<span class="kw">wordcloud</span>(word, n, <span class="dt">max.words =</span> <span class="dv">100</span>))
-
- wordcloadplot
-
-
-
- reshapplot =<span class="st"> </span>tidy_text <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">inner_join</span>(<span class="kw">get_sentiments</span>(<span class="st">"bing"</span>)) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">count</span>(word, sentiment, <span class="dt">sort =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">acast</span>(word <span class="op">~</span><span class="st"> </span>sentiment, <span class="dt">value.var =</span> <span class="st">"n"</span>, <span class="dt">fill =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">comparison.cloud</span>(<span class="dt">colors =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"gray20"</span>, <span class="st">"gray80"</span>),
-                     <span class="dt">max.words =</span> <span class="dv">100</span>)
-
- reshapplot
-
-}</code></pre></div>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p><code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("SentiAnalyzer")</a></code></p>
 </div>
-<div id="checking-and-fixing-unbalanced-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#checking-and-fixing-unbalanced-data" class="anchor"></a>2- Checking and fixing Unbalanced data</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#' Clean text and buil term matrix for bag of words model or TF DFI.</span>
-<span class="co">#'</span>
-<span class="co">#' @param x unbalanced dataset, a tsv format : tab delimeter, two column: first text and second binary class label.</span>
-<span class="co">#' @return balanced dataset, save as out.tsv name in inst folder</span>
-<span class="co">#' @author Zahra Khoshmanesh</span>
-<span class="co">#' @export</span>
-<span class="co">#' @import ROSE</span>
-<span class="co">#' @examples</span>
-<span class="co">#' BalanceData('./data/Imbalance_Restaurant_Reviews.tsv')</span>
-
-
-BalanceData&lt;-<span class="cf">function</span>(dataset){
-
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ROSE)
-
-  <span class="co">#read  datasets :put two dataset, 1 balance and 1 imbalanced for testing purpose</span>
-  source_datasets=<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.delim</a></span>(dataset,<span class="dt">quote=</span><span class="st">''</span>,<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-  <span class="co">#source_datasets=read.delim('./inst/Imbalance_Restaurant_Reviews.tsv',quote='',stringsAsFactors = FALSE)</span>
-
-  <span class="co">#check the number of two class label</span>
-  check_class &lt;-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(source_datasets[[<span class="op">-</span><span class="dv">1</span>]])
-
-  res_name &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(source_datasets)[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(source_datasets)]
-  formula &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/formula">as.formula</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(res_name, <span class="st">' ~ .'</span>))
-
-    <span class="cf">if</span> (check_class[<span class="dv">1</span>]<span class="op">!=</span>check_class[<span class="dv">2</span>]){
-
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="st">"dataset is imbalance, balancing it in few seconds"</span>)
-    <span class="co">#data.rose &lt;- ROSE(class_label ~ ., data = source_datasets, seed = 1)$data</span>
-    data.rose &lt;-<span class="st"> </span><span class="kw">ROSE</span>(formula, <span class="dt">data =</span> source_datasets, <span class="dt">seed =</span> <span class="dv">1</span>)<span class="op">$</span>data
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(data.rose[[<span class="dv">2</span>]])
-
-  }  <span class="cf">else</span> {
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="st">"dataset is balanced dataset and no need to balance it"</span>)
-  }
-
-
-  <span class="co">#save output in file</span>
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/write.table">write.table</a></span>(data.rose, <span class="dt">file=</span><span class="st">'./inst/out.tsv'</span>, <span class="dt">quote=</span><span class="ot">FALSE</span>, <span class="dt">sep=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>, <span class="dt">col.names =</span> <span class="ot">NA</span>)
-
-  <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.access">file.access</a></span>(<span class="st">'./inst/out.tsv'</span>, <span class="dt">mode =</span> <span class="dv">0</span>)<span class="op">==</span><span class="dv">0</span>){
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="st">"balancing dataset is done! and new balanced dataset saved in inst folder under name out.tsv "</span>)
-
-  }
-}
-
-<span class="co">#BalanceData('./data/Imbalance_Restaurant_Reviews.tsv')</span></code></pre></div>
-</div>
-<div id="cleaning-dataset-and-build-term-matrix-for-ml-algorithms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#cleaning-dataset-and-build-term-matrix-for-ml-algorithms" class="anchor"></a>3- Cleaning dataset and build term matrix for ML algorithms</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#' Clean text and build term matrix for bag of words,TF DFI and bi-gram.</span>
-<span class="co">#'</span>
-<span class="co">#' @param source_dataset A tsv file having two columns, review as text, label as binary.</span>
-<span class="co">#' @param dtm-method 1 for bag of word, 2 for TF DFI, 3 for bigram.</span>
-<span class="co">#' @param reductionrate how many percent of term matrix you want to keep,usually 0.999 and not less than 0.99.</span>
-<span class="co">#' @return dataframe "dataset" : The term matrix converted to dataframe plus target label.</span>
-<span class="co">#' @author Zahra Khoshmanesh</span>
-<span class="co">#' @export</span>
-<span class="co">#' @import tm</span>
-<span class="co">#' @import assertthat</span>
-<span class="co">#' @import testthat</span>
-<span class="co">#' @examples</span>
-<span class="co">#' CleanText('./data/Restaurant_Reviews.tsv',dtm_method=1,reductionrate=0.999)</span>
-<span class="co">#' CleanText('./data/Restaurant_Reviews.tsv',dtm_method=2,reductionrate=0.999)</span>
-<span class="co">#' CleanText('./data/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)</span>
-CleanText &lt;-<span class="st"> </span><span class="cf">function</span>(source_dataset,dtm_method,reductionrate){
-
-  <span class="co">#assertthat(not_empty(source_dataset), noNA(source_dataset),not_empty(dtm_method),not_empty(reductionrate))</span>
-
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tm)
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rJava)
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(RWeka)
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(matlib)
-  source_datasets=<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.delim</a></span>(source_dataset,<span class="dt">quote=</span><span class="st">''</span>,<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-  corpus=<span class="kw">VCorpus</span>(<span class="kw">VectorSource</span>(source_datasets[[<span class="dv">1</span>]]))
-  <span class="co">#convert all review to lower case</span>
-  corpus=<span class="st"> </span><span class="kw">tm_map</span>(corpus,<span class="kw">content_transformer</span>(tolower))
-  <span class="co"># remove numbers from reviews</span>
-  corpus=<span class="kw">tm_map</span>(corpus,removeNumbers)
-  <span class="co"># remove punctuations from reviews</span>
-  corpus=<span class="kw">tm_map</span>(corpus,removePunctuation)
-  <span class="co"># remove Stop words from reviews</span>
-  corpus=<span class="kw">tm_map</span>(corpus,removeWords,<span class="kw">stopwords</span>())
-  <span class="co"># Stemming</span>
-  corpus=<span class="kw">tm_map</span>(corpus,stemDocument)
-  <span class="co"># remove extra space that created in cleaning stage when for example number remove</span>
-  corpus=<span class="kw">tm_map</span>(corpus,stripWhitespace)
-
-  <span class="co">#creating document term matrix of words in reviews</span>
-
-  <span class="co"># bigram</span>
-  BigramTokenizer &lt;-<span class="st">  </span><span class="cf">function</span>(x)  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlist">unlist</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw">ngrams</span>(<span class="kw">words</span>(x), <span class="dv">2</span>), paste, <span class="dt">collapse =</span> <span class="st">" "</span>), <span class="dt">use.names =</span> <span class="ot">FALSE</span>)
-  dtm &lt;-<span class="cf">switch</span>(dtm_method,
-               <span class="st">'1'</span> =<span class="st"> </span><span class="kw">DocumentTermMatrix</span>(corpus),
-               <span class="st">'2'</span> =<span class="st"> </span><span class="kw">DocumentTermMatrix</span>(corpus,<span class="dt">control =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">weighting =</span> <span class="cf">function</span>(x) <span class="kw">weightTfIdf</span>(x, <span class="dt">normalize =</span> <span class="ot">FALSE</span>))),
-               <span class="st">'3'</span> =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/t">t</a></span>(<span class="kw">TermDocumentMatrix</span>(corpus, <span class="dt">control =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">tokenize =</span> BigramTokenizer)))
-                )
-
-  <span class="co"># reduce dimention of sparse matrix</span>
-  dtm =<span class="st"> </span><span class="kw">removeSparseTerms</span>(dtm,reductionrate)
-
-  <span class="co"># convert matrix of independent variables to data frame</span>
-  dataset =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">as.matrix</a></span>(dtm))
-  <span class="co"># encode the target feature as factor</span>
-  dataset<span class="op">$</span>target =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(source_datasets[[<span class="op">-</span><span class="dv">1</span>]],<span class="dt">level=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>,<span class="dv">1</span>))
-  <span class="co">#assertthat(not_empty(dataset), noNA(dataset),is.data.frame(dataset))</span>
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(dataset)
-}
-<span class="co">#df&lt;-CleanText('./data/Restaurant_Reviews.tsv',dtm_method=3,reductionrate=0.999)</span>
-<span class="co">#dim(df)</span></code></pre></div>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p>Three steps of processing your review dataset:</p>
+<ol>
+<li>balancing the dataset</li>
+<li>"streamlining the text to get a sense of the major keywords</li>
+<li>choose the algorithm that is training the model</li>
+<li>Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review</li>
+</ol>
+<p>=======</p>
 </div>
 </div>
   </div>
@@ -258,7 +104,9 @@ CleanText &lt;-<span class="st"> </span><span class="cf">function</span>(source_
     <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://opensource.org/licenses/mit-license.php">MIT</a></li>
+<li>
+<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
 <div class="developers">
@@ -270,10 +118,8 @@ CleanText &lt;-<span class="st"> </span><span class="cf">function</span>(source_
 </ul>
 </div>
 
-      </div>
-
+  </div>
 </div>
-
 
       <footer><div class="copyright">
   <p>Developed by Zahra Khoshmanesh, Atousa Zarindast, Joshua budi.</p>

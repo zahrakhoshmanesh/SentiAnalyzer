@@ -4,19 +4,44 @@ Version: 0.0.0.9000
 Authors@R: c(
     person("Zahra", "Khoshmanesh", email = "zkh@iastate.edu", role = c("aut", "cre")),
     person("Atousa", "Zarindast", email = "atousa@iastate.edu", role = "aut"),
-    person("Joshua", "budi", email = "joshua@iastate.edu", role = "aut"))  
+    person("Joshua", "budi", email = "budij@iastate.edu", role = "aut"))  
 Description: What the package does (one paragraph).
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Suggests: 
-    testthat (>= 2.1.0),
-    covr
+Depends:
+    R (>= 2.10)
+Suggests:
+    covr,
+    knitr,
+    rmarkdown,
+    plotly
 Imports:
     assertthat,
     caret,
     tidyr,
     tm,
     purrr,
-    dplyr
+    dplyr,
+    ROSE,
+    testthat (>= 2.1.0),
+    tidyverse,
+    SnowballC,
+    usethis,
+    ggplot2,
+    reshape2,
+    tidytext,
+    wordcloud,
+    tibble,
+    NLP,
+    matlib,
+    RColorBrewer,
+    randomForest,
+    e1071,
+    matlib,
+    shiny, 
+    shinythemes,
+    klaR
+VignetteBuilder: knitr
+
