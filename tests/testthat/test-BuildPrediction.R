@@ -18,6 +18,6 @@ test_that("BuildPrediction work as expected", {
 
   expect_equal(class(test_val), "data.frame")
   #output has one col
-  expect_equivalent(dim(test_val), c(5,1))
+  expect_equivalent(dim(test_val), c(4,1))
   #expect_equal(sapply(-ncol(testing),class), c("integer"|"numeric"))#
 })
