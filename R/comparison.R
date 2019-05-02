@@ -30,45 +30,18 @@ comparison <- function(x){
   f1score= function(x){
     2*((x$table[1])/(x$table[1]+x$table[1,2]))*((x$table[1])/(x$table[1]+x$table[2,1])) / 
       (((x$table[1])/(x$table[1]+x$table[1,2])) +  (x$table[1])/(x$table[1]+x$table[2,1]))}
+  TPR= function(x){
+    (x$table[1])/(x$table[1]+x$table[2,1])}
+  FPR= function(x){
+    (x$table[1,2])/(x$table[1,2]+x$table[2,2])}
   
   #pass the functions accuracy, precision, recall, f1score for each of the 4 algorithms
-  df<-df%>%mutate(accuracy=purrr::map(.x=conf,.f=accuracy_f),
-                  precision=purrr::map(.x=conf,.f=precision_f),
+  df<-df%>%mutate(accuracy_f=purrr::map(.x=conf,.f=accuracy_f),
+                  precision_f=purrr::map(.x=conf,.f=precision_f),
                   recall=purrr::map(.x=conf,.f=recall_f),
-                  f1score=purrr::map(.x=conf,.f=f1score))
+                  f1score=purrr::map(.x=conf,.f=f1score),
+                  TPR=purrr::map(.x=conf,.f=TPR),
+                  FPR=purrr::map(.x=conf,.f=FPR))
   return(df)
 }
 
-heatmapCmx <- function(listCmx) { #listCmx is list returned by BuildPrediction function
-  
-  Cmx_4param <- Cmx[2:5]
-  Cmx_4param <- as.data.frame(Cmx_4param) 
-  colnames(Cmx_4param) <- c("accuracy","precision","recall","f1-score")
-  rownames(Cmx_4param) <- c("Decision tree","Naive Bayes","k-Nearest Neighbors", "Gradient-Boosting")
-  
-  plotly::plot_ly(z=data.matrix(Cmx_4param),
-                  x=colnames(Cmx_4param),
-                  y=rownames(Cmx_4param), 
-                  type="heatmap")
-  
-  plotly::plot_ly(
-    type = 'table',
-    header = list(
-      values = c('<b>Confusion Matrix</b>', colnames(Cmx_4param)),
-      line = list(color = '#506784'),
-      fill = list(color = '#119DFF'),
-      align = c('left','center'),
-      font = list(color = 'white', size = 12)
-    ),
-    cells = list(
-      values = rbind(rownames(Cmx_4param), 
-                     data.matrix(Cmx_4param)),
-      line = list(color = '#506784'),
-      fill = list(color = c('#25FEFD', 'white')),
-      align = c('left', 'left'),
-      font = list(color = c('#black'), size = 12)
-    ))
-  
-  
-
-}
