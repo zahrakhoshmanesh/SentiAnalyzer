@@ -63,6 +63,17 @@ str(balanced_data)
 ```
 
 
+### Visualization
+Before we start any further major processing of data, we can quickly get an insight of the data through a word cloud visualization. Termcount is used for filtering the highest terms repeated in reviews, usually > 10 count
+
+**input**: a balanced dataset of text and binary sentiment review, low baseline for term count 
+
+**output**: wordcloud plot and frequency of words bar plot
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
+VisualizeData(balanced_data,12)
+```
+
+
 ## Cleaning the text
 **input**: `CleanText()` calls for 3 arguments: 
 
@@ -184,7 +195,7 @@ library(caret)
 ```
 
 Example shown is for Gradient Boosting Machine trained model 
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE}
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
 SentiAnalyzer::BuildTraining(clean_dataset)[[2]] 
 ```
 
@@ -193,13 +204,13 @@ df_trained <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.c
 ```
 
 ### Build Prediction
-predict the classes using trained algorithms and give confusion matrix  in return
+predict the classes using trained algorithms and return list of confusion matrices
 
 **input**: document-term matrix (result from `CleanText()` which is `clean_dataset`)
 
 **output**: list of various parameter values of 4 machine learning algorithms
 
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
 df_predicted <- SentiAnalyzer::BuildPrediction(df_trained)
 ```
 
@@ -211,24 +222,46 @@ among the 4 ML training model classifications
   
 **output**: list of confusion matrices of 4 machine learning algorithms
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
-Cmx <- SentiAnalyzer::comparison(df_trained)
+Cmxx <- SentiAnalyzer::comparison(df_trained)
 ```
 
-### Heatmap
+### Heatmap and table
 
 **input**: confusion matrix from `Comparison`
 
 **output**: interactive plotly heat map and table
-```{r}
-heatmapCmx(Cmx)
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+    Cmx_4param <- Cmxx[2:5]
+    Cmx_4param <- as.data.frame(Cmx_4param) 
+    colnames(Cmx_4param) <- c("accuracy","precision","recall","f1-score")
+    rownames(Cmx_4param) <- c("Decision tree","Naive Bayes","k-Nearest Neighbors", "Gradient-Boosting")
+    
+    #heatmap encompassing 4 ML trained model output, 4 parameters of the confusion matrix
+    plotly::plot_ly(z=data.matrix(Cmx_4param),
+                    x=colnames(Cmx_4param),
+                    y=rownames(Cmx_4param), 
+                    type="heatmap",
+                    textfont=list(size=20,color = "black"))
+    
+    #plotly table for 4 ML trained model output, 4 parameters of the confusion matrix
+    plotly::plot_ly(
+      type = 'table',
+      header = list(
+        values = c('<b>Confusion Matrix</b>', colnames(Cmx_4param)),
+        line = list(color = '#506784'),
+        fill = list(color = '#119DFF'),
+        align = c('left','center'),
+        font = list(color = 'white', size = 12)
+      ),
+      cells = list(
+        values = rbind(rownames(Cmx_4param),
+                       data.matrix(Cmx_4param)),
+        line = list(color = '#506784'),
+        fill = list(color = c('#25FEFD', 'white')),
+        align = c('left', 'left'),
+        font = list(color = c('#black'), size = 12)
+        
+        
+      ))
 ```
 
-
-### Visualization
-
-**input**: a balanced dataset of text and binary sentiment review
-
-**output**: wordcloud plot and frequency of words bar plot
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
-VisualizeData(balanced_data,15)
-```

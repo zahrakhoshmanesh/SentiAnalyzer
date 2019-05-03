@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • SentiAnalyzer</title>
+<title>Interpreting confusion matrix — interpretCM • SentiAnalyzer</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Interpreting confusion matrix — interpretCM" />
+
+<meta property="og:description" content="Interpreting confusion matrix" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -104,84 +107,52 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Interpreting confusion matrix</h1>
+    
+    <div class="hidden name"><code>interpretCM.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Interpreting confusion matrix</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="BalanceData.html">BalanceData()</a></code> </p>
-        </td>
-        <td><p>Clean text and build term matrix for bag of words model or TF DFI.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="BuildPrediction.html">BuildPrediction()</a></code> </p>
-        </td>
-        <td><p>predict the classes using trained algorithms and give confusion matrix  in return</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="BuildTraining.html">BuildTraining()</a></code> </p>
-        </td>
-        <td><p>Train Machine learning algorithms and return trained models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="CleanText.html">CleanText()</a></code> </p>
-        </td>
-        <td><p>Clean text and build term matrix for bag of words,TF DFI and bi-gram.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="CmxParams.html">CmxParams()</a></code> </p>
-        </td>
-        <td><p>visualize performance of the algorithm</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="comparison.html">comparison()</a></code> </p>
-        </td>
-        <td><p>compare the performance of the 4 algorithms</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="interpretCM.html">interpretCM()</a></code> </p>
-        </td>
-        <td><p>Interpreting confusion matrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="VisualizeData.html">VisualizeData()</a></code> </p>
-        </td>
-        <td><p>Visualize dataset and get some insight of data.</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>interpretCM</span>(<span class='no'>listCmx</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>confusion matrix passed on after BuildPrediction()</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>plots and table for interpretation of confusion matrix</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>SentiAnalyzer</span>)
+<span class='no'>Cmx_loc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"SentiAnalyzer"</span>, <span class='st'>"data/Cmx.rda"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/load'>load</a></span>(<span class='st'>"data/Cmx.rda"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open compressed file 'data/Cmx.rda', probable reason 'No such file or directory'</span></div><div class='output co'>#&gt; <span class='error'>Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection</span></div><div class='input'><span class='fu'>interpretCM</span>(<span class='no'>Cmx</span>)</div><div class='output co'>#&gt; <span class='error'>Error in interpretCM(Cmx): could not find function "interpretCM"</span></div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    <p>Joshua Budi</p>
   </div>
 </div>
 
