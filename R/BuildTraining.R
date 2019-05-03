@@ -1,26 +1,20 @@
-#' Train Machine learning algorithms and return trained models
+#' Train Machine learning algorithms and give trained models
 #'
 #' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
 #' @return trained models
 #' @author Atousa Zarindast
 #' @export
-#' @import tidyverse
-#' @import tidyr
-#' @import assertthat
-#' @import testthat
 #' @import caret
-#' @import tidyr
 #' @examples
 #' library(SentiAnalyzer)
 #' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
 #' my_training_data <- BuildTraining(csv_data)
 
-BuildTraining <- function(x) {
+BuildTraining<- function(x) {
 
-  assert_that(not_empty(x), noNA(x), is.data.frame(x))
-  expect_equal(unique(sapply(x[, -ncol(x)], is.numeric)), TRUE)
+ # assertthat::assert_that(not_empty(x), noNA(x), is.data.frame(x))
+  #assertthat::assert_that(unique(sapply(x[, -ncol(x)], is.numeric)))
 
-  #last_co<-x[,ncol(x)]
 
   if (is.factor(x[, ncol(x)]) == FALSE) {
     x[, ncol(x)] <- ifelse(x[, ncol(x)] == 1, "Yes", "No")
@@ -32,12 +26,12 @@ BuildTraining <- function(x) {
 
   res_name <- colnames(x)[ncol(x)]
   formula <- as.formula(paste(res_name, ' ~ .'))
-  #cross validation
+  #cross valication
 
   ############Decision tree with cross validation training#######################
 
   # train control
-  ctrl_cv10 = trainControl(
+  ctrl_cv10 = caret::trainControl(
     method = "cv",
     number = 10,
     savePred = T,
@@ -45,7 +39,7 @@ BuildTraining <- function(x) {
   )
   #expanding the tree
   treeGrid_dectree = expand.grid(C = (1:2) * 0.02, M = (1:2))
-
+  message("Finished building control")
 
   #decision tree with cross validation
   model_dectree_10 = caret::train(
@@ -53,9 +47,9 @@ BuildTraining <- function(x) {
     data = x,
     method = "rf",
     trControl = ctrl_cv10,
-    ntree = 5
+    ntree = 100
   )
-
+  message("Finished building decision tree")
 
   #predict
   # prediction_dec_parameterset = predict(model_dectree_10, x)
@@ -67,12 +61,12 @@ BuildTraining <- function(x) {
   ################## Naive Bayes with Cross Validation training ################
   treeGrid_naive = expand.grid(
     fL = c(1:2),
-    usekernel = c(TRUE, FALSE),
+    usekernel = TRUE,
     adjust = c(0.5:1)
   )
   #NB model training
 
-  model_naive_10 = train(
+  model_naive_10 = caret::train(
     formula,
     data = x,
     method = "nb",
@@ -80,18 +74,12 @@ BuildTraining <- function(x) {
     tuneGrid = treeGrid_naive
   )
 
-  #prediction
-  # prediction_naive_parameterset = predict(model_naive_10, x)
-  #confusion matrix
-  # NB_con<-confusionMatrix(prediction_naive_parameterset, x[,ncol(x)])
-  # NB_con
- 
-  
+
+  treeGrid_knn = expand.grid(k = c(1:100))
+
 
   ###### kNN with Cross Validation ############
-  treeGrid_knn = expand.grid(k = c(1:50))
-
-  model_knn_10 = train(
+  model_knn_10 =caret::train(
     formula,
     data = x,
     method = "knn",
@@ -103,33 +91,19 @@ BuildTraining <- function(x) {
   #prediction
   # prediction_knn_parameterset = predict(model_knn_10, x)
   #confusion matrix
-  #KNN_con<-confusionMatrix(prediction_knn_parameterset, x[,ncol(x)])
-  #KNN_con
+  #KKN_con<-confusionMatrix(prediction_knn_parameterset, x[,ncol(x)])
+  #KKN_con
 
 
   #####GBM
   gbmGrid <-  expand.grid(
-    interaction.depth = c(1, 5, 9),
+    interaction.depth = c(1:9),
     n.trees = (1:5) * 50,
     shrinkage = 0.1,
     n.minobsinnode = 20
   )
-
-
-
-  #trctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
-  #set.seed(3233)
-
-  #trctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
-  #set.seed(3233)
-  #svm_Linear <- train(formula, data = x, method = "svmLinear",
-  #trControl=trctrl,
-  #preProcess = c("center", "scale"),
-  #tuneLength = 10)
-  #prediction_SVM = predict(svm_Linear, x[,ncol(x)])
-
-  #set.seed(825)
-  gbmFit2 <- train(
+  
+  gbmFit2 <- caret::train(
     formula,
     data = x,
     method = "gbm",
@@ -146,8 +120,16 @@ BuildTraining <- function(x) {
   #gbm_con
 
   #plot(gbmFit2)
+  
+  #SVM
+  svmGrid<-expand.grid(degree=(1:10),scale=0.01,C=(1:2))
+  svm_Poly <- caret::train(formula, data = x, method = "svmPoly",tuneGrid=svmGrid)
+  
+  
+  
 
-  list <- list(x=x, gbmFit2, model_knn_10, model_naive_10, model_dectree_10)
+  list <-
+    list(x=x, gbmFit2, model_knn_10, model_naive_10, model_dectree_10,svm_Poly)
   return(list)
 
 }

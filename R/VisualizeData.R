@@ -39,16 +39,22 @@ VisualizeData<-function(dataset,termcount){
 
  wordfreqplot = tidy_text %>%
     count(word, sort = TRUE) %>%
-    filter(n > termcount) %>%
+    dplyr::filter(n > termcount) %>%
     mutate(word = reorder(word, n)) %>%
     ggplot(aes(word, n)) +
     geom_col() +
     xlab(NULL) +
     coord_flip()
 
-  wordcloadplot = tidy_text %>%
-     count(word) %>%
-     with(wordcloud::wordcloud(word, n, max.words = 100,rot.per=0.35,colors=brewer.pal(8, "Dark2")))
+  # wordcloadplot = tidy_text %>%
+  #    count(word) %>%
+  #    with(wordcloud::wordcloud(word, n, max.words = 100,rot.per=0.35,colors=brewer.pal(8, "Dark2")))
+
+ wordcloadplot = tidy_text %>%
+    count(word) %>%
+    #with(wordcloud(word, n, max.words = 100))
+    with(wordcloud(word, n, max.words = 100,rot.per=0.35,colors=brewer.pal(8, "Dark2")))
+
  
  
   reshapplot = tidy_text %>%

@@ -43,6 +43,7 @@ Imports:
     shiny, 
     shinythemes,
     klaR,
-    gbm
+    gbm,
+    magrittr
 VignetteBuilder: knitr
 

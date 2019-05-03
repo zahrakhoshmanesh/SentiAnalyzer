@@ -18,6 +18,6 @@ test_that("BuildTraining work as expected", {
   
   expect_equal(class(test_val), "list")
   #output has one col
-  expect_equivalent(length(test_val), 5)
+  expect_equivalent(length(test_val), 6)
   #expect_equal(sapply(-ncol(testing),class), c("integer"|"numeric"))#
 })
