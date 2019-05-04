@@ -66,7 +66,7 @@ VisualizeData<-function(dataset,termcount){
  
  #visualizeplots <- c(wordfreqplot,wordcloadplot,reshapplot)
  
- #return(visualizeplots)
+ return(wordfreqplot)
 
 }
 
