@@ -24,7 +24,7 @@ BuildPrediction <- function(x) {
   
   if (is.data.frame(x)) {
     list <-BuildTraining(x)
-    #data(package = "SentiAnalyzer", my_training_data)
+
    
   } 
   

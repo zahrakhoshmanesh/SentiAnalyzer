@@ -44,6 +44,7 @@ Imports:
     shinythemes,
     klaR,
     gbm,
-    magrittr
+    magrittr,
+    kernlab
 VignetteBuilder: knitr
 
