@@ -21,6 +21,11 @@ BuildPrediction <- function(x) {
   # library(purrr)
 
   # list <- BuildTraining(x)
+  if (checkmate::testList(x)) {
+    # Add more checks here to make sure the list is properly formatted!!
+    testthat::expect_equivalent(length(x), 5)
+    list <- x
+  }
   
   if (is.data.frame(x)) {
     list <-BuildTraining(x)
@@ -28,10 +33,7 @@ BuildPrediction <- function(x) {
    
   } 
   
-  if (is.list(x)) {
-    # Add more checks here to make sure the list is properly formatted!!
-    list <- x
-  }
+
   
   
   xx <- list[1]%>%purrr::map_df(~.x)
