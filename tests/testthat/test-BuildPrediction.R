@@ -3,16 +3,21 @@ context("test-BuildPrediction")
 test_that("BuildPrediction work as expected", {
   
   data(package = "SentiAnalyzer", testing1)
-  #csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+ 
   
   #input is dataframe
   expect_s3_class(testing1, "data.frame")
 
   #testing output
-  #prediction-output <- BuildPrediction(x = csv_data)
+  outi <- BuildPrediction(x = testing1)
   #output is a list
-  #expect_s3_class(prediction-output, "data.frame")
- # expect_type(prediction-output, "data.frame")
-  #show_failure(expect_s3_class(output, "integer"))
+  expect_s3_class(outi, "data.frame")
+  #output has one col
+  expect_equivalent(dim(outi), c(5,1))
+  #col are numeric or integer
+  expect_equal(unique(sapply(testing1[-ncol(testing1)], class)),"integer")#
+  if (checkmate::testList( x= testing1)) {
+    # Add more checks here to make sure the list is properly formatted!!
+    testthat::expect_equivalent(length(x), 5)}
 
 })
