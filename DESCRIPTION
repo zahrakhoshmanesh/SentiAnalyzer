@@ -45,6 +45,7 @@ Imports:
     klaR,
     gbm,
     magrittr,
-    kernlab
+    kernlab,
+    checkmate
 VignetteBuilder: knitr
 
