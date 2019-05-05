@@ -28,10 +28,14 @@ BalanceData<-function(dataset){
        print("dataset is imbalance, Starting balancing it")
        balanced_dataframe <- ROSE:: ROSE(formula, data = source_datasets, seed = 1)$data
        table(balanced_dataframe[[2]])
+       output=balanced_dataframe
+       
      }  
   else
     {
     print("dataset is balanced  and no need to balance it")
+      output=source_datasets
+      
     }
 
   
@@ -43,7 +47,7 @@ BalanceData<-function(dataset){
   #if (file.access(system.file(package = "SentiAnalyzer", "balanced_dataframe"), mode = 0)==0){
   #  print("balancing dataset is done! and new balanced dataset saved in Data folder as balanced_dataframe.rda file ")
   #}
-  return(balanced_dataframe)
+  return(output)
 }
 
 

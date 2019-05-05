@@ -5,7 +5,7 @@
 #' @return 3 confusion matrix for each trained classification algorithm
 #' @author Atousa Zarindast
 #' @export
-#' @examples 
+#' examples 
 #' library(SentiAnalyzer)
 #' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
 #' my_training_data <- BuildPrediction(csv_data)
@@ -24,6 +24,8 @@ BuildPrediction <- function(x) {
   
   if (is.data.frame(x)) {
     list <-BuildTraining(x)
+
+   
   } 
   
   if (is.list(x)) {
@@ -40,7 +42,8 @@ BuildPrediction <- function(x) {
   
   t<-df%>%dplyr::mutate( prediction=purrr::map(.x=method,.f=function(d){predict(d,xx)}) )
   t<-t%>%dplyr::mutate(conf=purrr::map(.x=prediction,.f=function(d){confusionMatrix(d,xx[, ncol(xx)])}))
-  t<-t[3]
-  return(t)
+  pred_output<-t[3]
+  out = as.data.frame(pred_output)
+  return(out)
 
 }

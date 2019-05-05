@@ -2,23 +2,18 @@
 % Please edit documentation in R/comparison.R
 \name{comparison}
 \alias{comparison}
-\title{compare the performance of the 4 algorithms}
+\title{visualize performance of the algorithm}
 \usage{
 comparison(x)
 }
 \arguments{
-\item{x}{input is a dataframe for document-term matrix in which columns are the terms and row are binary variable 1 if that term exist in that data instance}
+\item{x}{input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance}
 }
 \value{
-visualization of trained algorithms (for classifiying textual data), comparision and select the best!
+visualization of trained algrithms (for classifiying textual data), comparision and select the best!
 }
 \description{
-compare the performance of the 4 algorithms
-}
-\examples{
-library(SentiAnalyzer)
-csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
-my_training_data <- BuildTraining(csv_data)
+visualize performance of the algorithm
 }
 \author{
 Atousa Zarindast

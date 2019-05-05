@@ -42,6 +42,9 @@ Imports:
     matlib,
     shiny, 
     shinythemes,
-    klaR
+    klaR,
+    gbm,
+    magrittr,
+    kernlab
 VignetteBuilder: knitr
 

@@ -5,10 +5,10 @@
 #' @author Atousa Zarindast
 #' @export
 #' @import caret
-#' @examples
-#' library(SentiAnalyzer)
-#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
-#' my_training_data <- BuildTraining(csv_data)
+# examples
+# library(SentiAnalyzer)
+# csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+# my_training_data <- BuildTraining(csv_data)
 
 BuildTraining<- function(x) {
 
@@ -128,8 +128,7 @@ BuildTraining<- function(x) {
   
   
 
-  list <-
-    list(x=x, gbmFit2, model_knn_10, model_naive_10, model_dectree_10,svm_Poly)
-  return(list)
+  train_output <- list(x=x, gbmFit2, model_knn_10, model_naive_10, model_dectree_10,svm_Poly)
+  return(train_output)
 
 }

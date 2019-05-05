@@ -10,7 +10,7 @@
 #' @import tm
 #' @import matlib
 #' @import SnowballC
-#' @import NLP
+#' @importFrom NLP ngrams words
 #' @examples
 #' library("SentiAnalyzer")
 #' direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
