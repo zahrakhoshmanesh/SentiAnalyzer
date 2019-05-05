@@ -20,8 +20,8 @@ Visualize dataset and get some insight of data.
 \examples{
 library(SentiAnalyzer)
 direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
-orignal_dataset <- read.delim(direction,quote='',stringsAsFactors = FALSE)
-VisualizeData(dataset=orignal_dataset,termcount=15)
+original_dataset <- read.delim(direction,quote='',stringsAsFactors = FALSE)
+VisualizeData(dataset=original_dataset,termcount=15)
 }
 \author{
 Zahra Khoshmanesh
