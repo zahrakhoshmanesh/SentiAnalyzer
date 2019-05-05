@@ -15,11 +15,6 @@ BuildPrediction(x)
 \description{
 predict the classes using trained algorithms and give cnfusion matrix  in return
 }
-\examples{
-library(SentiAnalyzer)
-csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
-my_training_data <- BuildPrediction(csv_data)
-}
 \author{
 Atousa Zarindast
 }

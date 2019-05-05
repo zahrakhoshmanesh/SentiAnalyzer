@@ -15,11 +15,6 @@ trained models
 \description{
 Train Machine learning algorithms and give trained models
 }
-\examples{
-library(SentiAnalyzer)
-csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
-my_training_data <- BuildTraining(csv_data)
-}
 \author{
 Atousa Zarindast
 }

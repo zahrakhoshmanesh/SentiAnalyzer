@@ -15,11 +15,6 @@ visualization of trained algrithms (for classifiying textual data), comparision 
 \description{
 visualize performance of the algorithm
 }
-\examples{
-library(SentiAnalyzer)
-csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
-comparison <- comparison(csv_data)
-}
 \author{
 Atousa Zarindast
 }

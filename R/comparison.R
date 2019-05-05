@@ -4,7 +4,7 @@
 #' @return visualization of trained algrithms (for classifiying textual data), comparision and select the best!
 #' @author Atousa Zarindast
 #' @export
-#' @examples
+#' examples
 #' library(SentiAnalyzer)
 #' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
 #' comparison <- comparison(csv_data)
