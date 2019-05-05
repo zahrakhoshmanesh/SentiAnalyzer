@@ -11,6 +11,6 @@ test_that("BuildTraining work as expected", {
   #output
   output <- BuildTraining(x = testing1)
   expect_type(output, "list")
-  show_failure(expect_s3_class(output, "list"))
+  #show_failure(expect_s3_class(output, "list"))
   
 })

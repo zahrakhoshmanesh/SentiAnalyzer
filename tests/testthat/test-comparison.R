@@ -12,8 +12,13 @@ test_that("comparison work as expected", {
   #input is dataframe
   expect_s3_class(testing1, "data.frame")
   #col are numeric or integer
-  expect_equal(unique(sapply(testing[-ncol(testing1)], class)),"integer")#
+  expect_equal(unique(sapply(testing[-ncol(testing1)], class)),"integer")
   #output
+  
+  #output <- comparison(testing1)
+  #expect_type(output, "list")
+  #show_failure(expect_s3_class(output, "list"))
+  
   #test_val <- comparison(x = testing1)
   #output is a list
   
