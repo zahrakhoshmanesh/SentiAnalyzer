@@ -9,9 +9,9 @@ CleanText(source_dataset, dtm_method, reductionrate)
 \arguments{
 \item{source_dataset}{A dataframe  having two columns, review as text, label as binary.}
 
-\item{reductionrate}{how many percent of term matrix you want to keep,usually 0.999 and not less than 0.99.}
+\item{dtm_method}{1 for bag of word, 2 for TF DFI, 3 for bigram.}
 
-\item{dtm-method}{1 for bag of word, 2 for TF DFI, 3 for bigram.}
+\item{reductionrate}{how many percent of term matrix you want to keep,usually 0.999 and not less than 0.99.}
 }
 \value{
 dataframe "dataset" : The term matrix converted to dataframe plus target label.

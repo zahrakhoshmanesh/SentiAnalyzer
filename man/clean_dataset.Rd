@@ -6,8 +6,6 @@
 \title{clean_dataset}
 \format{A data frame with 1000 rows and 97 variables:
 \describe{
-  \item{X}{row number}
-  \item{also}{...}
   ...
 }}
 \usage{

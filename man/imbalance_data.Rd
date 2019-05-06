@@ -6,8 +6,8 @@
 \title{imbalance_data}
 \format{A data frame with 903 rows and 2 variables:
 \describe{
-  \item{X}{row number}
-  \item{also}{...}
+  \item{Liked}{class variable}
+  \item{Review}{text reviews}
   ...
 }}
 \usage{

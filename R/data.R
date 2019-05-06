@@ -4,8 +4,6 @@
 #'
 #' @format A data frame with 1000 rows and 98 variables:
 #' \describe{
-#'   \item{X}{row number}
-#'   \item{also}{...}
 #'   ...
 #' }
 "testing"
@@ -16,8 +14,6 @@
 #'
 #' @format A data frame with 1000 rows and 98 variables:
 #' \describe{
-#'   \item{X}{row number}
-#'   \item{also}{...}
 #'   ...
 #' }
 "testing1"
@@ -28,8 +24,8 @@
 #'
 #' @format A data frame with 903 rows and 2 variables:
 #' \describe{
-#'   \item{X}{row number}
-#'   \item{also}{...}
+#'   \item{Liked}{class variable}
+#'   \item{Review}{text reviews}
 #'   ...
 #' }
 "imbalance_data"
@@ -40,11 +36,23 @@
 #'
 #' @format A data frame with 1000 rows and 2 variables:
 #' \describe{
-#'   \item{X}{row number}
-#'   \item{also}{...}
+#'   \item{Liked}{class variable}
+#'   \item{Review}{text reviews}
 #'   ...
 #' }
 "original_dataset"
+
+#' orignal_dataset
+#'
+#' A dataset containing ...
+#'
+#' @format A data frame with 1000 rows and 2 variables:
+#' \describe{
+#'   \item{Liked}{class variable}
+#'   \item{Review}{text reviews}
+#'   ...
+#' }
+"orignal_dataset"
 
 
 #' clean_dataset
@@ -53,8 +61,6 @@
 #'
 #' @format A data frame with 1000 rows and 97 variables:
 #' \describe{
-#'   \item{X}{row number}
-#'   \item{also}{...}
 #'   ...
 #' }
 "clean_dataset"
