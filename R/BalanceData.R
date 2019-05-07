@@ -50,7 +50,8 @@ BalanceData<-function(dataset){
   return(output)
 }
 
-
+#deleting non-ascii character
+#source_datasets[[1]] <- gsub("[^\x20-\x7E]", "", source_datasets[[1]])
 
 
 
