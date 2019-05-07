@@ -3,6 +3,8 @@
 <!-- badges: start -->
 [![travis](https://travis-ci.org/zahrakhoshmanesh/SentiAnalyzer.svg?branch=master)](https://travis-ci.org/zahrakhoshmanesh/SentiAnalyzer)
 [![Coverage status](https://codecov.io/gh/zahrakhoshmanesh/SentiAnalyzer/branch/master/graph/badge.svg)](https://codecov.io/github/zahrakhoshmanesh/SentiAnalyzer?branch=master)
+
+
 <!-- badges: end -->
 
 ### Sentiment analysis for consumer review
