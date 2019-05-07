@@ -16,8 +16,8 @@ SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which
 
 ## Usage
 Major steps of processing your textual dataset: 
-1. balancing the dataset
-2. "streamlining the text to get a sense of the major keywords
+1. Balancing the dataset
+2. Streamlining the text to get a sense of the major keywords
 
 3. Train different classification algorithms(e.g., SVM,NB,RF,KNN,GBM) and choose best parameters for each one to get the highest possible classification accuracy for an specefic dataset
 
