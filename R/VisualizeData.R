@@ -8,7 +8,7 @@
 #' @export
 #' @import tidytext
 #' @import dplyr
-#' @import ggplot2
+#' @import ggplot2 
 #' @importFrom  wordcloud comparison.cloud wordcloud
 #' @importFrom  reshape2 acast
 #' @importFrom  RColorBrewer brewer.pal
@@ -36,9 +36,9 @@ VisualizeData<-function(dataset,termcount){
     dplyr::filter(n > termcount) %>%
     dplyr::mutate(word = stats::reorder(word, n)) %>%
     ggplot2::ggplot(aes(x=word,y=n)) +
-    ggplot2::geom_col() +
-    ggplot2::xlab(NULL) +
-    ggplot2::coord_flip()
+    geom_col() +
+    xlab(NULL) +
+    coord_flip()
 
 
  wordcloadplot = tidy_text %>%
