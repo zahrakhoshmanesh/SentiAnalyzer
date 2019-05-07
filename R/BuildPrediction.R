@@ -10,7 +10,11 @@
 #' library(SentiAnalyzer)
 #' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
 
+<<<<<<< HEAD
 #my_training_data <- BuildPrediction(csv_data)}
+=======
+#Predicted_obj <- BuildPrediction(csv_data)
+>>>>>>> 5f3bbae45f1551693015fcb67457805cdbdf6752
 
 BuildPrediction <- function(x) {
   # library(assertthat)
@@ -26,7 +30,7 @@ BuildPrediction <- function(x) {
   # list <- BuildTraining(x)
   if (checkmate::testList(x)) {
     # Add more checks here to make sure the list is properly formatted!!
-    testthat::expect_equivalent(length(x), 5)
+    testthat::expect_equivalent(length(x), 6)
     list <- x
   }
   

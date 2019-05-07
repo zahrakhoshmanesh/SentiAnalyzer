@@ -8,8 +8,13 @@
 #' @examples
 #' \dontrun{
 # library(SentiAnalyzer)
+<<<<<<< HEAD
 # csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
 # my_training_data <- BuildTraining(csv_data)}
+=======
+# csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
+ #trained_models <- BuildTraining(csv_data)
+>>>>>>> 5f3bbae45f1551693015fcb67457805cdbdf6752
 
 BuildTraining<- function(x) {
 
@@ -52,11 +57,6 @@ BuildTraining<- function(x) {
   )
   message("Finished building decision tree")
 
-  #predict
-  # prediction_dec_parameterset = predict(model_dectree_10, x)
-  #confusion matrix
-  # DT_con<-confusionMatrix(prediction_dec_parameterset, x[,ncol(x)])
-  # DT_con
 
 
   ################## Naive Bayes with Cross Validation training ################
@@ -88,12 +88,6 @@ BuildTraining<- function(x) {
     tuneGrid = treeGrid_knn
   )
 
-  # plot(model_knn_10)
-  #prediction
-  # prediction_knn_parameterset = predict(model_knn_10, x)
-  #confusion matrix
-  #KKN_con<-confusionMatrix(prediction_knn_parameterset, x[,ncol(x)])
-  #KKN_con
 
 
   #####GBM
@@ -114,13 +108,7 @@ BuildTraining<- function(x) {
     tuneGrid = gbmGrid,
     trControl = ctrl_cv10
   )
-  #prediction
-  # prediction_gbmFit2 = predict(gbmFit2, x)
-  #confusion matrix
-  #gbm_con<-confusionMatrix(prediction_gbmFit2, x[,ncol(x)])
-  #gbm_con
 
-  #plot(gbmFit2)
   
   #SVM
   svmGrid<-expand.grid(degree=(1:10),scale=0.01,C=(1:2))
