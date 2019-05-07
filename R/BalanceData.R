@@ -9,10 +9,11 @@
 #' @import usethis
 #' @importFrom stats as.formula
 #' @examples
+#' \dontrun{
 #' library("SentiAnalyzer")
 #' direction <- system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv")
 #' imbalance_data<- read.delim(direction,quote='',stringsAsFactors = FALSE)
-#' BalanceData(imbalance_data)
+#' BalanceData(imbalance_data)}
 
 
 BalanceData<-function(dataset){

@@ -15,10 +15,11 @@
 #' @importFrom tibble as.tibble
 #' @importFrom stats reorder
 #' @examples
+#' \dontrun{
 #' library(SentiAnalyzer)
 #' direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
 #' original_dataset <- read.delim(direction,quote='',stringsAsFactors = FALSE)
-#' VisualizeData(dataset=original_dataset,termcount=15)
+#' VisualizeData(dataset=original_dataset,termcount=15)}
 
 VisualizeData<-function(dataset,termcount){
   word=sentiment=value=NULL

@@ -12,12 +12,13 @@
 #' @import SnowballC
 #' @importFrom NLP ngrams words
 #' @examples
+#' \dontrun{
 #' library("SentiAnalyzer")
 #' direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
 #' orignal_dataset <- read.delim(direction,quote='',stringsAsFactors = FALSE)
 #' CleanText(original_dataset,dtm_method=1,reductionrate=0.99)
 #' CleanText(original_dataset,dtm_method=2,reductionrate=0.99)
-#' CleanText(original_dataset,dtm_method=3,reductionrate=0.999)
+#' CleanText(original_dataset,dtm_method=3,reductionrate=0.999)}
  
 CleanText <- function(source_dataset,dtm_method,reductionrate){
 
