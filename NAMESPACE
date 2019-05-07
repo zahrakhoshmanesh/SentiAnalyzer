@@ -2,9 +2,11 @@
 
 export("%>%")
 export(BalanceData)
+export(BuildPrediction)
 export(BuildTraining)
 export(CleanText)
 export(VisualizeData)
+export(comparison)
 import(ROSE)
 import(SnowballC)
 import(caret)

@@ -21,9 +21,10 @@
 #' VisualizeData(dataset=original_dataset,termcount=15)
 
 VisualizeData<-function(dataset,termcount){
+  word=sentiment=value=NULL
 
   source_datasets <- dataset
- 
+  termcount <- termcount
   tidy_text <- source_datasets[[1]] %>%
     as.tibble %>% 
     tidytext:: unnest_tokens(word, value) %>%
@@ -33,7 +34,7 @@ VisualizeData<-function(dataset,termcount){
     dplyr::count(word, sort = TRUE) %>%
     dplyr::filter(n > termcount) %>%
     dplyr::mutate(word = stats::reorder(word, n)) %>%
-    ggplot2::ggplot(aes(word, n)) +
+    ggplot2::ggplot(aes(x=word,y=n)) +
     ggplot2::geom_col() +
     ggplot2::xlab(NULL) +
     ggplot2::coord_flip()

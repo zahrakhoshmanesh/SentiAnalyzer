@@ -5,10 +5,11 @@
 #' @return 3 confusion matrix for each trained classification algorithm
 #' @author Atousa Zarindast
 #' @export
-#' examples 
+#' @examples 
 #' library(SentiAnalyzer)
 #' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
-#' my_training_data <- BuildPrediction(csv_data)
+
+#my_training_data <- BuildPrediction(csv_data)
 
 BuildPrediction <- function(x) {
   # library(assertthat)
@@ -19,6 +20,7 @@ BuildPrediction <- function(x) {
   # library(RWeka)
   # library(eply)
   # library(purrr)
+  prediction=method=predict=NULL
 
   # list <- BuildTraining(x)
   if (checkmate::testList(x)) {
@@ -29,13 +31,9 @@ BuildPrediction <- function(x) {
   
   if (is.data.frame(x)) {
     list <-BuildTraining(x)
-
-   
   } 
   
 
-  
-  
   xx <- list[1]%>%purrr::map_df(~.x)
   list<-list[-1]
   
