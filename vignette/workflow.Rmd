@@ -237,7 +237,7 @@ Cmxx
     Cmx_4param <- Cmxx[2:5]
     Cmx_4param <- as.data.frame(Cmx_4param) 
     colnames(Cmx_4param) <- c("accuracy","precision","recall","f1-score")
-    rownames(Cmx_4param) <- c("Decision tree","Naive Bayes","k-Nearest Neighbors", "Gradient-Boosting")
+    rownames(Cmx_4param) <- c("Decision tree","Naive Bayes","k-Nearest Neighbors", "Gradient-Boosting","SVM")
     
     #heatmap encompassing 4 ML trained model output, 4 parameters of the confusion matrix
     plotly::plot_ly(z=data.matrix(Cmx_4param),
