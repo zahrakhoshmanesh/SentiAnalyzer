@@ -15,13 +15,13 @@ SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which
 `install.packages("SentiAnalyzer")`
 
 ## Usage
-Three steps of processing your review dataset: 
+Major steps of processing your textual dataset: 
 1. balancing the dataset
 2. "streamlining the text to get a sense of the major keywords
 
 3. Train different classification algorithms(e.g., SVM,NB,RF,KNN,GBM) and choose best parameters for each one to get the highest possible classification accuracy for an specefic dataset
 
-3. choose the best trained classification algorithm for the specific dataset according to different measures (e.g., FScore, Recall, Precision, Accuracy) 
+3. Choose the best trained classification algorithm for the specific dataset according to different measures (e.g., FScore, Recall, Precision, Accuracy) 
 
 5. Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review
 
