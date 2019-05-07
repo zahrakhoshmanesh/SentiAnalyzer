@@ -7,14 +7,14 @@
 #' @import caret
 #' @examples
 #' \dontrun{
-# library(SentiAnalyzer)
-<<<<<<< HEAD
-# csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
-# my_training_data <- BuildTraining(csv_data)}
-=======
+#' library(SentiAnalyzer)
+#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+#' my_training_data <- BuildTraining(csv_data)}
+
+
 # csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
  #trained_models <- BuildTraining(csv_data)
->>>>>>> 5f3bbae45f1551693015fcb67457805cdbdf6752
+
 
 BuildTraining<- function(x) {
 

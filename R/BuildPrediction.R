@@ -9,12 +9,10 @@
 #' \dontrun{
 #' library(SentiAnalyzer)
 #' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+#' my_training_data <- BuildPrediction(csv_data)}
 
-<<<<<<< HEAD
-#my_training_data <- BuildPrediction(csv_data)}
-=======
 #Predicted_obj <- BuildPrediction(csv_data)
->>>>>>> 5f3bbae45f1551693015fcb67457805cdbdf6752
+
 
 BuildPrediction <- function(x) {
   # library(assertthat)
