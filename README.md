@@ -14,6 +14,10 @@ SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which
 ## Installation
 `install.packages("SentiAnalyzer")`
 
+## Website
+[SentiAnalyzer](https://zahrakhoshmanesh.github.io/SentiAnalyzer/)
+
+
 ## Usage
 Three steps of processing your review dataset: 
 1. balancing the dataset
