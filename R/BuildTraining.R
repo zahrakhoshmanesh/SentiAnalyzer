@@ -19,7 +19,7 @@ BuildTraining<- function(x) {
   if (is.factor(x[, ncol(x)]) == FALSE) {
     x[, ncol(x)] <- ifelse(x[, ncol(x)] == 1, "Yes", "No")
 
-    x[, ncol(x)] <- factor(x[, ncol(x)], level = c("Yes", "No"))
+    x[, ncol(x)] <- factor(x[, ncol(x)], levels = c("Yes", "No"))
     } else {
     x[, ncol(x)] <- ifelse(x[, ncol(x)] == 1, "Yes", "No")
   }
