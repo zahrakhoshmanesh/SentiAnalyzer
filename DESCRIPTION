@@ -44,6 +44,8 @@ Imports:
     gbm,
     magrittr,
     kernlab,
-    checkmate
+    checkmate,
+    matlib,
+    stats
 VignetteBuilder: knitr
 

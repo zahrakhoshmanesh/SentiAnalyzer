@@ -21,16 +21,10 @@
  
 CleanText <- function(source_dataset,dtm_method,reductionrate){
 
-  #assertthat(not_empty(source_dataset), noNA(source_dataset),not_empty(dtm_method),not_empty(reductionrate))
+  #assertthat(not_empty(source_dataset),not_empty(dtm_method),not_empty(reductionrate))
 
-  # library(tm)
-  #library(rJava)
-  #library(RWeka)
-  #library(matlib)
-  #source_datasets=read.delim(source_dataset,quote='',stringsAsFactors = FALSE)
   origin_data=source_dataset
-  #dim(origin_data)
-  #dim(origin_data[[1]])
+
   corpus <- tm::VCorpus(VectorSource(origin_data[[1]])) %>%
       tm::tm_map(content_transformer(tolower)) %>% #convert all review to lower case
       tm::tm_map(removeNumbers) %>% # remove numbers from reviews
@@ -39,7 +33,6 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
       tm::tm_map(stemDocument) %>% # Stemming
       tm::tm_map(stripWhitespace)  # remove extra space that created in cleaning stage when for example number remove
   
-  #dim(corpus)
 
   #creating document term matrix of words in reviews
 
@@ -57,7 +50,7 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
   # convert matrix of independent variables to data frame
   clean_dataset = as.data.frame(as.matrix(dtm))
   # encode the target feature as factor
-  clean_dataset$target = factor(origin_data[[-1]],level=c(0,1))
+  clean_dataset$target = factor(origin_data[[-1]],levels=c(0,1))
   #assertthat(not_empty(dataset), noNA(dataset),is.data.frame(dataset))
   #usethis::use_data(clean_dataset,overwrite = TRUE)
   return(clean_dataset)

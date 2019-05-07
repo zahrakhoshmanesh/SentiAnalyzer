@@ -6,14 +6,14 @@
 #' @return some diagram and insight of data
 #' @author Zahra Khoshmanesh
 #' @export
-#' @import tidyverse
 #' @import tidytext
 #' @import dplyr
 #' @import ggplot2
-#' @import wordcloud
-#' @import reshape2
-#' @import tibble
-#' @import RColorBrewer
+#' @importFrom  wordcloud comparison.cloud wordcloud
+#' @importFrom  reshape2 acast
+#' @importFrom  RColorBrewer brewer.pal
+#' @importFrom tibble as.tibble
+#' @importFrom stats reorder
 #' @examples
 #' library(SentiAnalyzer)
 #' direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
@@ -22,50 +22,37 @@
 
 VisualizeData<-function(dataset,termcount){
 
-  #library(tidytext)
-  #library(dplyr)
-  #library(ggplot2)
-  #library(wordcloud)
-  #library(reshape2)
-
   source_datasets <- dataset
  
-  #text_df <- tibble(text = source_datasets[[1]])
-
- tidy_text <- source_datasets[[1]] %>%
+  tidy_text <- source_datasets[[1]] %>%
     as.tibble %>% 
-   tidytext:: unnest_tokens(word, value) %>%
-     dplyr:: anti_join(tidytext:: stop_words)
+    tidytext:: unnest_tokens(word, value) %>%
+    dplyr:: anti_join(tidytext:: stop_words)
 
  wordfreqplot = tidy_text %>%
-    count(word, sort = TRUE) %>%
+    dplyr::count(word, sort = TRUE) %>%
     dplyr::filter(n > termcount) %>%
-    mutate(word = reorder(word, n)) %>%
-    ggplot(aes(word, n)) +
-    geom_col() +
-    xlab(NULL) +
-    coord_flip()
+    dplyr::mutate(word = stats::reorder(word, n)) %>%
+    ggplot2::ggplot(aes(word, n)) +
+    ggplot2::geom_col() +
+    ggplot2::xlab(NULL) +
+    ggplot2::coord_flip()
 
-  # wordcloadplot = tidy_text %>%
-  #    count(word) %>%
-  #    with(wordcloud::wordcloud(word, n, max.words = 100,rot.per=0.35,colors=brewer.pal(8, "Dark2")))
 
  wordcloadplot = tidy_text %>%
-    count(word) %>%
-    #with(wordcloud(word, n, max.words = 100))
-    with(wordcloud(word, n, max.words = 100,rot.per=0.35,colors=brewer.pal(8, "Dark2")))
+   dplyr::count(word) %>%
+    with(wordcloud::wordcloud(word, n, max.words = 100,rot.per=0.35,colors=RColorBrewer::brewer.pal(8, "Dark2")))
 
  
  
   reshapplot = tidy_text %>%
-     inner_join(get_sentiments("bing")) %>%
-     count(word, sentiment, sort = TRUE) %>%
-     acast(word ~ sentiment, value.var = "n", fill = 0) %>%
-    comparison.cloud(colors = c("gray20", "gray80"),
+    dplyr::inner_join(tidytext::get_sentiments("bing")) %>%
+    dplyr::count(word, sentiment, sort = TRUE) %>%
+    reshape2::acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+    wordcloud::comparison.cloud(colors = c("gray20", "gray80"),
                      max.words = 100)
  
- #visualizeplots <- c(wordfreqplot,wordcloadplot,reshapplot)
- 
+
  return(wordfreqplot)
 
 }

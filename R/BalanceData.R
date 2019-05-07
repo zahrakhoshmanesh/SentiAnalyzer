@@ -7,6 +7,7 @@
 #' @export
 #' @import ROSE
 #' @import usethis
+#' @importFrom stats as.formula
 #' @examples
 #' library("SentiAnalyzer")
 #' direction <- system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv")
