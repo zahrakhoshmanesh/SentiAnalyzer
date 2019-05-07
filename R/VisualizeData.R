@@ -1,8 +1,8 @@
 
 #' Visualize dataset and get some insight of data.
 #'
-#' @param x dataset.
-#' @param y termcount:used for filtering the highest terms repeated in reviews usually > 10
+#' @param dataset dataset.
+#' @param termcount termcount:used for filtering the highest terms repeated in reviews usually > 10
 #' @return some diagram and insight of data
 #' @author Zahra Khoshmanesh
 #' @export

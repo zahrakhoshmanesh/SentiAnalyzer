@@ -7,9 +7,9 @@
 VisualizeData(dataset, termcount)
 }
 \arguments{
-\item{x}{dataset.}
+\item{dataset}{dataset.}
 
-\item{y}{termcount:used for filtering the highest terms repeated in reviews usually > 10}
+\item{termcount}{termcount:used for filtering the highest terms repeated in reviews usually > 10}
 }
 \value{
 some diagram and insight of data
