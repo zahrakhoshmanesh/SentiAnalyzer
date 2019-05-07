@@ -16,6 +16,9 @@ SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which
 
 ## Website
 [SentiAnalyzer](https://zahrakhoshmanesh.github.io/SentiAnalyzer/)
+[Workflow of Functions](https://zahrakhoshmanesh.github.io/SentiAnalyzer/articles/workflow.html)
+[What is incide the data: Shiny version](https://joeybudi.shinyapps.io/zahra/)
+
 
 
 ## Usage
