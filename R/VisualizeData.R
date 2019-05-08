@@ -8,17 +8,18 @@
 #' @export
 #' @import tidytext
 #' @import dplyr
-#' @import ggplot2
+#' @import ggplot2 
 #' @importFrom  wordcloud comparison.cloud wordcloud
 #' @importFrom  reshape2 acast
 #' @importFrom  RColorBrewer brewer.pal
 #' @importFrom tibble as.tibble
 #' @importFrom stats reorder
 #' @examples
+#' \dontrun{
 #' library(SentiAnalyzer)
 #' direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
 #' original_dataset <- read.delim(direction,quote='',stringsAsFactors = FALSE)
-#' VisualizeData(dataset=original_dataset,termcount=15)
+#' VisualizeData(dataset=original_dataset,termcount=15)}
 
 VisualizeData<-function(dataset,termcount){
   word=sentiment=value=NULL
@@ -35,9 +36,9 @@ VisualizeData<-function(dataset,termcount){
     dplyr::filter(n > termcount) %>%
     dplyr::mutate(word = stats::reorder(word, n)) %>%
     ggplot2::ggplot(aes(x=word,y=n)) +
-    ggplot2::geom_col() +
-    ggplot2::xlab(NULL) +
-    ggplot2::coord_flip()
+    geom_col() +
+    xlab(NULL) +
+    coord_flip()
 
 
  wordcloadplot = tidy_text %>%

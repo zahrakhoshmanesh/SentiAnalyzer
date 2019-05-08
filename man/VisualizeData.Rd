@@ -18,10 +18,11 @@ some diagram and insight of data
 Visualize dataset and get some insight of data.
 }
 \examples{
+\dontrun{
 library(SentiAnalyzer)
 direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
 original_dataset <- read.delim(direction,quote='',stringsAsFactors = FALSE)
-VisualizeData(dataset=original_dataset,termcount=15)
+VisualizeData(dataset=original_dataset,termcount=15)}
 }
 \author{
 Zahra Khoshmanesh

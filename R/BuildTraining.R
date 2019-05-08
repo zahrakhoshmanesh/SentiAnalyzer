@@ -5,10 +5,16 @@
 #' @author Atousa Zarindast
 #' @export
 #' @import caret
-# examples
-# library(SentiAnalyzer)
+#' @examples
+#' \dontrun{
+#' library(SentiAnalyzer)
+#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+#' my_training_data <- BuildTraining(csv_data)}
+
+
 # csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
  #trained_models <- BuildTraining(csv_data)
+
 
 BuildTraining<- function(x) {
 

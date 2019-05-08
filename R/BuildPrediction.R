@@ -6,10 +6,13 @@
 #' @author Atousa Zarindast
 #' @export
 #' @examples 
+#' \dontrun{
 #' library(SentiAnalyzer)
 #' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+#' my_training_data <- BuildPrediction(csv_data)}
 
 #Predicted_obj <- BuildPrediction(csv_data)
+
 
 BuildPrediction <- function(x) {
   # library(assertthat)

@@ -42,19 +42,6 @@
 #' }
 "original_dataset"
 
-#' orignal_dataset
-#'
-#' A dataset containing ...
-#'
-#' @format A data frame with 1000 rows and 2 variables:
-#' \describe{
-#'   \item{Liked}{class variable}
-#'   \item{Review}{text reviews}
-#'   ...
-#' }
-"orignal_dataset"
-
-
 #' clean_dataset
 #'
 #' A dataset containing ...
@@ -64,3 +51,13 @@
 #'   ...
 #' }
 "clean_dataset"
+
+#' trained_models
+#'
+#' A dataset containing ...
+#'
+#' @format A data frame:
+#' \describe{
+#'   ...
+#' }
+"trained_models"
