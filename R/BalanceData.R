@@ -4,10 +4,12 @@
 #' @param dataset unbalanced dataset, a dataframe : two column: first text reviews and second binary class, label: negative =0 and positive=1.
 #' @return balanced_dataframe balanced dataframe containing two columns: review texts and binary class , label: negative =0 and positive=1.
 #' @author Zahra Khoshmanesh
-#' @export
 #' @import ROSE
 #' @import usethis
 #' @importFrom stats as.formula
+#' @importFrom methods hasArg
+#' @export 
+#' @return A balanced dataframe 
 #' @examples
 #' \dontrun{
 #' library("SentiAnalyzer")
@@ -15,8 +17,13 @@
 #' imbalance_data<- read.delim(direction,quote='',stringsAsFactors = FALSE)
 #' BalanceData(imbalance_data)}
 
-
 BalanceData<-function(dataset){
+  
+  
+  if(!hasArg(dataset)){
+    dataset=system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv")
+    warning('file path does not provided by user, set to default file path')
+  }
 
   source_datasets=dataset #read dataset and assign it to local variable 
   
@@ -40,19 +47,11 @@ BalanceData<-function(dataset){
       
     }
 
-  
-  #write.table(data.rose, file='./inst/extdata/out.tsv', quote=FALSE, sep='\t', col.names = NA)
-  
-  #usethis::use_data(balanced_dataframe,overwrite = TRUE) #save output file in Data folder as balanced_dataframe.rda file
-  
-  #check if file exist, message user that balancing was successful
-  #if (file.access(system.file(package = "SentiAnalyzer", "balanced_dataframe"), mode = 0)==0){
-  #  print("balancing dataset is done! and new balanced dataset saved in Data folder as balanced_dataframe.rda file ")
-  #}
+  checkmate::testDataFrame(output)
   return(output)
 }
 
-#deleting non-ascii character
+# reg for deleting non-ascii character
 #source_datasets[[1]] <- gsub("[^\x20-\x7E]", "", source_datasets[[1]])
 
 

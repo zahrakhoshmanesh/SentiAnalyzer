@@ -3,8 +3,8 @@ library(caret)
 
 library(tidyr)
 library(tidyverse)
-library(RWeka)
-library(eply)
+#library(RWeka)
+#library(eply)
 library(ggplot2)
 library(gbm)
 #install.packages("shinythemes") to run code

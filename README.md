@@ -1,4 +1,4 @@
-# SentiAnalyzer
+
 
 <!-- badges: start -->
 [![travis](https://travis-ci.org/zahrakhoshmanesh/SentiAnalyzer.svg?branch=master)](https://travis-ci.org/zahrakhoshmanesh/SentiAnalyzer)
@@ -6,6 +6,11 @@
 
 
 <!-- badges: end -->
+
+# SentiAnalyzer
+<img src="inst/extdata/SAhexlogo.png" align="right" width="120"/>
+
+
 
 ### Sentiment analysis for consumer review
 

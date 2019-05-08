@@ -17,4 +17,3 @@ knitr::opts_chunk$set(
 ## [filter frequency of words](https://joeybudi.shinyapps.io/zahra/) 
 
 ## [machine learning training model algorithm](https://joeybudi.shinyapps.io/atousa/)
-
