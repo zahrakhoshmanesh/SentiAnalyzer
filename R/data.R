@@ -12,7 +12,7 @@
 #'
 #' A dataset containing ...
 #'
-#' @format A data frame with 100 rows and 5 variables:
+#' @format Reduced dataframe for testing purpose with 100 rows and 5 variables:
 #' \describe{
 #'   ...
 #' }

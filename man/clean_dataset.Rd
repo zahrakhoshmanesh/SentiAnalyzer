@@ -5,7 +5,7 @@
 \alias{clean_dataset}
 \title{clean_dataset}
 \format{A data frame with 1000 rows and 97 variables:
-\describe{
+\describe{ cleaned dataset term matrix
   ...
 }}
 \usage{

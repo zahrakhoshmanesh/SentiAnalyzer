@@ -5,7 +5,7 @@
 \alias{trained_models}
 \title{trained_models}
 \format{A data frame:
-\describe{
+\describe{ trained ML models in as list variables
   ...
 }}
 \usage{
