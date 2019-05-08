@@ -25,13 +25,13 @@ SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which
 
 Major steps of processing your textual dataset: 
 
-1. balancing the dataset
+1. Balancing the dataset
 
-2. "streamlining the text to get a sense of the major keywords
+2. Streamlining the text to get a sense of the major keywords
 
 3. Train different classification algorithms(e.g., SVM,NB,RF,KNN,GBM) and choose best parameters for each one to get the highest possible classification accuracy for an specefic dataset
 
-3. choose the best trained classification algorithm for the specific dataset according to different measures (e.g., FScore, Recall, Precision, Accuracy) 
+3. Choose the best trained classification algorithm for the specific dataset according to different measures (e.g., FScore, Recall, Precision, Accuracy) 
 
 5. Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review
 
@@ -196,6 +196,16 @@ res_name <- colnames(csv_data)[ncol(csv_data)]
 
 plot(model_knn_10)
 ```
+
+
+
+
+
+
+
+
+
+
 As shown in plot above it explores up to 100 neighbours for KNN algorithm and selects the best one for the trained KNN model
 
 Example shown is for trained Gradient Boosting Machine trained model 
@@ -224,8 +234,8 @@ This function extracts F1, Recall,Precision and Accuracy from confuction matrice
   
 **output**: list of confusion matrices of 5 machine learning algorithms
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
-Cmxx <- SentiAnalyzer::comparison(df_predicted)
-Cmxx
+#Cmxx <- SentiAnalyzer::comparison(df_predicted)
+#Cmxx
 ```
 
 ### Heatmap and table
@@ -234,37 +244,37 @@ Cmxx
 
 **output**: interactive plotly heat map and table
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-    Cmx_4param <- Cmxx[2:5]
-    Cmx_4param <- as.data.frame(Cmx_4param) 
-    colnames(Cmx_4param) <- c("accuracy","precision","recall","f1-score")
-    rownames(Cmx_4param) <- c("Decision tree","Naive Bayes","k-Nearest Neighbors", "Gradient-Boosting","SVM")
-    
-    #heatmap encompassing 4 ML trained model output, 4 parameters of the confusion matrix
-    plotly::plot_ly(z=data.matrix(Cmx_4param),
-                    x=colnames(Cmx_4param),
-                    y=rownames(Cmx_4param), 
-                    type="heatmap",
-                    textfont=list(size=20,color = "black"))
-    
-    #plotly table for 4 ML trained model output, 4 parameters of the confusion matrix
-    plotly::plot_ly(
-      type = 'table',
-      header = list(
-        values = c('<b>Confusion Matrix</b>', colnames(Cmx_4param)),
-        line = list(color = '#506784'),
-        fill = list(color = '#119DFF'),
-        align = c('left','center'),
-        font = list(color = 'white', size = 12)
-      ),
-      cells = list(
-        values = rbind(rownames(Cmx_4param),
-                       data.matrix(Cmx_4param)),
-        line = list(color = '#506784'),
-        fill = list(color = c('#25FEFD', 'white')),
-        align = c('left', 'left'),
-        font = list(color = c('#black'), size = 12)
-        
-        
-      ))
+    # Cmx_4param <- Cmxx[2:5]
+    # Cmx_4param <- as.data.frame(Cmx_4param) 
+    # colnames(Cmx_4param) <- c("accuracy","precision","recall","f1-score")
+    # rownames(Cmx_4param) <- c("Decision tree","Naive Bayes","k-Nearest Neighbors", "Gradient-Boosting","SVM")
+    # 
+    # #heatmap encompassing 5 ML trained model output, 5 parameters of the confusion matrix
+    # plotly::plot_ly(z=data.matrix(Cmx_4param),
+    #                 x=colnames(Cmx_4param),
+    #                 y=rownames(Cmx_4param), 
+    #                 type="heatmap",
+    #                 textfont=list(size=20,color = "black"))
+    # 
+    # #plotly table for 5 ML trained model output, 5 parameters of the confusion matrix
+    # plotly::plot_ly(
+    #   type = 'table',
+    #   header = list(
+    #     values = c('<b>Confusion Matrix</b>', colnames(Cmx_4param)),
+    #     line = list(color = '#506784'),
+    #     fill = list(color = '#119DFF'),
+    #     align = c('left','center'),
+    #     font = list(color = 'white', size = 12)
+    #   ),
+    #   cells = list(
+    #     values = rbind(rownames(Cmx_4param),
+    #                    data.matrix(Cmx_4param)),
+    #     line = list(color = '#506784'),
+    #     fill = list(color = c('#25FEFD', 'white')),
+    #     align = c('left', 'left'),
+    #     font = list(color = c('#black'), size = 12)
+    #     
+    #     
+    #   ))
 ```
 
