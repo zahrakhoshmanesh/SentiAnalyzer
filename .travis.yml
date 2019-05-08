@@ -2,10 +2,28 @@
 
 language: R
 cache: packages
-r_packages:
-  - covr
+
 services:
   - xvfb
+  
+env_vars:
+  global:
+    - RGL_USE_NULL: true
+    - warnings_are_errors: false
 
+services:
+  - xvfb
+  
+r_binary_packages:
+  - rgl
+  
+r_packages:
+  - covr
+  
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3
+  
 after_success:
-  - Rscript -e 'library(covr); codecov()'
+- Rscript -e 'library(covr); codecov()'
