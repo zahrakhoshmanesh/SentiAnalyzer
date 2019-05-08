@@ -1,29 +1,4 @@
 
-Skip to content
-Pull requests
-Issues
-Marketplace
-Explore
-@atousaz
-
-0
-0
-
-4
-
-srvanderplas/SentiAnalyzer forked from zahrakhoshmanesh/SentiAnalyzer
-Code
-Pull requests 0
-Projects 0
-Wiki
-Insights
-SentiAnalyzer/R/BuildTraining.R
-@srvanderplas srvanderplas Merge https://github.com/zahrakhoshmanesh/SentiAnalyzer fc2c84f 16 hours ago
-@zahrakhoshmanesh
-@atousaz
-@srvanderplas
-@joeybudi
-106 lines (92 sloc) 2.8 KB
 #' Train Machine learning algorithms and give trained models
 #'
 #' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
