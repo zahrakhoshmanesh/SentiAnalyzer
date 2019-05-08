@@ -30,7 +30,7 @@ BuildTraining <- function(x) {
   # train control
   ctrl_cv10 <- caret::trainControl(
     method = "cv",
-    number = 10,
+    number = 5,
     savePred = T,
     classProb = T
   )
@@ -79,8 +79,8 @@ BuildTraining <- function(x) {
   
   ##### GBM
   gbmGrid <- expand.grid(
-    interaction.depth = c(1:9),
-    n.trees = (1:5) ,
+    interaction.depth = c(1:3),
+    n.trees = (1:5)*10 ,
     shrinkage = 0.1,
     n.minobsinnode = 20
   )
@@ -93,11 +93,11 @@ BuildTraining <- function(x) {
     tuneGrid = gbmGrid,
     trControl = ctrl_cv10
   ))
-  
+  message("Finished building GBM")
   # SVM
   svmGrid <- expand.grid(degree = (1:10), scale = 0.01, C = (1:2))
   svm_Poly <- try(caret::train(formula, data = x, method = "svmPoly", tuneGrid = svmGrid))
-  
+  message("Finished building SVM")
   train_output <- list(x = x, gbmFit2, model_knn_10, model_naive_10, model_dectree_10, svm_Poly)
   return(train_output)
 }
