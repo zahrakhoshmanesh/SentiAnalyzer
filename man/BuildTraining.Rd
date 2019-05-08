@@ -18,7 +18,7 @@ Train Machine learning algorithms and give trained models
 \examples{
 \dontrun{
 library(SentiAnalyzer)
-csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
 my_training_data <- BuildTraining(csv_data)}
 }
 \author{
