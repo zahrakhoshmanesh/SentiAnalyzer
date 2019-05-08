@@ -6,11 +6,14 @@
 #' @param reductionrate how many percent of term matrix you want to keep,usually 0.999 and not less than 0.99.
 #' @return dataframe "dataset" : The term matrix converted to dataframe plus target label.
 #' @author Zahra Khoshmanesh
-#' @export
 #' @import tm
 #' @import matlib
 #' @import SnowballC
+#' @import checkmate
 #' @importFrom NLP ngrams words
+#' @importFrom methods hasArg
+#' @export 
+#' @return A clean dataframe,a term-matrix
 #' @examples
 #' \dontrun{
 #' library("SentiAnalyzer")
@@ -22,7 +25,25 @@
  
 CleanText <- function(source_dataset,dtm_method,reductionrate){
 
-  #assertthat(not_empty(source_dataset),not_empty(dtm_method),not_empty(reductionrate))
+
+    if(!hasArg(source_dataset)){
+      source_dataset=system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
+      warning('file path does not provided by user, set to default file path')
+    }
+    else if(!hasArg(dtm_method)){
+      dtm_method=1
+      warning('dtm_method does not exist, set to default method, bag of word with simple count')
+    }
+    # check whether the reductionrate is a number 
+    if(!is.numeric(reductionrate)){
+      reductionrate=0.99
+      warning('reductionrate is not numeric,set to default 0.99 value')
+      
+    }
+    # check whether the reductionrate is a number between 0.99 and 1.
+    checkmate::assertNumber(reductionrate,lower = 0.99, upper =1) 
+  
+  
 
   origin_data=source_dataset
 
@@ -52,12 +73,12 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
   clean_dataset = as.data.frame(as.matrix(dtm))
   # encode the target feature as factor
   clean_dataset$target = factor(origin_data[[-1]],levels=c(0,1))
-  #assertthat(not_empty(dataset), noNA(dataset),is.data.frame(dataset))
-  #usethis::use_data(clean_dataset,overwrite = TRUE)
+  #check outputs
+  checkmate::checkFactor(clean_dataset$target)
+  checkmate::testDataFrame(clean_dataset)
+  
   return(clean_dataset)
 }
 
-#df1 <- CleanText(orignal_dataset,dtm_method=1,reductionrate=0.99)
-#df2 <- CleanText(orignal_dataset,dtm_method=2,reductionrate=0.99)
-#df3 <- CleanText(orignal_dataset,dtm_method=3,reductionrate=0.999)
+
 

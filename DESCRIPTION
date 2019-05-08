@@ -46,6 +46,7 @@ Imports:
     kernlab,
     checkmate,
     matlib,
-    stats
+    stats,
+    methods
 VignetteBuilder: knitr
 

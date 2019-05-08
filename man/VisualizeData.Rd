@@ -13,6 +13,8 @@ VisualizeData(dataset, termcount)
 }
 \value{
 some diagram and insight of data
+
+A ggplot
 }
 \description{
 Visualize dataset and get some insight of data.

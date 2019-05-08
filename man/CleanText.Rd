@@ -15,6 +15,8 @@ CleanText(source_dataset, dtm_method, reductionrate)
 }
 \value{
 dataframe "dataset" : The term matrix converted to dataframe plus target label.
+
+A clean dataframe,a term-matrix
 }
 \description{
 Clean text and build term matrix for bag of words,TF DFI and bi-gram.
