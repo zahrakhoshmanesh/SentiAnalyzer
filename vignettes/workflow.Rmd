@@ -13,9 +13,10 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-<img src="inst/extdata/SAhexlogo.png" align="right" width="120"/>
 
-
+```{r fig.align = "right", out.width = "120px"}
+knitr::include_graphics(system.file(package = "SentiAnalyzer", "extdata/SAhexlogo.png"))
+```
 
 ### Sentiment analysis for consumer review
 
@@ -218,7 +219,8 @@ As shown in plot above it explores up to 100 neighbours for KNN algorithm and se
 
 Example shown is for trained Gradient Boosting Machine trained model 
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
-load(system.file(package = "SentiAnalyzer", "trained_models.RData"))
+
+data(package = "SentiAnalyzer", "trained_models")
 trained_models[2]
 ```
 
