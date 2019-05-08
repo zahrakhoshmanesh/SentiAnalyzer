@@ -3,7 +3,7 @@
 \docType{data}
 \name{testing}
 \alias{testing}
-\title{Testing}
+\title{testing}
 \format{A data frame with 1000 rows and 98 variables:
 \describe{
   ...

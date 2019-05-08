@@ -7,7 +7,7 @@
 #' @examples
 #' \dontrun{
 #' library(SentiAnalyzer)
-#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
 #' comparison <- comparison(csv_data)}
 
 comparison <- function(x){

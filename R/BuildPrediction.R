@@ -5,48 +5,43 @@
 #' @return 3 confusion matrix for each trained classification algorithm
 #' @author Atousa Zarindast
 #' @export
-#' @examples 
+#' @examples
 #' \dontrun{
 #' library(SentiAnalyzer)
-#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
-#' my_training_data <- BuildPrediction(csv_data)}
-
-#Predicted_obj <- BuildPrediction(csv_data)
-
-
+#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
+#' my_training_data <- BuildPrediction(csv_data)
+#' }
+#' 
+#' # Predicted_obj <- BuildPrediction(csv_data)
 BuildPrediction <- function(x) {
-  # library(assertthat)
-  # library(caret)
-  # library(tidyr)
-  # library(testthat)
-  # library(tidyverse)
-  # library(RWeka)
-  # library(eply)
-  # library(purrr)
-  prediction=method=predict=NULL
-
+  
+  prediction <- method <- predict <- NULL
+  
   # list <- BuildTraining(x)
-  if (checkmate::testList(x)) {
+  if (is.list(x)) {
     # Add more checks here to make sure the list is properly formatted!!
-    testthat::expect_equivalent(length(x), 6)
-    list <- x
+    checkmate::checkList(x, len = 6)
+    trainingList <- x
   }
   
   if (is.data.frame(x)) {
-    list <-BuildTraining(x)
-  } 
+    trainingList <- BuildTraining(x)
+  }
   
-
-  xx <- list[1]%>%purrr::map_df(~.x)
-  list<-list[-1]
   
-  df <- data.frame(matrix(list, nrow=length(list), byrow=T)) 
-  names(df)<-"method"
+  xx <- trainingList[1] %>% purrr::map_df(~.x)
+  trainingList <- trainingList[-1]
   
-  t<-df%>%dplyr::mutate( prediction=purrr::map(.x=method,.f=function(d){predict(d,xx)}) )
-  t<-t%>%dplyr::mutate(conf=purrr::map(.x=prediction,.f=function(d){confusionMatrix(d,xx[, ncol(xx)])}))
-  pred_output<-t[3]
-  out = as.data.frame(pred_output)
+  df <- data.frame(matrix(trainingList, nrow = length(trainingList), byrow = T))
+  names(df) <- "method"
+  
+  tmp <- df %>% dplyr::mutate(prediction = purrr::map(.x = method, .f = function(d) {
+    predict(d, xx)
+  }))
+  tmp <- tmp %>% dplyr::mutate(conf = purrr::map(.x = prediction, .f = function(d) {
+    caret::confusionMatrix(d, xx[, ncol(xx)])
+  }))
+  pred_output <- tmp[3]
+  out <- as.data.frame(pred_output)
   return(out)
-
 }
