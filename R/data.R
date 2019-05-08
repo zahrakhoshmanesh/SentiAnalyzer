@@ -1,4 +1,4 @@
-#' Testing
+#' testing
 #'
 #' A dataset containing ...
 #'
@@ -8,11 +8,11 @@
 #' }
 "testing"
 
-#' Testing1
+#' testing1
 #'
 #' A dataset containing ...
 #'
-#' @format A data frame with 1000 rows and 98 variables:
+#' @format A data frame with 100 rows and 4 variables:
 #' \describe{
 #'   ...
 #' }

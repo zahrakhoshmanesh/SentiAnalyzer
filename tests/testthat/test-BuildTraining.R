@@ -1,16 +1,22 @@
 context("test-BuildTraining")
 
 test_that("BuildTraining work as expected", {
+  #data(package = "SentiAnalyzer", testing1)
   
+  simple_df <- data.frame(
+    X = 1:10, 
+    yay = c(1, 1, 1, 1, 0, 0, 0, 0, 0, 0),
+    boo = c(0, 0, 0, 1, 0, 0, 1, 1, 1, 1),
+    meh = c(0, 0, 1, 1, 1, 1, 1, 1, 0, 0),
+    sad = c(0, 0, 0, 0, 1, 0, 1, 0, 1, 1),
+    awesome = c(1, 0, 1, 1, 1, 0, 0, 0, 0, 0),
+    turtle = c(0, 0, 0, 0, 0, 1, 0, 0, 0, 1))
   
-  data(package = "SentiAnalyzer", testing1)
-  #input is dataframe
-  expect_s3_class(testing1, "data.frame")
-  #col are numeric or integer
-  expect_equal(unique(sapply(testing1[-ncol(testing1)], class)),"integer")
-  #output
-  output <- BuildTraining(x = testing1)
-  expect_type(output, "list")
-  #show_failure(expect_s3_class(output, "list"))
+  # col are numeric or integer
+  sapply(simple_df[-ncol(simple_df)], function(x) expect_true(class(x) %in% c("integer", "numeric")))
   
+  # output
+  expect_warning(df <- BuildTraining(x = simple_df))
+  expect_type(df, "list")
+  # show_failure(expect_s3_class(output, "list"))
 })
