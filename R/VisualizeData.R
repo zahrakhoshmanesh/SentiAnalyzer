@@ -8,6 +8,8 @@
 #' @import ggplot2 
 #' @importFrom stats reorder
 #' @importFrom methods hasArg
+#' @importFrom reshape2 acast
+#' @importFrom RColorBrewer brewer.pal 
 #' @export 
 #' @return A ggplot
 #' @examples
