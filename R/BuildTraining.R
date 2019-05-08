@@ -1,3 +1,29 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@atousaz
+
+0
+0
+
+4
+
+srvanderplas/SentiAnalyzer forked from zahrakhoshmanesh/SentiAnalyzer
+Code
+Pull requests 0
+Projects 0
+Wiki
+Insights
+SentiAnalyzer/R/BuildTraining.R
+@srvanderplas srvanderplas Merge https://github.com/zahrakhoshmanesh/SentiAnalyzer fc2c84f 16 hours ago
+@zahrakhoshmanesh
+@atousaz
+@srvanderplas
+@joeybudi
+106 lines (92 sloc) 2.8 KB
 #' Train Machine learning algorithms and give trained models
 #'
 #' @param x input is a dataframe for bag of word file in which columns are the terms and row are binary variable 1 if that term exist in that data instance
@@ -8,10 +34,12 @@
 #' @examples
 #' \dontrun{
 #' library(SentiAnalyzer)
-#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
+#' csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
 #' my_training_data <- BuildTraining(csv_data)
 #' }
-
+#' 
+#' # csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
+#' # trained_models <- BuildTraining(csv_data)
 BuildTraining <- function(x) {
   
   if (is.factor(x[, ncol(x)]) == FALSE) {
@@ -30,7 +58,7 @@ BuildTraining <- function(x) {
   # train control
   ctrl_cv10 <- caret::trainControl(
     method = "cv",
-    number = 5,
+    number = 10,
     savePred = T,
     classProb = T
   )
@@ -79,8 +107,8 @@ BuildTraining <- function(x) {
   
   ##### GBM
   gbmGrid <- expand.grid(
-    interaction.depth = c(1:3),
-    n.trees = (1:5)*10 ,
+    interaction.depth = c(1:4),
+    n.trees = (1:5) * 3,
     shrinkage = 0.1,
     n.minobsinnode = 20
   )
@@ -93,11 +121,26 @@ BuildTraining <- function(x) {
     tuneGrid = gbmGrid,
     trControl = ctrl_cv10
   ))
-  message("Finished building GBM")
+  
   # SVM
   svmGrid <- expand.grid(degree = (1:10), scale = 0.01, C = (1:2))
   svm_Poly <- try(caret::train(formula, data = x, method = "svmPoly", tuneGrid = svmGrid))
-  message("Finished building SVM")
+  
   train_output <- list(x = x, gbmFit2, model_knn_10, model_naive_10, model_dectree_10, svm_Poly)
   return(train_output)
 }
+
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+

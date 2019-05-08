@@ -1,4 +1,4 @@
-#' testing
+#' Testing
 #'
 #' A dataset containing ...
 #'
@@ -8,11 +8,11 @@
 #' }
 "testing"
 
-#' testing1
+#' Testing1
 #'
 #' A dataset containing ...
 #'
-#' @format A data frame with 100 rows and 4 variables:
+#' @format A data frame with 100 rows and 5 variables:
 #' \describe{
 #'   ...
 #' }
@@ -47,7 +47,7 @@
 #' A dataset containing ...
 #'
 #' @format A data frame with 1000 rows and 97 variables:
-#' \describe{
+#' \describe{ cleaned dataset term matrix
 #'   ...
 #' }
 "clean_dataset"
@@ -57,7 +57,7 @@
 #' A dataset containing ...
 #'
 #' @format A data frame:
-#' \describe{
+#' \describe{ trained ML models in as list variables
 #'   ...
 #' }
 "trained_models"
