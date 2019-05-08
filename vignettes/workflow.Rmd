@@ -170,7 +170,7 @@ res_name <- colnames(csv_data)[ncol(csv_data)]
     savePred = T,
     classProb = T
   )
-  treeGrid_knn = expand.grid(k = c(1:100))
+  treeGrid_knn = expand.grid(k = c(1:80))
   ###### kNN with Cross Validation ############
   model_knn_10 =caret::train(
     formula,
@@ -181,15 +181,6 @@ res_name <- colnames(csv_data)[ncol(csv_data)]
   )
 plot(model_knn_10)
 ```
-
-
-
-
-
-
-
-
-
 
 As shown in plot above it explores up to 100 neighbours for KNN algorithm and selects the best one for the trained KNN model
 
