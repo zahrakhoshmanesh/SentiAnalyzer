@@ -14,10 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r fig.align = "right", out.width = "120px"}
-knitr::include_graphics(system.file(package = "SentiAnalyzer", "extdata/SAhexlogo.png"))
-```
-
 ### Sentiment analysis for consumer review
 
 SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which includes natural language processing (NLP) of consumer sentiments. The dataset that SentiAnalyzer can work with for now is short text and a binary quantification, e.g. whether consumer hits the like button. The NLP of the sentiment is analyzed through the options of algorithms to compile the words and the machinge learning training model of choice.  
@@ -35,7 +31,7 @@ Major steps of processing your textual dataset:
 
 3. Train different classification algorithms(e.g., SVM,NB,RF,KNN,GBM) and choose best parameters for each one to get the highest possible classification accuracy for an specefic dataset
 
-3. Choose the best trained classification algorithm for the specific dataset according to different measures (e.g., F1-Score, Recall, Precision, Accuracy) 
+3. Choose the best trained classification algorithm for the specific dataset according to different measures (e.g., FScore, Recall, Precision, Accuracy) 
 
 5. Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review
 
@@ -102,11 +98,9 @@ integrating built-in functions from `tm`, `CleanText()` will "clean up" the word
 *remove stop words, e.g. "the", "a", "for", "and", etc
 *extract the stems of thegiven words using Porter's stemming algorithmn
 *remove extra white spaces that was left off by the removed texts 
-
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE}
 library(tm)
 ```
-
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=FALSE}
 corpus=VCorpus(VectorSource(balanced_data$Review)) 
 corpus=tm_map(corpus,content_transformer(tolower)) #convert all review to lower case
@@ -116,7 +110,6 @@ corpus=tm_map(corpus,removeWords,stopwords()) # remove Stop words from reviews
 corpus=tm_map(corpus,stemDocument) # Stemming
 corpus=tm_map(corpus,stripWhitespace) # remove extra space that's created in cleaning stage above
 ```
-
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=FALSE}
 corpus$content[[1]][[1]]
 corpus$content[[2]][[1]]
@@ -125,20 +118,14 @@ corpus$content[[4]][[1]]
 corpus$content[[5]][[1]]
 corpus$content[[6]][[1]]
 ```
-
 ##### b. Creating the document-term matrix/bag of words model
-
 Next, still within the scope of the same current function, `Cleantext()`, the corpus is formatted to a [document-term matrix](#https://en.wikipedia.org/wiki/Document-term_matrix) (DTM) and creating document term matrix of words in reviews. Essentially it creates a single column for every tokens in the corpus and counted for frequency of occurence on each tokens on the rows
-
 user also have the choice to choose either (the argument call is also done on `CleanText`):
-
 1. bag of words
 2. tf-idf (term frequency-inverse document frequency)
 3. Bi-gram 
-
 ##### c. choosing the reduction rate
 the document-term matrix will quickly expand the dataset dimension, especially the sparse terms, significantly. Depending on the dimension of the dataset can be adjusted be adjusted within the range 0 to 1. Essentially it is calling `tm::removeSparseTerms`
-
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE}
 clean_dataset <- SentiAnalyzer::CleanText(balanced_data, dtm_method=1, reductionrate=0.99)
 ```
@@ -149,14 +136,11 @@ names(clean_dataset)[1:50]
 head(clean_dataset[1:10])
 tail(clean_dataset[1:10])
 ```
-
-
-## Building  classification Training
+## Building  classification
 Train different classification algorithms(e.g., SVM,NB,RF,KNN,GBM) and choose best parameters for each one to get the highest possible classification accuracy for an specefic dataset
-
 **input**: document-term matrix (result from `CleanText()` which is `clean_dataset`)
 
-**output**: list of trained models with best parameters from 5 machine learning algorithms (GBM, KNN, NB, RF, SVM_Poly)
+**output**: list of trained models with best parameters from 5 machine learning algorithms (GBM, KNN, NB, RF,SVM_Poly)
 
 **Using cross validation for a valid testing accuracy**
 
@@ -164,14 +148,10 @@ using package `caret`, and `traincontrol`
 
 Using the whole dataset for training purpose and 10-fold cross validation for a valid estimate of testing accuracy.
 
-#### Example training classifier : KNN
+### Example training classifier : KNN
 The model training consist of `expand.grid()`, `train()` (formula, data, method, train control, tuneGrid, etc)
 
-**Training KNN with the best parameters using `caret` training function.**
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE, eval=FALSE}
-SentiAnalyzer::BuildPrediction(clean_dataset)
-```
-
+**Training KNN with the best parameters using `caret` traning function.**
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=FALSE, eval=TRUE}
 csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
 res_name <- colnames(csv_data)[ncol(csv_data)]
@@ -179,7 +159,6 @@ res_name <- colnames(csv_data)[ncol(csv_data)]
   
   if (is.factor(csv_data[, ncol(csv_data)]) == FALSE) {
     csv_data[, ncol(csv_data)] <- ifelse(csv_data[, ncol(csv_data)] == 1, "Yes", "No")
-
     csv_data[, ncol(csv_data)] <- factor(csv_data[, ncol(csv_data)], levels = c("Yes", "No"))
     } else {
     csv_data[, ncol(csv_data)] <- ifelse(csv_data[, ncol(csv_data)] == 1, "Yes", "No")
@@ -192,8 +171,6 @@ res_name <- colnames(csv_data)[ncol(csv_data)]
     classProb = T
   )
   treeGrid_knn = expand.grid(k = c(1:100))
-
-
   ###### kNN with Cross Validation ############
   model_knn_10 =caret::train(
     formula,
@@ -202,7 +179,6 @@ res_name <- colnames(csv_data)[ncol(csv_data)]
     trControl = ctrl_cv10,
     tuneGrid = treeGrid_knn
   )
-
 plot(model_knn_10)
 ```
 
@@ -218,35 +194,31 @@ plot(model_knn_10)
 As shown in plot above it explores up to 100 neighbours for KNN algorithm and selects the best one for the trained KNN model
 
 Example shown is for trained Gradient Boosting Machine trained model 
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
-
-data(package = "SentiAnalyzer", "trained_models")
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
+load(system.file(package = "SentiAnalyzer", "trained_models.RData"))
 trained_models[2]
 ```
 
 
-## Build Prediction
-classifies the target value of input data using different trained algorithms (output of `BuildTraining` function) and return a list of confusion matrices. These matrices later will be used for further interpretation. Down the line, the `comparison()` function will extract a few important parameters that should be of main interest to aid with interpretation of the prediction model. 
+### Build Prediction
+classifies the target value of input data using different trained algorithms (output of `BuildTraining` function) and return a list of confusion matrices, these matrices can be used for any purposes. we intent to  extract different measurements from it using `comparison` function. User can also put TermVector Matrice as input and this function, depending upon the type of the input automaticly runs `BuildTraining` function if needed. The goal here to have confuction matrix information as a list.
 
-User can also use document-term matrix (result from `CleanText()` as input to use this function. So it depends upon the type of the input the user choose, this function will automatically run `BuildTraining()` also if the user chooses to use a DocumentTermMatrix. The goal here to have confusion matrix information as a list.
-
-**input**: document-term matrix (result from `CleanText()` which is `cleaned_dataset`) or list of trained models (output of `BuildTraining()`)
+**input**: document-term matrix (result from `CleanText()` which is `cleaned_dataset`) or list of trained models (output of `SentiAnalyzer::BuildTraining` Function)
 
 **output**: list of various parameter values of 5 machine learning algorithms (GBM, KNN, NB, RF,SVM_Poly)
+Here we used `BuilPrediction` for an already trained object that we load earlier (`trained_models`). As mentioned earlier the input can also be a cleaned TermVector matrix(output of `CleanText()` function)
 
-`BuilPrediction()` will skip `BuildTraining()` for an already trained object that we load earlier (saved as `trained_models`). As mentioned earlier, the input can also be a cleaned document-term matrix (output of `CleanText()`)
-
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
 df_predicted <- SentiAnalyzer::BuildPrediction(trained_models)
 ```
 
-## Comparison of ML training models
-This function extracts **F1, Recall,Precision and Accuracy** from confusion matrices list and returns a dataframe of those measurments.
+### Comparison of ML training models
+This function extracts F1, Recall,Precision and Accuracy from confuction matrices list and returns a dataframe of those measurments.
 
-**input**: depending upon the type of the input, function runs appropriate needed functions. Input can be a document-term matrix (result from `CleanText()`, saved as `cleaned_dataset`) or a list (output of `BuildPrediction()` )
+**input**: depending upon the type of the input, function runs appropriate needed functions. Input can be a document-term matrix (result from `CleanText()` functionwhich is `cleaned_dataset`) or a list (output of `BuildPrediction` function)
   
 **output**: list of confusion matrices of 5 machine learning algorithms
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
 #Cmxx <- SentiAnalyzer::comparison(df_predicted)
 #Cmxx
 ```
@@ -256,7 +228,7 @@ This function extracts **F1, Recall,Precision and Accuracy** from confusion matr
 **input**: confusion matrix from `Comparison`
 
 **output**: interactive plotly heat map and table
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE, echo=FALSE}
     # Cmx_4param <- Cmxx[2:5]
     # Cmx_4param <- as.data.frame(Cmx_4param) 
     # colnames(Cmx_4param) <- c("accuracy","precision","recall","f1-score")
@@ -290,4 +262,3 @@ This function extracts **F1, Recall,Precision and Accuracy** from confusion matr
     #     
     #   ))
 ```
-
