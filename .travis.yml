@@ -6,6 +6,15 @@ cache: packages
 services:
   - xvfb
   
+addons:
+  apt:
+    packages:
+      - libftgl2 
+      - libcgal-dev 
+      - libglu1-mesa-dev  
+      - libx11-dev 
+      - libfreetype6-dev
+  
 env_vars:
   global:
     - RGL_USE_NULL: true
