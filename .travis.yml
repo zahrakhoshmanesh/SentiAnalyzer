@@ -26,4 +26,4 @@ before_script:
   - sleep 3
   
 after_success:
-- Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'library(covr); codecov()'
