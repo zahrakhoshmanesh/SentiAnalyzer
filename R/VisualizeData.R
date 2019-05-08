@@ -5,7 +5,6 @@
 #' @param termcount termcount:used for filtering the highest terms repeated in reviews usually > 10
 #' @return some diagram and insight of data
 #' @author Zahra Khoshmanesh
-#' @export
 #' @import tidytext
 #' @import dplyr
 #' @import ggplot2 
@@ -14,6 +13,9 @@
 #' @importFrom  RColorBrewer brewer.pal
 #' @importFrom tibble as.tibble
 #' @importFrom stats reorder
+#' @importFrom methods hasArg
+#' @export 
+#' @return A ggplot
 #' @examples
 #' \dontrun{
 #' library(SentiAnalyzer)
@@ -23,6 +25,22 @@
 
 VisualizeData<-function(dataset,termcount){
   word=sentiment=value=NULL
+  
+  if(!hasArg(dataset)){
+    dataset=system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
+    warning('file path does not provided by user, set to default file')
+  }
+  else if(!hasArg(termcount)){
+    termcount=15
+    warning('termcount did not provided, set to default 15')
+  }
+  # check whether the reductionrate is a number 
+  if(!is.integer(termcount)){
+    termcount=15
+    warning('termcount is not a number,set to default 15 value')
+    
+  }
+
 
   source_datasets <- dataset
   termcount <- termcount
