@@ -2,7 +2,7 @@
 title: "Workflow: SentiAnalyzer"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SentiAnalyzer}
+  %\VignetteIndexEntry{Workflow: SentiAnalyzer}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
