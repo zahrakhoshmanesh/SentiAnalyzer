@@ -17,8 +17,7 @@ comparison <- function(x) {
   if (ncol(x) > 1) {
     df <- BuildPrediction(x)
   } else {
-    # Assume x comes from BuildPrediction function
-    # Add more checks here to make sure the list is properly formatted!!
+    assertthat::assert_that(x%>%purrr::map(.f=length)==5)
     df <- x
   }
   
