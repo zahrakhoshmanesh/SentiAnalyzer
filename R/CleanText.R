@@ -7,8 +7,6 @@
 #' @return dataframe "dataset" : The term matrix converted to dataframe plus target label.
 #' @author Zahra Khoshmanesh
 #' @import tm
-#' @import matlib
-#' @import SnowballC
 #' @import checkmate
 #' @importFrom NLP ngrams words
 #' @importFrom methods hasArg
@@ -47,13 +45,13 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
 
   origin_data=source_dataset
 
-  corpus <- tm::VCorpus(VectorSource(origin_data[[1]])) %>%
-      tm::tm_map(content_transformer(tolower)) %>% #convert all review to lower case
-      tm::tm_map(removeNumbers) %>% # remove numbers from reviews
-      tm::tm_map(removePunctuation) %>% # remove punctuations from reviews
-      tm::tm_map(removeWords,stopwords()) %>% # remove Stop words from reviews
-      tm::tm_map(stemDocument) %>% # Stemming
-      tm::tm_map(stripWhitespace)  # remove extra space that created in cleaning stage when for example number remove
+  corpus <- VCorpus(VectorSource(origin_data[[1]])) %>%
+      tm_map(content_transformer(tolower)) %>% #convert all review to lower case
+      tm_map(removeNumbers) %>% # remove numbers from reviews
+      tm_map(removePunctuation) %>% # remove punctuations from reviews
+      tm_map(removeWords,stopwords()) %>% # remove Stop words from reviews
+      tm_map(stemDocument) %>% # Stemming
+      tm_map(stripWhitespace)  # remove extra space that created in cleaning stage when for example number remove
   
 
   #creating document term matrix of words in reviews
@@ -61,13 +59,13 @@ CleanText <- function(source_dataset,dtm_method,reductionrate){
   # bigram
   BigramTokenizer <-  function(x)  unlist(lapply(NLP::ngrams(NLP::words(x), 2), paste, collapse = " "), use.names = FALSE)
   dtm <-switch(dtm_method,
-               '1' = tm::DocumentTermMatrix(corpus),
-               '2' = tm::DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE))),
+               '1' = DocumentTermMatrix(corpus),
+               '2' = DocumentTermMatrix(corpus,control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE))),
                '3' = t(TermDocumentMatrix(corpus, control = list(tokenize = BigramTokenizer)))
                 )
 
   # reduce dimention of sparse matrix
-  dtm = tm:: removeSparseTerms(dtm,reductionrate)
+  dtm = removeSparseTerms(dtm,reductionrate)
 
   # convert matrix of independent variables to data frame
   clean_dataset = as.data.frame(as.matrix(dtm))

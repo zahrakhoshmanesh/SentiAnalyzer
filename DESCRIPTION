@@ -39,5 +39,9 @@ Imports:
     tibble,
     tidyr,
     tidytext,
-    tm
+    tm,
+    methods,
+    usethis,
+    RColorBrewer,
+    reshape2
 VignetteBuilder: knitr

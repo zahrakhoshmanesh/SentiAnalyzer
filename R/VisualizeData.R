@@ -5,15 +5,11 @@
 #' @param termcount termcount:used for filtering the highest terms repeated in reviews usually > 10
 #' @return some diagram and insight of data
 #' @author Zahra Khoshmanesh
-#' @import tidytext
-#' @import dplyr
 #' @import ggplot2 
-#' @importFrom  wordcloud comparison.cloud wordcloud
-#' @importFrom  reshape2 acast
-#' @importFrom  RColorBrewer brewer.pal
-#' @importFrom tibble as.tibble
 #' @importFrom stats reorder
 #' @importFrom methods hasArg
+#' @importFrom reshape2 acast
+#' @importFrom RColorBrewer brewer.pal 
 #' @export 
 #' @return A ggplot
 #' @examples
@@ -24,7 +20,8 @@
 #' VisualizeData(dataset=original_dataset,termcount=15)}
 
 VisualizeData<-function(dataset,termcount){
-  word=sentiment=value=NULL
+  #word=sentiment=value=NULL
+  word <- sentiment <- value <- n <- NULL
   
   if(!hasArg(dataset)){
     dataset=system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
@@ -45,7 +42,7 @@ VisualizeData<-function(dataset,termcount){
   source_datasets <- dataset
   termcount <- termcount
   tidy_text <- source_datasets[[1]] %>%
-    as.tibble %>% 
+    tibble::enframe(name = NULL) %>%
     tidytext:: unnest_tokens(word, value) %>%
     dplyr:: anti_join(tidytext:: stop_words)
 

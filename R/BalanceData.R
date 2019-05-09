@@ -34,7 +34,7 @@ BalanceData<-function(dataset){
 
   if (check_class[1]!=check_class[2]) #check if the data is unbalance, balnce it otherwise inform user that no need to balance
      {
-       print("dataset is imbalance, Starting balancing it")
+       message("dataset is imbalance, Starting balancing it")
        balanced_dataframe <- ROSE:: ROSE(formula, data = source_datasets, seed = 1)$data
        table(balanced_dataframe[[2]])
        output=balanced_dataframe
@@ -42,7 +42,7 @@ BalanceData<-function(dataset){
      }  
   else
     {
-    print("dataset is balanced  and no need to balance it")
+      message("dataset is balanced and no need to balance it")
       output=source_datasets
       
     }
