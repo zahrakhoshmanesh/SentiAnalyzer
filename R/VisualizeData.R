@@ -27,7 +27,7 @@ VisualizeData<-function(dataset,termcount){
     dataset=system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
     warning('file path does not provided by user, set to default file')
   }
-  else if(!hasArg(termcount)){
+  if(!hasArg(termcount)){
     termcount=15
     warning('termcount did not provided, set to default 15')
   }
@@ -42,7 +42,7 @@ VisualizeData<-function(dataset,termcount){
   source_datasets <- dataset
   termcount <- termcount
   tidy_text <- source_datasets[[1]] %>%
-    tibble::enframe(name = NULL) %>%
+    tibble::enframe(name = "word") %>%
     tidytext:: unnest_tokens(word, value) %>%
     dplyr:: anti_join(tidytext:: stop_words)
 

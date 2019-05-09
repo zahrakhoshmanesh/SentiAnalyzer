@@ -21,6 +21,10 @@ BuildPrediction <- function(x) {
   if (is.list(x)) {
     # Add more checks here to make sure the list is properly formatted!!
     checkmate::checkList(x, len = 6)
+    checkmate::checkList(x[2], len = 23)
+    checkmate::checkList(x[3], len = 23)
+    checkmate::checkList(x[4], len = 23)
+    checkmate::checkList(x[5], len = 23)
     trainingList <- x
   }
   

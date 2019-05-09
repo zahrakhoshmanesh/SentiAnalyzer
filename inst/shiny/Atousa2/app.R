@@ -1,172 +1,111 @@
 library(shiny)
-library(caret)
+library(SentiAnalyzer)
+require(ggplot2)
+require(dplyr)
 
-library(tidyr)
-library(tidyverse)
-#library(RWeka)
-#library(eply)
-library(ggplot2)
-library(gbm)
-#install.packages("shinythemes") to run code
-x<-read.csv("x.csv")
-ui = tagList(
-    shinythemes::themeSelector(),
-    navbarPage(
-      # theme = "cerulean",  # <--- To set and use a specific theme, uncomment this
-      "ML training algorithms training",
-      #sidebarLayout(
-               sidebarPanel(
+csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
 
-                 #textInput("txt", "Text input:", "general"),
-                 #sliderInput("slider", "Slider input:", 1, 100, 30),
-                 # tags$h5("Deafult actionButton:"),
-                 # actionButton("action", "Search"),
+# Set up data - only run once
+if (!file.exists("testRes.Rdata")) {
+  x<-read.csv("x.csv")
+  training <- BuildTraining(x)
+  prediction <- BuildPrediction(training)
+  comp<-comparison(prediction)
+  if(exists("comp")) { # if the object exists with the sample results, save it
+    save(x,training, prediction, comp, file = "testRes.Rdata")
+  }
+}
 
-                 # tags$h5("actionButton with CSS class:"),
-                 # actionButton("action2", "Action button", class = "btn-primary")
-                 radioButtons(
-                   "whichM",
-                   "Training Alg",
-                   choices = c("knn", "gbm"),
-                   selected = "knn"
-                 ),
-
-                 conditionalPanel(
-                   condition = "input.whichM=='knn'",
-
-                   numericInput("knn_min", "min number of neigbors: ", value = 1, min=1, max=50),
-                   numericInput("knn_max", "max number of neigbors: ", value = 1, min=1, max=50)
-                 ),
-
-                 conditionalPanel(
-                   condition = "input.whichM=='gbm'",
-
-                   numericInput("n.trees_l", " min number of trees:",
-                                value = 1, min=5, max=500),
-                   numericInput("n.trees_m", "max number of trees:",
-                                value = 1, min=5, max=500)
-                 )
-
-               ),
-
-                 tabsetPanel(
-                   tabPanel("Visual",
-                            mainPanel(plotOutput("train")
-
-                            )
-                            )
-
-
-                  # tabPanel("Summary",
-                           # mainPanel(h4("Summary")),
-                             # verbatimTextOutput("summary")
-
-
-
-                            # Output: Header + table of distribution ----
-                            #h4("Observations"),
-                            #tableOutput("view")
-
-
-
-
-
-
-
-
-
-
-                   )#for tabpanel
-
-                 )#for tabset panel
-              #for main panel
-
-      #tabPanel("Visual",
-
-                 #textInput("txt", "Text input:", "general"),
-                 #sliderInput("slider", "Slider input:", 1, 100, 30),
-                 # tags$h5("Deafult actionButton:"),
-                 # actionButton("action", "Search"),
-
-                 # tags$h5("actionButton with CSS class:"),
-                 # actionButton("action2", "Action button", class = "btn-primary")
-              # ),
-
-
-)
-#)
-
-
-
-
-
-
-         #  tabPanel("Summary",
-                    #verbatimTextOutput("summary") ),
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+  # Application title
+  titlePanel("Comparing different machine learning algorithms"),
+  
+ 
+  # Generate a row with a sidebar
+  sidebarLayout(      
+    
+    # Define the sidebar with one input
+    sidebarPanel(
+      fileInput("userfile", label = "Upload text data", accept = "csv"),
+      checkboxInput("sampledata", label = "Demonstrate app with sample data", value = T),
+      helpText("Warning: Running these computations can take 15-20 minutes; please be patient or use test data."),
+      
+      selectizeInput("Method", "Method:", 
+                  choices=c("gbm","KNN","NB","RandomForest","SVM"), 
+                  selected=c("gbm","KNN","NB","RandomForest","SVM"),
+                  multiple = T),
+      hr(),
+      helpText("Select the method that you want the measurment for.")
+    ),
+    
+ 
+  
+  
+  mainPanel(# Output: Header + table of distribution ----
+            h4("view"),
+            tableOutput("view"), 
+            plotOutput("confPlot")
+  
+  )
+))
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-  #datasetInput <- reactive({
-  #input$whichM
-  output$train <- renderPlot({
-
-    if (input$whichM=="knn")
-
-    res_name <- colnames(x)[ncol(x)]
-    formula <- as.formula(paste(res_name, ' ~ .'))
-
-
-    treeGrid_knn = expand.grid(k = c(input$knn_min:input$knn_max))
-
-    # train control
-    ctrl_cv10 = trainControl(
-      method = "cv",
-      number = 5,
-      savePred = T,
-      classProb = T
-    )
-
-    ###### kNN with Cross Validation ############
-    model_knn_10 = train(
-      formula,
-      data = x,
-      method = "knn",
-      trControl = ctrl_cv10,
-      tuneGrid = treeGrid_knn
-    )
-
-    plot(model_knn_10)
-
-
-    if (input$whichM=="gbm")
-      gbmGrid <-  expand.grid(
-        interaction.depth = c(1, 5, 9),
-        n.trees = c(input$n.trees_l:input$n.trees_M) * 50,
-        shrinkage = 0.1,
-        n.minobsinnode = 20
-      )
-
-    gbmFit2 <- train(
-      formula,
-      data = x,
-      method = "gbm",
-
-      verbose = FALSE,
-
-      tuneGrid = gbmGrid,
-      trControl = ctrl_cv10
-    )
-
-    plot(gbmFit2)
+  
+  modeltraining <- reactive({
+    # depend on userfile (if exists) and sampledata
+    if (!is.null(input$userfile)) {
+      # if userfile exists, use it!
+      validate(need(exists(input$userfile$datapath), "Please upload a file"),
+               need(file.exists(input$userfile$datapath), "File not found"))
+      
+      res <- SentiAnalyzer::BuildTraining(read_csv(input$userfile$datapath[1]))
+    } else if (input$sampledata) {
+      load("testRes.Rdata")
+      res <- training
+    } else {
+      validate(need(!is.null(input$userfile) | input$sampledata, "Please either use sample data or provide your own."))
+    }
+    res
   })
- # if (input$whichM=="knn")
-  # Generate a summary of the dataset ----
-  #output$summary <- renderPrint({
-  #  print(model_knn_10)})
- # }#for reactive
+  
+  modelpred <- reactive({
+    BuildPrediction(modeltraining())
+  })
+  
+  modelcompare <- reactive({
+    comparison(modelpred())
+  })
+  
+  output$view <- renderTable({
+    modelcompare() %>%
+      filter(Method %in% input$Method)
+    
+  })
+  
+  output$confPlot <- renderPlot({
+    
+    make_conf_df <- function(x, y) {
+      # Confusion matrix table = x
+      x$table %>%
+        as_data_frame() %>%
+        mutate(Method = y)
+    }
+    
+    purrr::map2_df(modelpred()$conf, 
+                   c("gbm","KNN","NB","RandomForest","SVM"), 
+                   make_conf_df
+                   ) %>%
+      filter(Method %in% input$Method) %>%
+      ggplot(data = .) + 
+      geom_tile(aes(x = Reference, y = Prediction, fill = n)) + 
+      geom_text(aes(x = Reference, y = Prediction, label = n)) + 
+      facet_wrap(~Method)
+    
+    
+  })
 }
 
 # Bind ui and server together
 shinyApp(ui, server)
-
-

@@ -33,6 +33,7 @@ Imports:
     NLP,
     purrr,
     randomForest,
+    assertthat,
     ROSE,
     stats,
     testthat (>= 2.1.0),

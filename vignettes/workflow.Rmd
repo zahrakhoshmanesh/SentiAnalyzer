@@ -1,0 +1,308 @@
+---
+title: "Workflow: SentiAnalyzer"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Workflow: SentiAnalyzer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Sentiment analysis for consumer review
+
+SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which includes natural language processing (NLP) of consumer sentiments. The dataset that SentiAnalyzer can work with for now is short text and a binary quantification, e.g. whether consumer hits the like button. The NLP of the sentiment is analyzed through the options of algorithms to compile the words and the machinge learning training model of choice.  
+
+## Installation
+`install.packages("SentiAnalyzer")`
+
+## Usage
+
+Major steps of processing your textual dataset: 
+
+1. Balancing the dataset
+
+2. Streamlining the text to get a sense of the major keywords
+
+3. Train different classification algorithms(e.g., SVM,NB,RF,KNN,GBM) and choose best parameters for each one to get the highest possible classification accuracy for an specefic dataset
+
+3. Choose the best trained classification algorithm for the specific dataset according to different measures (e.g., FScore, Recall, Precision, Accuracy) 
+
+5. Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review
+
+## Tackling imbalanced data
+The first step to process your data is to make sure that both of your variables have equal numbers of observations/unit. `BalanceData` function can be used to balance the called dataset. Using packages: `ROSE`, balance the columns of the data. For oversampled data, used `ovun.sample` to balance over or under sampled data. Then check the balance of the columns/variables.
+
+#### Importing the imbalance dataset (OPTIONAL)
+```{r include=FALSE}
+imb <- system.file(package = "SentiAnalyzer", "extdata/Imbalance_Restaurant_Reviews.tsv")
+imbalance_data <- read.delim(imb,quote='',stringsAsFactors = FALSE)
+```
+
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold'}
+head(imbalance_data)
+```
+
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE}
+SentiAnalyzer::BalanceData(imbalance_data)
+```
+
+check the balanced dataset, same number of rows and columns now
+
+```{r include=FALSE}
+direction <- system.file(package = "SentiAnalyzer", "extdata/Restaurant_Reviews.tsv")
+balanced_data <- read.delim(direction,quote='',stringsAsFactors = FALSE)
+```
+
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold' }
+dim(balanced_data)
+str(balanced_data)
+```
+
+
+## Early Visualization
+Before we start any further major processing of data, we can quickly get an insight of the data through a word cloud visualization. Termcount is used for filtering the highest terms repeated in reviews, usually > 10 count
+
+check out [shiny version of this function](https://joeybudi.shinyapps.io/zahra/)
+
+**input**: a balanced dataset of text and binary sentiment review, low baseline for term count 
+
+**output**: wordcloud plot and frequency of words bar plot
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
+SentiAnalyzer::VisualizeData(balanced_data,12)
+```
+
+
+## Cleaning the text
+**input**: `CleanText()` calls for 3 arguments: 
+
+a. the dataset 
+b. document term matrix structure of choice (choose 1 from 3) 
+c. reduction rate (range 0-1)
+
+**output**: `CleanText()` returns a matrix `clean_dataset` saved as `data/clean_dataset.rda`
+
+packages used: `tm` and `SnowballC`
+
+##### a. text-mining the dataset
+integrating built-in functions from `tm`, `CleanText()` will "clean up" the words from the text and mine for the words that conveys a range sorts of sentiment and convert some formatting; this remains what is called as token (single) or corpus (all the tokens):
+
+a. converts all text to lower case
+b. remove numbers from the text
+c. remove punctuations
+d. remove stop words, e.g. "the", "a", "for", "and", etc
+e. extract the stems of thegiven words using Porter's stemming algorithmn
+f. remove extra white spaces that was left off by the removed texts 
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE}
+library(tm)
+```
+
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=FALSE}
+corpus=VCorpus(VectorSource(balanced_data$Review)) 
+corpus=tm_map(corpus,content_transformer(tolower)) #convert all review to lower case
+corpus=tm_map(corpus,removeNumbers) # remove numbers from reviews
+corpus=tm_map(corpus,removePunctuation) # remove punctuations from reviews
+corpus=tm_map(corpus,removeWords,stopwords()) # remove Stop words from reviews
+corpus=tm_map(corpus,stemDocument) # Stemming
+corpus=tm_map(corpus,stripWhitespace) # remove extra space that's created in cleaning stage above
+```
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=FALSE}
+corpus$content[[1]][[1]]
+corpus$content[[2]][[1]]
+corpus$content[[3]][[1]]
+corpus$content[[4]][[1]]
+corpus$content[[5]][[1]]
+corpus$content[[6]][[1]]
+```
+##### b. Creating the document-term matrix/bag of words model
+Next, still within the scope of the same current function, `Cleantext()`, the corpus is formatted to a [document-term matrix](#https://en.wikipedia.org/wiki/Document-term_matrix) (DTM) and creating document term matrix of words in reviews. Essentially it creates a single column for every tokens in the corpus and counted for frequency of occurence on each tokens on the rows
+
+user also have the choice to choose either (the argument call is also done on `CleanText`):
+
+1. bag of words
+2. tf-idf (term frequency-inverse document frequency)
+3. Bi-gram 
+
+##### c. choosing the reduction rate
+the document-term matrix will quickly expand the dataset dimension, especially the sparse terms, significantly. Depending on the dimension of the dataset can be adjusted be adjusted within the range 0 to 1. Essentially it is calling `tm::removeSparseTerms`
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=TRUE}
+clean_dataset <- SentiAnalyzer::CleanText(balanced_data, dtm_method=1, reductionrate=0.99)
+```
+example:
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=FALSE}
+dim(clean_dataset)
+names(clean_dataset)[1:50]
+head(clean_dataset[1:10])
+tail(clean_dataset[1:10])
+```
+
+## Building  classification training
+
+Trains different classification algorithms using `Buildtraining` function and choose best parameters for each one of the available classification algorithms to get the highest possible classification accuracy for a specefic dataset. The algorithms that are being trained in the package are:
+  
+  a. Gradient-boosting machine (GBM)
+b. k-Nearest Neighbor (KNN)
+c. Naive Bayes (NB)
+d. Random Forest (RF)
+e. svm_Poly
+
+###Buildtraining function 
+(warning, this function will take a lot of time to run, so we are showing a reduced version of it)
+```{r message=FALSE, include=FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
+SentiAnalyzer::BuildTraining(clean_dataset)
+```
+**input**: document-term matrix (result from `CleanText()` which is `clean_dataset`)
+
+**output**: list of trained models with best parameters from 5 machine learning algorithms (GBM, KNN, NB, RF,SVM_Poly)
+
+**Using cross validation for a valid testing accuracy**
+  
+  This function uses package `caret`, and `traincontrol` and whole dataset for training purpose, we use 10-fold cross validation for a valid estimate of testing accuracy.
+
+the order of the list output of the trained models are: GBM, kNN, Naive Bayes, Decision Tree, svm_Poly. The performance of the trained models can be viewed/visualized by calling a specific model according to the index in the list; `plot()`, which is an  embedded function from `caret`. 
+
+For example, to plot GBM model
+```{r echo=TRUE, eval=FALSE}
+data(package = "SentiAnalyzer", trained_models)
+plot((trained_models[[2]]))
+```
+
+### Example training classifier : KNN
+The model training consist of `expand.grid()`, `train()` (formula, data, method, train control, tuneGrid, etc)
+
+**Training KNN with the best parameters using `caret` traning function.** 
+  We train the classifier KNN for k(1:80) nearest neighbors and selects one with the highest accuracy, 
+
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=FALSE, eval=TRUE}
+#csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
+data(package = "SentiAnalyzer", testing1)
+res_name <- colnames(testing1)[ncol(testing1)]
+formula <- as.formula(paste(res_name, ' ~ .'))
+
+if (is.factor(testing1[, ncol(testing1)]) == FALSE) {
+  testing1[, ncol(testing1)] <- ifelse(testing1[, ncol(testing1)] == 1, "Yes", "No")
+  testing1[, ncol(testing1)] <- factor(testing1[, ncol(testing1)], levels = c("Yes", "No"))
+} else {
+  testing1[, ncol(testing1)] <- ifelse(testing1[, ncol(testing1)] == 1, "Yes", "No")
+}
+# train control
+ctrl_cv10 = caret::trainControl(
+  method = "cv",
+  number = 10,
+  savePred = T,
+  classProb = T
+)
+treeGrid_knn = expand.grid(k = c(1:80))
+###### kNN with Cross Validation ############
+model_knn_10 =caret::train(
+  formula,
+  data = testing1,
+  method = "knn",
+  trControl = ctrl_cv10,
+  tuneGrid = treeGrid_knn
+)
+```
+
+Visualization of the KNN tranining :
+  
+  ```{r message=FALSE, warning=FALSE, echo=FALSE}
+plot(model_knn_10)
+```
+
+As shown in plot above it explores up to 80 neighbours for KNN algorithm and selects the best one for the trained KNN model.
+We can see that for small values of k there is overfittingh while from k=50 above it is always predicting the majority there needs to be a trade off between bias and variance
+
+Another example, output from the  trained Gradient Boosting Machine trained model 
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE}
+data(package = "SentiAnalyzer", trained_models)
+plot((trained_models[[2]]))
+
+```
+
+
+
+As shown it searches for tree depth and boosting iterations, for the specific dataset tree depth less than 2 and 50 boosting iteration is doing better than other settings.
+
+
+## BuildPrediction function
+Classifies the target value of input data using different trained algorithms (output of `BuildTraining` function) and return a list of confusion matrices, these matrices can be used for any purposes. we intent to  extract different measurements(F,Recall, Precision,Accuracy) from it using `comparison()` function. User can also put TermVector Matrice as input and this function, depending upon the type of the input automaticly runs `BuildTraining` function if needed. The goal here to have confuction matrix information as a list.
+
+**input**: document-term matrix (e.g., result from `CleanText()` function which is `cleaned_dataset`) or list of trained models. Output of `BuildTraining()`  (e.g., `trained_models` saved in package data)
+
+**output**: list of various parameter values of 5 machine learning algorithms (GBM, KNN, NB, RF,SVM_Poly)
+
+
+Here we used `BuilPrediction()` by using a loaded trained object (list of trained models)  (e.g.,`trained_models`). As mentioned earlier the input can also be a cleaned document-term matrix (e.g.,output of `CleanText()` function)
+
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
+data(package = "SentiAnalyzer", trained_models)
+df_predicted <- SentiAnalyzer::BuildPrediction(trained_models)
+```
+
+## Comparision function; Comparison of ML training models
+This function extracts F1, Recall,Precision and Accuracy from confusion matrices list and returns a dataframe of those measurments.
+
+**input**: depending upon the type of the input, function runs appropriate needed functions. Input can be a document-term matrix (e.g., result from `CleanText()` function which is `cleaned_dataset`) or a list (e.g., output of `BuildPrediction` function)
+
+**output**: list of confusion matrices of 5 machine learning algorithms
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
+Cmx <- SentiAnalyzer::comparison(df_predicted)
+```
+
+Example confusion matrices for different algorithm for our example dataset `cleaned_dataset` :
+```{r message=FALSE, include=FALSE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
+data(package = "SentiAnalyzer", trained_models)
+df_predicted <- SentiAnalyzer::BuildPrediction(trained_models)
+Cmx <- SentiAnalyzer::comparison(df_predicted)
+Cmx
+```
+### Next steps 
+what now? How about we visualize these numbers to aid our interpretation of comparing the parameters?
+  
+  For a more interactive version of the functions, access our [Shiny apps](https://zahrakhoshmanesh.github.io/SentiAnalyzer/articles/shiny.html)
+
+Here is an example of plotly heat map and table of the confusion matrices
+
+
+**input**: confusion matrix from `Comparison`
+
+**output**: interactive plotly heat map and table
+```{r message=FALSE, include=FALSE, warning=FALSE, echo=FALSE, eval=FALSE}
+Cmx_4param <- Cmx[1:4]
+Cmx_4param <- as.data.frame(Cmx_4param)
+#colnames(Cmx_4param) <- c("accuracy","precision","recall","f1-score")
+rownames(Cmx_4param) <- c("Gradient-Boosting", "k-Nearest Neighbors", "Naive Bayes", "Random Forest","SVM")
+
+
+
+#heatmap encompassing 5 ML trained model output, 5 parameters of the confusion matrix
+plotly::plot_ly(z=data.matrix(Cmx_4param),
+                x=colnames(Cmx_4param),
+                y=rownames(Cmx_4param),
+                type="heatmap",
+                textfont=list(size=20,color = "black"))
+
+# #plotly table for 5 ML trained model output, 5 parameters of the confusion matrix
+# plotly::plot_ly(
+#   type = 'table',
+#   header = list(
+#     values = c('<b>Confusion Matrix</b>', rownames(Cmx_4param)),
+#     line = list(color = '#506784'),
+#     fill = list(color = '#119DFF'),
+#     align = c('left','center'),
+#     font = list(color = 'white', size = 12)
+#   ),
+#   cells = list(
+#     values = rbind(colnames(Cmx_4param),
+#                    data.matrix(Cmx_4param)),
+#     line = list(color = '#506784'),
+#     fill = list(color = c('#25FEFD', 'white')),
+#     align = c('left', 'left'),
+#     font = list(color = c('#black'), size = 12)
+# ))
+```
