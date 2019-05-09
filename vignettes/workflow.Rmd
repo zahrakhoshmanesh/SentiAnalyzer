@@ -185,8 +185,8 @@ plot(model_knn_10)
 As shown in plot above it explores up to 100 neighbours for KNN algorithm and selects the best one for the trained KNN model
 
 Example shown is for trained Gradient Boosting Machine trained model 
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
-load(system.file(package = "SentiAnalyzer", "trained_models.RData"))
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
+data(package = "SentiAnalyzer", trained_models)
 trained_models[2]
 ```
 
@@ -199,7 +199,7 @@ classifies the target value of input data using different trained algorithms (ou
 **output**: list of various parameter values of 5 machine learning algorithms (GBM, KNN, NB, RF,SVM_Poly)
 Here we used `BuilPrediction` for an already trained object that we load earlier (`trained_models`). As mentioned earlier the input can also be a cleaned TermVector matrix(output of `CleanText()` function)
 
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
 df_predicted <- SentiAnalyzer::BuildPrediction(trained_models)
 ```
 
@@ -210,8 +210,8 @@ This function extracts F1, Recall,Precision and Accuracy from confuction matrice
   
 **output**: list of confusion matrices of 5 machine learning algorithms
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
-#Cmxx <- SentiAnalyzer::comparison(df_predicted)
-#Cmxx
+Cmxx <- SentiAnalyzer::comparison(df_predicted)
+Cmxx
 ```
 
 ### Heatmap and table
