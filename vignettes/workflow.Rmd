@@ -14,9 +14,15 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+```{r pressure, echo=FALSE, fig.cap="SentiAnalyzer", out.width = '10%',fig.align="Right",eval=FALSE,include=FALSE}
+knitr::include_graphics("../inst/extdata/SAhexlogo.png")
+```
+
+
 ### Sentiment analysis for consumer review
 
-SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which includes natural language processing (NLP) of consumer sentiments. The dataset that SentiAnalyzer can work with for now is short text and a binary quantification, e.g. whether consumer hits the like button. The NLP of the sentiment is analyzed through the options of algorithms to compile the words and the machinge learning training model of choice.  
+SentiAnalyzer is a "one-stop" solution for analysis of of consumer reviews which includes natural language processing (NLP) of consumer sentiments. The dataset that SentiAnalyzer can work with, for now, is a short text and a binary quantification, e.g. whether consumer hits the like button. The NLP of the sentiment is analyzed through  options of algorithms to compile the words and the machinge learning training model of choice.  
 
 ## Installation
 `install.packages("SentiAnalyzer")`
@@ -73,8 +79,9 @@ check out [shiny version of this function](https://joeybudi.shinyapps.io/zahra/)
 **input**: a balanced dataset of text and binary sentiment review, low baseline for term count 
 
 **output**: wordcloud plot and frequency of words bar plot
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
-SentiAnalyzer::VisualizeData(balanced_data,12)
+```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=FALSE, eval=TRUE}
+#balanced_data <- read.delim(direction,quote='',stringsAsFactors = FALSE)
+#SentiAnalyzer::VisualizeData(balanced_data,15)
 ```
 
 
@@ -153,7 +160,7 @@ e. svm_Poly
 
 ###Buildtraining function 
 (warning, this function will take a lot of time to run, so we are showing a reduced version of it)
-```{r message=FALSE, include=FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
+```{r message=FALSE, include=TRUE, warning=FALSE, echo=TRUE, eval=FALSE}
 SentiAnalyzer::BuildTraining(clean_dataset)
 ```
 **input**: document-term matrix (result from `CleanText()` which is `clean_dataset`)
@@ -175,8 +182,8 @@ plot((trained_models[[2]]))
 ### Example training classifier : KNN
 The model training consist of `expand.grid()`, `train()` (formula, data, method, train control, tuneGrid, etc)
 
-**Training KNN with the best parameters using `caret` traning function.** 
-  We train the classifier KNN for k(1:80) nearest neighbors and selects one with the highest accuracy, 
+Training KNN with the best parameters using `caret` traning function.
+We train the classifier KNN for k(1:80) nearest neighbors. The train function selects the best parameter with the highest accuracy, 
 
 ```{r message=FALSE, include=TRUE, warning=FALSE, results='hide', echo=FALSE, eval=TRUE}
 #csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
@@ -214,10 +221,10 @@ Visualization of the KNN tranining :
 plot(model_knn_10)
 ```
 
-As shown in plot above it explores up to 80 neighbours for KNN algorithm and selects the best one for the trained KNN model.
-We can see that for small values of k there is overfittingh while from k=50 above it is always predicting the majority there needs to be a trade off between bias and variance
+As shown in plot above training explores up to 80 neighbours for KNN algorithm and selects the best one for the trained KNN model.
+We can see that for small values of k there is overfitting while from k=50 above it is gonna predict the majority. There needs to be a trade off between bias and variance
 
-Another example, output from the  trained Gradient Boosting Machine trained model 
+Another example, output from the Gradient Boosting trained model 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE}
 data(package = "SentiAnalyzer", trained_models)
 plot((trained_models[[2]]))
@@ -226,41 +233,54 @@ plot((trained_models[[2]]))
 
 
 
-As shown it searches for tree depth and boosting iterations, for the specific dataset tree depth less than 2 and 50 boosting iteration is doing better than other settings.
+As shown it searches for tree depth and boosting iterations, for this specific dataset tree depth less than 2 and 50 boosting iteration is doing better than other settings.
 
 
 ## BuildPrediction function
-Classifies the target value of input data using different trained algorithms (output of `BuildTraining` function) and return a list of confusion matrices, these matrices can be used for any purposes. we intent to  extract different measurements(F,Recall, Precision,Accuracy) from it using `comparison()` function. User can also put TermVector Matrice as input and this function, depending upon the type of the input automaticly runs `BuildTraining` function if needed. The goal here to have confuction matrix information as a list.
+Classifies the target value of input data using different trained models (output of `BuildTraining` function) and returns a list of confusion matrices, these matrices can be used for any purposes. Using `comparison()` function, we intent to  extract different measurements(F,Recall, Precision,Accuracy) from it.User can also put TermVector Matrix as input and this function, depending upon the type of the input, automaticly runs `BuildTraining` function if needed. The goal here to have confuction matrix information as a list.
 
-**input**: document-term matrix (e.g., result from `CleanText()` function which is `cleaned_dataset`) or list of trained models. Output of `BuildTraining()`  (e.g., `trained_models` saved in package data)
+**input**: document-term matrix (e.g., result from `CleanText()` function which is `cleaned_dataset`) or list of trained models. Output of `BuildTraining()`  (e.g., `trained_models` R object saved in package data)
 
 **output**: list of various parameter values of 5 machine learning algorithms (GBM, KNN, NB, RF,SVM_Poly)
 
 
-Here we used `BuilPrediction()` by using a loaded trained object (list of trained models)  (e.g.,`trained_models`). As mentioned earlier the input can also be a cleaned document-term matrix (e.g.,output of `CleanText()` function)
+Example below uses `BuilPrediction()` function, with our example trained object (list of trained models `trained_models`). As mentioned earlier the input can also be a cleaned document-term matrix (e.g.,output of `CleanText()` function)
 
-```{r message=FALSE, include=TRUE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
+```{r message=FALSE, include=TRUE, warning=FALSE, echo=TRUE, eval=FALSE}
 data(package = "SentiAnalyzer", trained_models)
-df_predicted <- SentiAnalyzer::BuildPrediction(trained_models)
+df_predicted <- BuildPrediction(trained_models)
 ```
 
-## Comparision function; Comparison of ML training models
+## Comparison function; Comparison of ML training models
 This function extracts F1, Recall,Precision and Accuracy from confusion matrices list and returns a dataframe of those measurments.
 
 **input**: depending upon the type of the input, function runs appropriate needed functions. Input can be a document-term matrix (e.g., result from `CleanText()` function which is `cleaned_dataset`) or a list (e.g., output of `BuildPrediction` function)
 
 **output**: list of confusion matrices of 5 machine learning algorithms
-```{r message=FALSE, include=FALSE, warning=FALSE, results='hold', echo=TRUE, eval=FALSE}
-Cmx <- SentiAnalyzer::comparison(df_predicted)
+Input can be 
+
+Example below uses `comparison()` function, with our example confusion matrices list R object (list of confusion matrices `df_predicted`). 
+```{r message=FALSE, include=TRUE, warning=FALSE, echo=TRUE, eval=FALSE}
+comparison(df_predicted)
+```
+
+As mentioned earlier the input can also be a cleaned document-term matrix (e.g.,output of `CleanText()` function which is `cleaned_dataset`) :
+
+```{r message=FALSE, include=TRUE, warning=FALSE, echo=TRUE, eval=FALSE}
+comparison(cleaned_dataset)
 ```
 
 Example confusion matrices for different algorithm for our example dataset `cleaned_dataset` :
-```{r message=FALSE, include=FALSE, warning=FALSE, results='hold', echo=TRUE, eval=TRUE}
+
+```{r message=FALSE, include=TRUE, warning=FALSE, echo=TRUE, eval=TRUE}
 data(package = "SentiAnalyzer", trained_models)
 df_predicted <- SentiAnalyzer::BuildPrediction(trained_models)
 Cmx <- SentiAnalyzer::comparison(df_predicted)
 Cmx
 ```
+
+As shown for this dataset, based on table above KNN is doing better than others with respect to accuracy and RandomForest is doing better in terms of F1 measure. As we can see, just referring to one measurement for summerizing the confusion matrix is not suitable. Selecting the best method can not be just based upon accuracy of classification.
+
 ### Next steps 
 what now? How about we visualize these numbers to aid our interpretation of comparing the parameters?
   
@@ -272,7 +292,7 @@ Here is an example of plotly heat map and table of the confusion matrices
 **input**: confusion matrix from `Comparison`
 
 **output**: interactive plotly heat map and table
-```{r message=FALSE, include=FALSE, warning=FALSE, echo=FALSE, eval=FALSE}
+```{r message=FALSE, include=TRUE, warning=FALSE, echo=FALSE, eval=TRUE}
 Cmx_4param <- Cmx[1:4]
 Cmx_4param <- as.data.frame(Cmx_4param)
 #colnames(Cmx_4param) <- c("accuracy","precision","recall","f1-score")
@@ -306,3 +326,7 @@ plotly::plot_ly(z=data.matrix(Cmx_4param),
 #     font = list(color = c('#black'), size = 12)
 # ))
 ```
+
+
+### Future work and limitations :
+
