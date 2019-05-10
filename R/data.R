@@ -1,6 +1,6 @@
 #' Testing
 #'
-#' A dataset containing ...
+#' A reduced restaurant review dataset containing 98 terms of 1000 observation 
 #'
 #' @format A data frame with 1000 rows and 98 variables:
 #' \describe{
@@ -10,9 +10,9 @@
 
 #' Testing1
 #'
-#' A dataset containing ...
+#' A further reduced restaurant review dataset containing 8 terms of 1000 observation
 #'
-#' @format Reduced dataframe for testing purpose with 100 rows and 5 variables:
+#' @format Reduced dataframe for testing purpose with 1000 rows and 8 variables:
 #' \describe{
 #'   ...
 #' }
@@ -20,7 +20,7 @@
 
 #' imbalance_data
 #'
-#' A dataset containing ...
+#' A dataset containing restaurant review data, intentionally made unbalanced
 #'
 #' @format A data frame with 903 rows and 2 variables:
 #' \describe{
@@ -28,11 +28,12 @@
 #'   \item{Review}{text reviews}
 #'   ...
 #' }
+#' @source \url{https://www.kaggle.com/c/restaurant-reviews}
 "imbalance_data"
 
 #' original_dataset
 #'
-#' A dataset containing ...
+#' A dataset containing restaurant review data
 #'
 #' @format A data frame with 1000 rows and 2 variables:
 #' \describe{
@@ -40,11 +41,12 @@
 #'   \item{Review}{text reviews}
 #'   ...
 #' }
+#' @source \url{https://www.kaggle.com/c/restaurant-reviews}
 "original_dataset"
 
 #' clean_dataset
 #'
-#' A dataset containing ...
+#' output of CleanText, the corpus that is cleaned up and stemmed for base words
 #'
 #' @format A data frame with 1000 rows and 97 variables:
 #' \describe{ cleaned dataset term matrix
@@ -54,10 +56,10 @@
 
 #' trained_models
 #'
-#' A dataset containing ...
+#' output of BuildTraining, lists
 #'
-#' @format A data frame:
-#' \describe{ trained ML models in as list variables
+#' @format A list with  5 trained algorithms resampling summaries: accuracy, kappa
+#' \describe{ list, in sequence: GBM, KNN, NB, RF,SVM_Poly 
 #'   ...
 #' }
 "trained_models"
