@@ -3,7 +3,7 @@ library(SentiAnalyzer)
 require(ggplot2)
 require(dplyr)
 
-csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing.csv"))
+#csv_data <- read.csv(system.file(package = "SentiAnalyzer", "extdata/testing1.csv"))
 
 # Set up data - only run once
 if (!file.exists("testRes.Rdata")) {

@@ -12,6 +12,6 @@
 testing
 }
 \description{
-A dataset containing ...
+A reduced restaurant review dataset containing 98 terms of 1000 observation
 }
 \keyword{datasets}

@@ -10,10 +10,13 @@
   \item{Review}{text reviews}
   ...
 }}
+\source{
+\url{https://www.kaggle.com/c/restaurant-reviews}
+}
 \usage{
 original_dataset
 }
 \description{
-A dataset containing ...
+A dataset containing restaurant review data
 }
 \keyword{datasets}

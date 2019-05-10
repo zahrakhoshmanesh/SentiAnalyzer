@@ -4,14 +4,14 @@
 \name{trained_models}
 \alias{trained_models}
 \title{trained_models}
-\format{A data frame:
-\describe{ trained ML models in as list variables
+\format{A list with  5 trained algorithms resampling summaries: accuracy, kappa
+\describe{ list, in sequence: GBM, KNN, NB, RF,SVM_Poly 
   ...
 }}
 \usage{
 trained_models
 }
 \description{
-A dataset containing ...
+output of BuildTraining, lists
 }
 \keyword{datasets}

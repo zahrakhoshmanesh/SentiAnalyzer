@@ -4,7 +4,7 @@
 \name{testing1}
 \alias{testing1}
 \title{Testing1}
-\format{Reduced dataframe for testing purpose with 100 rows and 5 variables:
+\format{Reduced dataframe for testing purpose with 1000 rows and 8 variables:
 \describe{
   ...
 }}
@@ -12,6 +12,6 @@
 testing1
 }
 \description{
-A dataset containing ...
+A further reduced restaurant review dataset containing 8 terms of 1000 observation
 }
 \keyword{datasets}

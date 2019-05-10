@@ -12,6 +12,6 @@
 clean_dataset
 }
 \description{
-A dataset containing ...
+output of CleanText, the corpus that is cleaned up and stemmed for base words
 }
 \keyword{datasets}

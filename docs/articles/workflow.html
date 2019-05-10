@@ -70,9 +70,9 @@
 <!--/.navbar -->
 
       
-      </header><script src="workflow_files/htmlwidgets-1.3/htmlwidgets.js"></script><script src="workflow_files/plotly-binding-4.9.0/plotly.js"></script><script src="workflow_files/typedarray-0.1/typedarray.min.js"></script><script src="workflow_files/jquery-1.11.3/jquery.min.js"></script><link href="workflow_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet">
-<script src="workflow_files/crosstalk-1.0.0/js/crosstalk.min.js"></script><link href="workflow_files/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="workflow_files/plotly-main-1.46.1/plotly-latest.min.js"></script><div class="row">
+      </header><script src="workflow_files/htmlwidgets-1.0/htmlwidgets.js"></script><script src="workflow_files/plotly-binding-4.7.1/plotly.js"></script><script src="workflow_files/typedarray-0.1/typedarray.min.js"></script><script src="workflow_files/jquery-1.11.3/jquery.min.js"></script><link href="workflow_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet">
+<script src="workflow_files/crosstalk-1.0.0/js/crosstalk.min.js"></script><link href="workflow_files/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="workflow_files/plotlyjs-1.29.2/plotly-latest.min.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Workflow: SentiAnalyzer</h1>
@@ -88,82 +88,94 @@
 <div id="sentiment-analysis-for-consumer-review" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sentiment-analysis-for-consumer-review" class="anchor"></a>Sentiment analysis for consumer review</h3>
-<p>SentiAnalyzer is a “one-stop” solution for analysis of of consumer reviews which includes natural language processing (NLP) of consumer sentiments. The dataset that SentiAnalyzer can work with for now is short text and a binary quantification, e.g. whether consumer hits the like button. The NLP of the sentiment is analyzed through the options of algorithms to compile the words and the machinge learning training model of choice.</p>
+<p>SentiAnalyzer is a straight forward solution for analyzing consumer reviews. The consumer reviews typically include the text which customers write after visiting the place or using the service provided by a service or job owner. The consumers usually give useful information through the reviews to the manager in a way that maybe affects the future of the company. Many potential future consumers read these reviews to decide whether they use the service or not. Therefore, that is necessary to know what’s inside the review data and whether the general view toward the service provided is positive or negative. Nowadays, Machine learning algorithms can find useful patterns in data and predict new data based on learning on previous data. However, Processing the reviews data is not easy since it contains natural languages data and we need to process the data in order to be consistent with machine learning algorithms which they can work well on numeric and categorical data. The dataset that SentiAnalyzer can work with, for now, is a short review text and a binary class which indicates whether consumer review is positive or negative. First, we use natural language processing techniques (NLP) to preprocess the text of reviews to prepare them for Machine Learning (ML) algorithms. Next, the ML algorithms train on the data and build models for predicting the sentiment of new review data. We also compare the efficiency of different ML algorithms and let know the user to know which algorithm works better with her/his data. The Senti Analyzer package also provides interactive plots using Shiny apps such as high term frequency plot, word cloud of positive and negative words plot, different confusion matrix plots such as heatmap and parameter tuning plot for ML algorithms.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p><code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("SentiAnalyzer")</a></code></p>
 </div>
-<div id="usage" class="section level2">
+<div id="overview-of-package-functionalities" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p>Three steps of processing your review dataset:</p>
+<a href="#overview-of-package-functionalities" class="anchor"></a>Overview of package functionalities</h2>
+<div id="preprocess-the-text" class="section level3">
+<h3 class="hasAnchor">
+<a href="#preprocess-the-text" class="anchor"></a>Preprocess the Text</h3>
 <ol style="list-style-type: decimal">
-<li>balancing the dataset</li>
-<li>"streamlining the text to get a sense of the major keywords</li>
-<li>choose the algorithm that is training the model</li>
-<li>Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review</li>
+<li><p>Balancing the dataset (<code><a href="../reference/BalanceData.html">BalanceData()</a></code> function)</p></li>
+<li><p>Cleaning, Tokenizing and Building the term matrix of text (<code><a href="../reference/CleanText.html">CleanText()</a></code> function)</p></li>
+<li><p>Visualize the clean term matrix(<code><a href="../reference/VisualizeData.html">VisualizeData()</a></code> function)</p></li>
 </ol>
+</div>
+<div id="machine-learning" class="section level3">
+<h3 class="hasAnchor">
+<a href="#machine-learning" class="anchor"></a>Machine Learning</h3>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Train different classification algorithms(e.g., SVM,NB,RF,KNN,GBM) and choose best parameters for each one to get the highest possible classification accuracy for an specefic dataset (<code><a href="../reference/BuildTraining.html">BuildTraining()</a></code> function)</p></li>
+<li><p>Choose the best trained classification algorithm for the specific dataset according to different measures (e.g., FScore, Recall, Precision, Accuracy) (<code><a href="../reference/comparison.html">comparison()</a></code> function)</p></li>
+<li><p>Predict on the new data (<code><a href="../reference/BuildPrediction.html">BuildPrediction()</a></code> function)</p></li>
+<li><p>Visualize the output of the confusion matrix, that is, the accuracy of the training model in predicting the sentiment of the consumer review</p></li>
+</ol>
+</div>
 </div>
 <div id="tackling-imbalanced-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tackling-imbalanced-data" class="anchor"></a>tackling imbalanced data</h2>
-<p>The first step to process your data is to make sure that both of your variables have equal numbers of observations/unit. <code>BalanceData</code> function can be used to balance the called dataset. Using packages: <code>ROSE</code>, balance the columns of the data. For oversampled data, used <code>ovun.sample</code> to balance over or under sampled data. Then check the balance of the columns/variables.</p>
-<p><code>BalanceData</code> will automatically save a balanced dataset saved in <code>/data</code> folder under name <code>data.rose.Rda</code></p>
+<a href="#tackling-imbalanced-data" class="anchor"></a>1. Tackling imbalanced data</h2>
+<p>The first step to process your data is to make sure that we have equal review rows in both positive and negative side. We check it in SentiAnalyzer package with <code>BalanceData</code>. This function can be used to balance the called dataset. We use package <code>ROSE</code> to balance data based on the class variable or dependent variable.If the data i already balanced, we just message the user that no need to balance the data and return the original dataset, otherwise the balanced dataset will return to the user.</p>
 <div id="importing-the-imbalance-dataset-optional" class="section level4">
 <h4 class="hasAnchor">
-<a href="#importing-the-imbalance-dataset-optional" class="anchor"></a>importing the imbalance dataset (OPTIONAL)</h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(imbalance_data)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co">#&gt;                                                                                                            Review</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="co">#&gt; 1                                                                                              Crust is not good.</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; 2                                                                       Not tasty and the texture was just nasty.</span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; 3                                                                  Now I am getting angry and I want my damn pho.</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt; 4                                                                           Honeslty it didn't taste THAT fresh.)</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; 5 The potatoes were like rubber and you could tell they had been made up ahead of time being kept under a warmer.</span></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt; 6                                                                                              Would not go back.</span></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt;   Liked</span></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; 1     0</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; 2     0</span></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; 3     0</span></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; 4     0</span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; 5     0</span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; 6     0</span></a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BalanceData">BalanceData</a></span>(imbalance_data)</a></code></pre></div>
-<p>check the balanced dataset, same number of rows and columns now</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(balanced_data)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(balanced_data)</a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; [1] 1000    2</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; 'data.frame':    1000 obs. of  2 variables:</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt;  $ Review: chr  "Wow... Loved this place." "Crust is not good." "Not tasty and the texture was just nasty." "Stopped by during the late May bank holiday off Rick Steve recommendation and loved it." ...</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt;  $ Liked : int  1 0 0 1 1 0 0 0 1 1 ...</span></a></code></pre></div>
-</div>
-<div id="visualization" class="section level3">
-<h3 class="hasAnchor">
-<a href="#visualization" class="anchor"></a>Visualization</h3>
-<p>Before we start any further major processing of data, we can quickly get an insight of the data through a word cloud visualization. Termcount is used for filtering the highest terms repeated in reviews, usually &gt; 10 count</p>
-<p><strong>input</strong>: a balanced dataset of text and binary sentiment review, low baseline for term count</p>
-<p><strong>output</strong>: wordcloud plot and frequency of words bar plot</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/VisualizeData.html">VisualizeData</a></span>(balanced_data,<span class="dv">12</span>)</a></code></pre></div>
+<a href="#importing-the-imbalance-dataset-optional" class="anchor"></a>Importing the imbalance dataset (OPTIONAL)</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(imbalance_data)
+<span class="co">#&gt;                                                                                                            Review</span>
+<span class="co">#&gt; 1                                                                                              Crust is not good.</span>
+<span class="co">#&gt; 2                                                                       Not tasty and the texture was just nasty.</span>
+<span class="co">#&gt; 3                                                                  Now I am getting angry and I want my damn pho.</span>
+<span class="co">#&gt; 4                                                                           Honeslty it didn't taste THAT fresh.)</span>
+<span class="co">#&gt; 5 The potatoes were like rubber and you could tell they had been made up ahead of time being kept under a warmer.</span>
+<span class="co">#&gt; 6                                                                                              Would not go back.</span>
+<span class="co">#&gt;   Liked</span>
+<span class="co">#&gt; 1     0</span>
+<span class="co">#&gt; 2     0</span>
+<span class="co">#&gt; 3     0</span>
+<span class="co">#&gt; 4     0</span>
+<span class="co">#&gt; 5     0</span>
+<span class="co">#&gt; 6     0</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BalanceData">BalanceData</a></span>(imbalance_data)</code></pre></div>
+<p>Input the balance dataset and check how the function responds:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(balanced_data)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(balanced_data)
+<span class="co">#&gt; [1] 1000    2</span>
+<span class="co">#&gt; 'data.frame':    1000 obs. of  2 variables:</span>
+<span class="co">#&gt;  $ Review: chr  "Wow... Loved this place." "Crust is not good." "Not tasty and the texture was just nasty." "Stopped by during the late May bank holiday off Rick Steve recommendation and loved it." ...</span>
+<span class="co">#&gt;  $ Liked : int  1 0 0 1 1 0 0 0 1 1 ...</span></code></pre></div>
 </div>
 </div>
 <div id="cleaning-the-text" class="section level2">
 <h2 class="hasAnchor">
-<a href="#cleaning-the-text" class="anchor"></a>Cleaning the text</h2>
+<a href="#cleaning-the-text" class="anchor"></a>2. Cleaning the text</h2>
+<p>The <code><a href="../reference/CleanText.html">CleanText()</a></code> function is used to preprocess the text and build a term matrix which will be input to the ML algorithms later. You can see the input, output and description of this function as follows:</p>
 <p><strong>input</strong>: <code><a href="../reference/CleanText.html">CleanText()</a></code> calls for 3 arguments:</p>
 <ol style="list-style-type: lower-alpha">
 <li>the dataset</li>
 <li>document term matrix structure of choice (choose 1 from 3)</li>
 <li>reduction rate (range 0-1)</li>
 </ol>
-<p><strong>output</strong>: <code><a href="../reference/CleanText.html">CleanText()</a></code> returns a matrix <code>clean_dataset</code> saved as <code>data/clean_dataset.rda</code></p>
-<p>packages used: <code>tm</code> and <code>SnowballC</code></p>
+<p><strong>output</strong>: <code><a href="../reference/CleanText.html">CleanText()</a></code> returns a term matrix <code>clean_dataset</code> saved as <code>data/clean_dataset.rda</code></p>
+<p>We used packages <code>tm</code> and <code>SnowballC</code> in <code><a href="../reference/CleanText.html">CleanText()</a></code> to tokenize, clean the text and build the term matrix.</p>
 <div id="a--text-mining-the-dataset" class="section level5">
 <h5 class="hasAnchor">
 <a href="#a--text-mining-the-dataset" class="anchor"></a>a. text-mining the dataset</h5>
 <p>integrating built-in functions from <code>tm</code>, <code><a href="../reference/CleanText.html">CleanText()</a></code> will “clean up” the words from the text and mine for the words that conveys a range sorts of sentiment and convert some formatting; this remains what is called as token (single) or corpus (all the tokens):</p>
-<p><em>converts all text to lower case </em>remove numbers from the text <em>remove punctuations </em>remove stop words, e.g. “the”, “a”, “for”, “and”, etc <em>extract the stems of thegiven words using Porter’s stemming algorithmn </em>remove extra white spaces that was left off by the removed texts</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tm)</a></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li>converts all text to lower case</li>
+<li>remove numbers from the text</li>
+<li>remove punctuations</li>
+<li>remove stop words, e.g. “the”, “a”, “for”, “and”, etc</li>
+<li>extract the stems of thegiven words using Porter’s stemming algorithmn</li>
+<li>remove extra white spaces that was left off by the removed texts</li>
+</ol>
+<p>Let go through the process step by step:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tm)</code></pre></div>
 <pre><code>#&gt; [1] "wow love place"
 #&gt; [1] "crust good"
 #&gt; [1] "tasti textur just nasti"
@@ -171,22 +183,22 @@
 #&gt; [1] "select menu great price"
 #&gt; [1] "now get angri want damn pho"</code></pre>
 </div>
-<div id="b--creating-the-document-term-matrixbag-of-words-model" class="section level5">
+<div id="b--creating-the-document-term-matrix" class="section level5">
 <h5 class="hasAnchor">
-<a href="#b--creating-the-document-term-matrixbag-of-words-model" class="anchor"></a>b. Creating the document-term matrix/bag of words model</h5>
+<a href="#b--creating-the-document-term-matrix" class="anchor"></a>b. Creating the document-term matrix</h5>
 <p>Next, still within the scope of the same current function, <code>Cleantext()</code>, the corpus is formatted to a <a href="#https://en.wikipedia.org/wiki/Document-term_matrix">document-term matrix</a> (DTM) and creating document term matrix of words in reviews. Essentially it creates a single column for every tokens in the corpus and counted for frequency of occurence on each tokens on the rows</p>
 <p>user also have the choice to choose either (the argument call is also done on <code>CleanText</code>):</p>
 <ol style="list-style-type: decimal">
-<li>bag of words</li>
+<li>bag of words (simple counting value )</li>
 <li>tf-idf (term frequency-inverse document frequency)</li>
-<li>Bi-gram</li>
+<li>Bi-gram (consider two words together)</li>
 </ol>
 </div>
 <div id="c--choosing-the-reduction-rate" class="section level5">
 <h5 class="hasAnchor">
-<a href="#c--choosing-the-reduction-rate" class="anchor"></a>c. choosing the reduction rate</h5>
+<a href="#c--choosing-the-reduction-rate" class="anchor"></a>c. choosing the reduction rate</h5>
 <p>the document-term matrix will quickly expand the dataset dimension, especially the sparse terms, significantly. Depending on the dimension of the dataset can be adjusted be adjusted within the range 0 to 1. Essentially it is calling <code><a href="https://www.rdocumentation.org/packages/tm/topics/removeSparseTerms">tm::removeSparseTerms</a></code></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">clean_dataset &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/CleanText">CleanText</a></span>(balanced_data, <span class="dt">dtm_method=</span><span class="dv">1</span>, <span class="dt">reductionrate=</span><span class="fl">0.99</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clean_dataset &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/CleanText">CleanText</a></span>(balanced_data, <span class="dt">dtm_method=</span><span class="dv">1</span>, <span class="dt">reductionrate=</span><span class="fl">0.99</span>)</code></pre></div>
 <p>example:</p>
 <pre><code>#&gt; [1] 1000   97
 #&gt;  [1] "also"       "alway"      "amaz"       "atmospher"  "awesom"    
@@ -215,57 +227,100 @@
 #&gt; 1000    0     0    0         0      0    0   0    0      0     0</code></pre>
 </div>
 </div>
-<div id="building-classification" class="section level2">
+<div id="early-visualization" class="section level2">
 <h2 class="hasAnchor">
-<a href="#building-classification" class="anchor"></a>Building classification</h2>
-<p><strong>input</strong>: document-term matrix (result from <code><a href="../reference/CleanText.html">CleanText()</a></code> which is <code>clean_dataset</code>)</p>
-<p><strong>output</strong>: list of training model parameters from 4 machine learning, random forest algorithms</p>
-<div id="preparing-the-dataset-and-divide-dataset-to-train-and-test" class="section level5">
-<h5 class="hasAnchor">
-<a href="#preparing-the-dataset-and-divide-dataset-to-train-and-test" class="anchor"></a>preparing the dataset and divide dataset to train and test</h5>
-<p>using package <code>caTools</code></p>
-<p>split the training and the test set to 0.8:0.2 split ratio, 0.8 of the dataset is used to train the model and 0.2 part is the predicted using the model</p>
-<p>cross-validation????</p>
+<a href="#early-visualization" class="anchor"></a>3. Early Visualization</h2>
+<p>Before we start any further major processing of data, we can quickly get an insight of the data through a word cloud visualization. Termcount is used for filtering the highest terms repeated in reviews, usually &gt; 10 count</p>
+<p>check out <a href="https://joeybudi.shinyapps.io/zahra/">shiny version of this function</a></p>
+<p><strong>input</strong>: a balanced dataset of text and binary sentiment review, a baseline for term count</p>
+<p><strong>output</strong>: wordcloud plot and frequency of words bar plot</p>
 </div>
-</div>
-<div id="classifier-random-forest" class="section level2">
+<div id="building-classification-training" class="section level2">
 <h2 class="hasAnchor">
-<a href="#classifier-random-forest" class="anchor"></a>Classifier : Random Forest</h2>
-<p>Training the model with various machine learning algorithms. classification that are popular for text mining, and are available in our package:</p>
-<ol style="list-style-type: decimal">
-<li>Decision Tree</li>
-<li>Naive Bayes</li>
-<li>k-Nearest Neighbors (kNN)</li>
-<li>Gradient-Boosting Machines (GBM)</li>
+<a href="#building-classification-training" class="anchor"></a>4. Building classification training</h2>
+<p>Trains different classification algorithms using <code>Buildtraining</code> function and choose best parameters for each one of the available classification algorithms to get the highest possible classification accuracy for a specefic dataset. The algorithms that are being trained in the package are:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Gradient-boosting machine (GBM)</li>
+<li>k-Nearest Neighbor (KNN)</li>
+<li>Naive Bayes (NB)</li>
+<li>Random Forest (RF)</li>
+<li>svm_Poly</li>
 </ol>
+<div id="buildtraining-function" class="section level3">
+<h3 class="hasAnchor">
+<a href="#buildtraining-function" class="anchor"></a>Buildtraining function</h3>
+<p>(warning, this function will take a lot of time to run, so we are showing a reduced version of it)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BuildTraining">BuildTraining</a></span>(clean_dataset)</code></pre></div>
+<p><strong>input</strong>: document-term matrix (result from <code><a href="../reference/CleanText.html">CleanText()</a></code> which is <code>clean_dataset</code>)</p>
+<p><strong>output</strong>: list of trained models with best parameters from 5 machine learning algorithms (GBM, KNN, NB, RF,SVM_Poly)</p>
+<p><strong>Using cross validation for a valid testing accuracy</strong></p>
+<p>This function uses package <code>caret</code>, and <code>traincontrol</code> and whole dataset for training purpose, we use 10-fold cross validation for a valid estimate of testing accuracy.</p>
+<p>the order of the list output of the trained models are: GBM, kNN, Naive Bayes, Decision Tree, svm_Poly. The performance of the trained models can be viewed/visualized by calling a specific model according to the index in the list; <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot()</a></code>, which is an embedded function from <code>caret</code>.</p>
+<p>For example, to plot GBM model</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="dt">package =</span> <span class="st">"SentiAnalyzer"</span>, trained_models)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>((trained_models[[<span class="dv">2</span>]]))</code></pre></div>
+</div>
+<div id="example-training-classifier-knn" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-training-classifier-knn" class="anchor"></a>Example training classifier : KNN</h3>
 <p>The model training consist of <code><a href="https://www.rdocumentation.org/packages/base/topics/expand.grid">expand.grid()</a></code>, <code>train()</code> (formula, data, method, train control, tuneGrid, etc)</p>
-<p><code>randomForest</code> and <code>caret()</code> package</p>
-<p>Example shown is for Gradient Boosting Machine trained model</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BuildTraining">BuildTraining</a></span>(clean_dataset)[[<span class="dv">2</span>]] </a></code></pre></div>
-<div id="build-prediction" class="section level3">
-<h3 class="hasAnchor">
-<a href="#build-prediction" class="anchor"></a>Build Prediction</h3>
-<p>predict the classes using trained algorithms and return list of confusion matrices</p>
-<p><strong>input</strong>: document-term matrix (result from <code><a href="../reference/CleanText.html">CleanText()</a></code> which is <code>clean_dataset</code>)</p>
-<p><strong>output</strong>: list of various parameter values of 4 machine learning algorithms</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">df_predicted &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BuildPrediction">BuildPrediction</a></span>(df_trained)</a></code></pre></div>
+<p>Training KNN with the best parameters using <code>caret</code> traning function. We train the classifier KNN for k(1:80) nearest neighbors. The train function selects the best parameter with the highest accuracy,</p>
+<p>Visualization of the KNN tranining :</p>
+<p><img src="workflow_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p>As shown in plot above training explores up to 80 neighbours for KNN algorithm and selects the best one for the trained KNN model. We can see that for small values of k there is overfitting while from k=50 above it is gonna predict the majority. There needs to be a trade off between bias and variance</p>
+<p>Another example, output from the Gradient Boosting trained model <img src="workflow_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
+<p>As shown it searches for tree depth and boosting iterations, for this specific dataset tree depth less than 2 and 50 boosting iteration is doing better than other settings.</p>
 </div>
-<div id="comparison-of-ml-training-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#comparison-of-ml-training-models" class="anchor"></a>Comparison of ML training models</h3>
-<p>among the 4 ML training model classifications</p>
-<p><strong>input</strong>: document-term matrix (result from <code><a href="../reference/CleanText.html">CleanText()</a></code> which is <code>clean_dataset</code>)</p>
-<p><strong>output</strong>: list of confusion matrices of 4 machine learning algorithms</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">Cmxx &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/comparison">comparison</a></span>(df_trained)</a></code></pre></div>
 </div>
-<div id="heatmap-and-table" class="section level3">
+<div id="buildprediction-function" class="section level2">
+<h2 class="hasAnchor">
+<a href="#buildprediction-function" class="anchor"></a>5. BuildPrediction function</h2>
+<p>Classifies the target value of input data using different trained models (output of <code><a href="../reference/BuildTraining.html">BuildTraining()</a></code> function) and returns a list of confusion matrices, these matrices can be used for any purposes. Using <code><a href="../reference/comparison.html">comparison()</a></code> function, we intent to extract different measurements(F,Recall, Precision,Accuracy) from it.User can also put TermVector Matrix as input and this function, depending upon the type of the input, automaticly runs <code>BuildTraining</code> function if needed. The goal here to have confuction matrix information as a list.</p>
+<p><strong>input</strong>: document-term matrix (e.g., result from <code><a href="../reference/CleanText.html">CleanText()</a></code> function which is <code>cleaned_dataset</code>) or list of trained models. Output of <code><a href="../reference/BuildTraining.html">BuildTraining()</a></code> (e.g., <code>trained_models</code> R object saved in package data)</p>
+<p><strong>output</strong>: list of various parameter values of 5 machine learning algorithms (GBM, KNN, NB, RF,SVM_Poly)</p>
+<p>Example below uses <code>BuilPrediction()</code> function, with our example trained object (list of trained models <code>trained_models</code>). As mentioned earlier the input can also be a cleaned document-term matrix (e.g.,output of <code><a href="../reference/CleanText.html">CleanText()</a></code> function)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="dt">package =</span> <span class="st">"SentiAnalyzer"</span>, trained_models)
+df_predicted &lt;-<span class="st"> </span><span class="kw"><a href="../reference/BuildPrediction.html">BuildPrediction</a></span>(trained_models)</code></pre></div>
+<p>As mentioned earlier the input can also be a cleaned document-term matrix (e.g.,output of <code><a href="../reference/CleanText.html">CleanText()</a></code> function which is <code>cleaned_dataset</code>) :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/BuildPrediction.html">BuildPrediction</a></span>(cleaned_dataset)</code></pre></div>
+</div>
+<div id="comparison-function-comparison-of-ml-training-models" class="section level2">
+<h2 class="hasAnchor">
+<a href="#comparison-function-comparison-of-ml-training-models" class="anchor"></a>6. Comparison function; Comparison of ML training models</h2>
+<p>This function extracts F1, Recall,Precision and Accuracy from confusion matrices list and returns a dataframe of those measurments.</p>
+<p><strong>input</strong>: depending upon the type of the input, function runs appropriate needed functions. Input can be a document-term matrix (e.g., result from <code><a href="../reference/CleanText.html">CleanText()</a></code> function which is <code>cleaned_dataset</code>) or a list (e.g., output of <code><a href="../reference/BuildPrediction.html">BuildPrediction()</a></code> function)</p>
+<p><strong>output</strong>: list of confusion matrices of 5 machine learning algorithms Input can be</p>
+<p>Example below uses <code><a href="../reference/comparison.html">comparison()</a></code> function, with our example confusion matrices list R object (list of confusion matrices <code>df_predicted</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/comparison.html">comparison</a></span>(df_predicted)</code></pre></div>
+<p>As mentioned earlier the input can also be a cleaned document-term matrix (e.g.,output of <code><a href="../reference/CleanText.html">CleanText()</a></code> function which is <code>cleaned_dataset</code>) :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/comparison.html">comparison</a></span>(cleaned_dataset)</code></pre></div>
+<p>Example confusion matrices for different algorithm for our example dataset <code>cleaned_dataset</code> :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="dt">package =</span> <span class="st">"SentiAnalyzer"</span>, trained_models)
+df_predicted &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/BuildPrediction">BuildPrediction</a></span>(trained_models)
+Cmx &lt;-<span class="st"> </span>SentiAnalyzer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/SentiAnalyzer/topics/comparison">comparison</a></span>(df_predicted)
+Cmx
+<span class="co">#&gt;   Accuracy Precision Recall        F1       Method</span>
+<span class="co">#&gt; 1    0.615 0.5755585  0.876 0.6946868          gbm</span>
+<span class="co">#&gt; 2    0.634 0.6009036  0.798 0.6855670          KNN</span>
+<span class="co">#&gt; 3    0.537 0.8936170  0.084 0.1535649           NB</span>
+<span class="co">#&gt; 4    0.619 0.5765766  0.896 0.7016445 RandomForest</span>
+<span class="co">#&gt; 5    0.612 0.5825959  0.790 0.6706282          SVM</span></code></pre></div>
+<p>As shown for this dataset, based on table above KNN is doing better than others with respect to accuracy and RandomForest is doing better in terms of F1 measure. As we can see, just referring to one measurement for summerizing the confusion matrix is not suitable. Selecting the best method can not be just based upon accuracy of classification.</p>
+<div id="next-steps" class="section level3">
 <h3 class="hasAnchor">
-<a href="#heatmap-and-table" class="anchor"></a>Heatmap and table</h3>
+<a href="#next-steps" class="anchor"></a>Next steps</h3>
+<p>what now? How about we visualize these numbers to aid our interpretation of comparing the parameters?</p>
+<p>For a more interactive version of the functions, access our <a href="https://zahrakhoshmanesh.github.io/SentiAnalyzer/articles/shiny.html">Shiny apps</a></p>
+<p>Here is an example of plotly heat map and table of the confusion matrices</p>
 <p><strong>input</strong>: confusion matrix from <code>Comparison</code></p>
 <p><strong>output</strong>: interactive plotly heat map and table </p>
-<div id="htmlwidget-40021cfcaf42069b4d0b" style="width:700px;height:432.632880098888px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-40021cfcaf42069b4d0b">{"x":{"visdat":{"3ffc6a8a55a":["function () ","plotlyVisDat"]},"cur_data":"3ffc6a8a55a","attrs":{"3ffc6a8a55a":{"z":[[0.695,0.708779443254818,0.662,0.68459152016546],[0.652,0.631487889273356,0.73,0.677179962894249],[0.738,0.671469740634006,0.932,0.780569514237856],[0.941,0.94188376753507,0.94,0.940940940940941]],"x":["accuracy","precision","recall","f1-score"],"y":["Decision tree","Naive Bayes","k-Nearest Neighbors","Gradient-Boosting"],"textfont":{"size":20,"color":"black"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"heatmap"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":[]},"yaxis":{"domain":[0,1],"automargin":true,"title":[]},"scene":{"zaxis":{"title":[]}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"showSendToCloud":false},"data":[{"colorbar":{"title":"","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(68,1,84,1)"],["0.0416666666666667","rgba(70,19,97,1)"],["0.0833333333333333","rgba(72,32,111,1)"],["0.125","rgba(71,45,122,1)"],["0.166666666666667","rgba(68,58,128,1)"],["0.208333333333333","rgba(64,70,135,1)"],["0.25","rgba(60,82,138,1)"],["0.291666666666667","rgba(56,93,140,1)"],["0.333333333333333","rgba(49,104,142,1)"],["0.375","rgba(46,114,142,1)"],["0.416666666666667","rgba(42,123,142,1)"],["0.458333333333333","rgba(38,133,141,1)"],["0.5","rgba(37,144,140,1)"],["0.541666666666667","rgba(33,154,138,1)"],["0.583333333333333","rgba(39,164,133,1)"],["0.625","rgba(47,174,127,1)"],["0.666666666666667","rgba(53,183,121,1)"],["0.708333333333333","rgba(79,191,110,1)"],["0.75","rgba(98,199,98,1)"],["0.791666666666667","rgba(119,207,85,1)"],["0.833333333333333","rgba(147,214,70,1)"],["0.875","rgba(172,220,52,1)"],["0.916666666666667","rgba(199,225,42,1)"],["0.958333333333333","rgba(226,228,40,1)"],["1","rgba(253,231,37,1)"]],"showscale":true,"z":[[0.695,0.708779443254818,0.662,0.68459152016546],[0.652,0.631487889273356,0.73,0.677179962894249],[0.738,0.671469740634006,0.932,0.780569514237856],[0.941,0.94188376753507,0.94,0.940940940940941]],"x":["accuracy","precision","recall","f1-score"],"y":["Decision tree","Naive Bayes","k-Nearest Neighbors","Gradient-Boosting"],"textfont":{"size":20,"color":"black"},"type":"heatmap","xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script><div id="htmlwidget-34a91b07724ee5b117c0" style="width:700px;height:432.632880098888px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-34a91b07724ee5b117c0">{"x":{"visdat":{"3ffc2ab44f30":["function () ","plotlyVisDat"]},"cur_data":"3ffc2ab44f30","attrs":{"3ffc2ab44f30":{"header":{"values":["<b>Confusion Matrix<\/b>","accuracy","precision","recall","f1-score"],"line":{"color":"#506784"},"fill":{"color":"#119DFF"},"align":["left","center"],"font":{"color":"white","size":12}},"cells":{"values":[["Decision tree","Naive Bayes","k-Nearest Neighbors","Gradient-Boosting"],["0.695","0.708779443254818","0.662","0.68459152016546"],["0.652","0.631487889273356","0.73","0.677179962894249"],["0.738","0.671469740634006","0.932","0.780569514237856"],["0.941","0.94188376753507","0.94","0.940940940940941"]],"line":{"color":"#506784"},"fill":{"color":["#25FEFD","white"]},"align":["left","left"],"font":{"color":"#black","size":12}},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"table"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"header":{"values":["<b>Confusion Matrix<\/b>","accuracy","precision","recall","f1-score"],"line":{"color":"#506784"},"fill":{"color":"#119DFF"},"align":["left","center"],"font":{"color":"white","size":12}},"cells":{"values":[["Decision tree","Naive Bayes","k-Nearest Neighbors","Gradient-Boosting"],["0.695","0.708779443254818","0.662","0.68459152016546"],["0.652","0.631487889273356","0.73","0.677179962894249"],["0.738","0.671469740634006","0.932","0.780569514237856"],["0.941","0.94188376753507","0.94","0.940940940940941"]],"line":{"color":"#506784"},"fill":{"color":["#25FEFD","white"]},"align":["left","left"],"font":{"color":"#black","size":12}},"type":"table","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="3b18654532f8" style="width:700px;height:432.632880098888px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="3b18654532f8">{"x":{"visdat":{"3b185c26ba9":["function () ","plotlyVisDat"]},"cur_data":"3b185c26ba9","attrs":{"3b185c26ba9":{"z":[[0.615,0.575558475689882,0.876,0.694686756542427],[0.634,0.600903614457831,0.798,0.685567010309278],[0.537,0.893617021276596,0.084,0.153564899451554],[0.619,0.576576576576577,0.896,0.701644479248238],[0.612,0.58259587020649,0.79,0.67062818336163]],"x":["Accuracy","Precision","Recall","F1"],"y":["Gradient-Boosting","k-Nearest Neighbors","Naive Bayes","Random Forest","SVM"],"textfont":{"size":20,"color":"black"},"alpha":1,"sizes":[10,100],"type":"heatmap"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1]},"yaxis":{"domain":[0,1]},"hovermode":"closest","showlegend":false,"legend":{"y":0.5,"yanchor":"top"}},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"colorbar":{"title":"","ticklen":2,"len":0.5,"y":1,"lenmode":"fraction","yanchor":"top"},"colorscale":[["0","rgba(68,1,84,1)"],["0.0678229212633171","rgba(71,27,106,1)"],["0.361127308831873","rgba(47,110,142,1)"],["0.57568895121146","rgba(37,162,134,1)"],["0.605576550703199","rgba(43,169,130,1)"],["0.606569157273765","rgba(44,169,130,1)"],["0.612181092117009","rgba(45,171,129,1)"],["0.62624700124298","rgba(47,174,127,1)"],["0.641135972461274","rgba(50,177,125,1)"],["0.650708128078818","rgba(51,179,123,1)"],["0.653633004926108","rgba(51,180,123,1)"],["0.657430213464696","rgba(52,181,122,1)"],["0.668103448275862","rgba(54,183,121,1)"],["0.690496576535889","rgba(69,188,115,1)"],["0.723981632521265","rgba(87,194,105,1)"],["0.738546375542884","rgba(93,197,101,1)"],["0.748333548191351","rgba(97,199,98,1)"],["0.756004572392352","rgba(100,201,96,1)"],["0.78784896482288","rgba(117,207,86,1)"],["0.869868637110016","rgba(169,219,54,1)"],["0.877668308702791","rgba(174,220,50,1)"],["0.939347290640394","rgba(214,226,41,1)"],["0.984409391049156","rgba(243,230,38,1)"],["0.99767669356811","rgba(252,231,37,1)"],["1","rgba(253,231,37,1)"]],"showscale":true,"z":[[0.615,0.575558475689882,0.876,0.694686756542427],[0.634,0.600903614457831,0.798,0.685567010309278],[0.537,0.893617021276596,0.084,0.153564899451554],[0.619,0.576576576576577,0.896,0.701644479248238],[0.612,0.58259587020649,0.79,0.67062818336163]],"x":["Accuracy","Precision","Recall","F1"],"y":["Gradient-Boosting","k-Nearest Neighbors","Naive Bayes","Random Forest","SVM"],"textfont":{"size":20,"color":"black"},"type":"heatmap","xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+</div>
+<div id="future-work-and-limitations" class="section level3">
+<h3 class="hasAnchor">
+<a href="#future-work-and-limitations" class="anchor"></a>Future work and limitations :</h3>
+<p>Deep learning algorithm can also be used to classify textual content. We used bag of word techniques but more sophisticated techniques for NLP such as word embedding can be incorporated.</p>
 </div>
 </div>
   </div>
@@ -276,11 +331,13 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#installation">Installation</a></li>
-      <li><a href="#usage">Usage</a></li>
-      <li><a href="#tackling-imbalanced-data">tackling imbalanced data</a></li>
-      <li><a href="#cleaning-the-text">Cleaning the text</a></li>
-      <li><a href="#building-classification">Building classification</a></li>
-      <li><a href="#classifier-random-forest">Classifier : Random Forest</a></li>
+      <li><a href="#overview-of-package-functionalities">Overview of package functionalities</a></li>
+      <li><a href="#tackling-imbalanced-data">1. Tackling imbalanced data</a></li>
+      <li><a href="#cleaning-the-text">2. Cleaning the text</a></li>
+      <li><a href="#early-visualization">3. Early Visualization</a></li>
+      <li><a href="#building-classification-training">4. Building classification training</a></li>
+      <li><a href="#buildprediction-function">5. BuildPrediction function</a></li>
+      <li><a href="#comparison-function-comparison-of-ml-training-models">6. Comparison function; Comparison of ML training models</a></li>
       </ul>
 </div>
       </div>

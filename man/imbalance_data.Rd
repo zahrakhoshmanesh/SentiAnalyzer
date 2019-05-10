@@ -10,10 +10,13 @@
   \item{Review}{text reviews}
   ...
 }}
+\source{
+\url{https://www.kaggle.com/c/restaurant-reviews}
+}
 \usage{
 imbalance_data
 }
 \description{
-A dataset containing ...
+A dataset containing restaurant review data, intentionally made unbalanced
 }
 \keyword{datasets}
