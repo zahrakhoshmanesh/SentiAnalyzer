@@ -15,9 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r pressure, echo=FALSE, fig.cap="SentiAnalyzer", out.width = '10%',fig.align="Right",eval=FALSE,include=FALSE}
-knitr::include_graphics("../inst/extdata/SAhexlogo.png")
-```
+
 
 
 ### Sentiment analysis for consumer review
