@@ -14,7 +14,7 @@
 
 ### Sentiment analysis for consumer review
 
-SentiAnalyzer is a straight forward solution for analysis of of consumer reviews which includes natural language processing (NLP) to preprocess the reviews and prepare the term matrix of reviews data in order to be consistent with Machine Learning algorithms. The dataset that SentiAnalyzer can work with is the review text and a binary class indicating the customer sentiment, e.g. whether consumer feeling is possitive or negative. 
+SentiAnalyzer is a straight forward solution for analysis of consumer reviews which includes natural language processing (NLP) to preprocess the reviews and prepare the term matrix of reviews data in order to be consistent with Machine Learning algorithms. The dataset that SentiAnalyzer can work with is the review text and a binary class indicating the customer sentiment, e.g. whether consumer feeling is possitive or negative. 
 
 ##  Overview of the SentiAnalyzer package 
 
